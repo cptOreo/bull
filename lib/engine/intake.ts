@@ -1,8 +1,4 @@
 import type {
-  Goal,
-  Horizon,
-  RiskComfort,
-  Experience,
   Locale,
   ProfileField,
   PartialProfile,

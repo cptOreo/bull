@@ -3,7 +3,6 @@ import {
   parseIntakeMessage,
   getNextIntakeQuestion,
   INTAKE_FIELD_SEQUENCE,
-  type IntakeResult,
 } from "@/lib/engine/intake";
 import type { PartialProfile, Profile } from "@/lib/engine/types";
 

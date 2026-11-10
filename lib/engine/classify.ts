@@ -1,7 +1,6 @@
 import type { Snapshot } from "@/lib/data/schema";
 import type {
   PartialProfile,
-  ProfileField,
   Route,
 } from "./types";
 import { parseIntakeMessage } from "./intake";

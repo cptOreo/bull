@@ -5,9 +5,9 @@ import type {
   ComparisonRow,
   DetailSection,
   EngineDeps,
-  Freshness,
   HowChosenView,
   Locale,
+  MetricSet,
   NewsItemView,
   Option,
   PartialProfile,
@@ -15,8 +15,7 @@ import type {
   ProfileField,
   ProfileState,
   Ref,
-  RiskFlag,
-  Route,
+  RefUnit,
   ScoredStock,
   ShortlistCard,
   TurnInput,
@@ -25,7 +24,6 @@ import { classify } from "./classify";
 import {
   parseIntakeMessage,
   getNextIntakeQuestion,
-  INTAKE_FIELD_SEQUENCE,
 } from "./intake";
 import { deriveMetrics } from "./metrics";
 import { scoreStock, selectShortlist } from "./score";
@@ -79,12 +77,12 @@ function registerNewsRefs(newsItems: NewsItemView[], refsMap: Map<string, Ref>):
  * Helper to register all numeric values from MetricSet into refs collection
  * so Rule 2 of safety choke point resolves all formatted variations.
  */
-function registerAllMetricRefs(stock: Stock, metrics: any, refsMap: Map<string, Ref>): void {
+function registerAllMetricRefs(stock: Stock, metrics: MetricSet, refsMap: Map<string, Ref>): void {
   for (const [key, ref] of Object.entries(metrics.refs as Record<string, Ref>)) {
     refsMap.set(key, ref);
   }
   const v = metrics.values;
-  const registerNum = (id: string, val: number | null, unit: any) => {
+  const registerNum = (id: string, val: number | null, unit: RefUnit) => {
     if (val !== null && !Number.isNaN(val)) {
       refsMap.set(`val:${id}`, createDerivedRef(`val:${id}`, val, unit, id, []));
       refsMap.set(
@@ -199,7 +197,7 @@ function resolveProfileWithAssumptions(
     currentAssumed.add("experience");
   }
 
-  let loc = p.locale ?? locale;
+  const loc = p.locale ?? locale;
 
   return {
     profile: {
@@ -220,7 +218,6 @@ function createSafeFallbackAnswer(
   snapshotId: string,
   locale: Locale,
   now: string,
-  reason?: string,
 ): Answer {
   const text =
     locale === "hi-en"
@@ -275,7 +272,7 @@ export function composeAnswer(
   }
 
   // Helper to add profile refs
-  const registerProfileRefs = (prof: Profile, assumedList: ProfileField[]) => {
+  const registerProfileRefs = (prof: Profile) => {
     refsMap.set("profile:goal", createProfileRef("profile:goal", prof.goal, prof.goal));
     refsMap.set("profile:horizon", createProfileRef("profile:horizon", prof.horizon, prof.horizon));
     refsMap.set(
@@ -290,7 +287,7 @@ export function composeAnswer(
   };
 
   let scoreId = "none";
-  let targetProfileState: ProfileState | null = {
+  const targetProfileState: ProfileState | null = {
     profile: activeProfile,
     assumed: activeAssumed,
     missing: intakeResult.missing,
@@ -304,7 +301,7 @@ export function composeAnswer(
         activeAssumed,
         locale,
       );
-      registerProfileRefs(resolvedProfile, assumed);
+      registerProfileRefs(resolvedProfile);
 
       // Score universe
       const scoredStocks: ScoredStock[] = snapshot.stocks.map((stock) => {
@@ -314,12 +311,12 @@ export function composeAnswer(
       });
 
       const shortlistResult = selectShortlist(scoredStocks);
-      scoreId = shortHash(shortlistResult.cards.map((c) => c.ticker));
+      scoreId = shortHash(shortlistResult.cards.map((c) => c.stock.ticker));
 
       // Build shortlist cards
       const cards: ShortlistCard[] = shortlistResult.cards.map((scored) => {
         const flags = deriveRiskFlags(scored.metrics, scored.stock);
-        return composeShortlistCard(scored, resolvedProfile, flags, locale);
+        return composeShortlistCard(scored, resolvedProfile, { flags, locale });
       });
 
       // Diversity note (§6.4)
@@ -351,7 +348,10 @@ export function composeAnswer(
       // Limitations block
       const sampleStock = snapshot.stocks[0];
       const sampleMetrics = getStockMetrics(sampleStock, snapshot, now);
-      blocks.push(composeLimitations(sampleStock, sampleMetrics, locale));
+      blocks.push({
+        type: "limitations",
+        items: composeLimitations({ metrics: sampleMetrics, locale }),
+      });
 
       // Mandatory education note
       blocks.push({
@@ -367,7 +367,7 @@ export function composeAnswer(
         activeAssumed,
         locale,
       );
-      registerProfileRefs(resolvedProfile, assumed);
+      registerProfileRefs(resolvedProfile);
 
       const tickerA = classification.entities.tickers[0] ?? "TCS";
       const tickerB = classification.entities.tickers[1] ?? "INFY";
@@ -454,7 +454,10 @@ export function composeAnswer(
         rows,
       });
 
-      blocks.push(composeLimitations(stockA, metricsA, locale));
+      blocks.push({
+        type: "limitations",
+        items: composeLimitations({ metrics: metricsA, locale }),
+      });
       blocks.push({
         type: "education_note",
         text: EDUCATION_NOTE_TEXT[locale],
@@ -533,7 +536,10 @@ export function composeAnswer(
         sections,
       });
 
-      blocks.push(composeLimitations(stock, metrics, locale));
+      blocks.push({
+        type: "limitations",
+        items: composeLimitations({ metrics, locale }),
+      });
       blocks.push({
         type: "education_note",
         text: EDUCATION_NOTE_TEXT[locale],
@@ -594,8 +600,8 @@ export function composeAnswer(
         const action = stock.corporateActions[0];
         historyNote +=
           locale === "hi-en"
-            ? ` Note: Corporate action (${action.kind}) recorded. Is event se pehle ke prices aur ratios directly continuous nahi hain.`
-            : ` Note: Corporate action (${action.kind}) recorded. Historical prices before this event are not directly comparable.`;
+            ? ` Note: Corporate action (${action.type}) recorded. Is event se pehle ke prices aur ratios directly continuous nahi hain.`
+            : ` Note: Corporate action (${action.type}) recorded. Historical prices before this event are not directly comparable.`;
       }
 
       historyNote +=

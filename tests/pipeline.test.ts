@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { handleTurn, buildAnswer } from "@/lib/engine/answer";
 import { inspectAnswer } from "@/lib/engine/safety";
 import { snapshot } from "@/lib/data/snapshot";
-import type { TurnInput, PartialProfile } from "@/lib/engine/types";
+import type { TurnInput } from "@/lib/engine/types";
 
 const FIXED_NOW = "2026-11-10T14:00:00Z";
 
