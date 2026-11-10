@@ -247,3 +247,18 @@ export type Mission = {
   unit: string;
   formulaNote: string;
 };
+
+export type TemplateCategory = "reason" | "risk" | "limitation" | "note";
+export type TemplateBand = "high" | "mid" | "low";
+
+export type Template = {
+  id: string;
+  category: TemplateCategory;
+  locale: Locale;
+  factor?: Factor;
+  band?: TemplateBand;
+  text: string;
+  pattern: string;
+  slotNames: string[];
+};
+
