@@ -87,3 +87,57 @@ export async function handleTurnWithRephrase(
     rephrase: (items) => provider.rephrase(items),
   });
 }
+
+/**
+ * Rephrases eligible narrative text in an Answer using the active LLM provider (e.g. Gemini),
+ * running all candidate sentences through the 6-pillar verification gate (§11.4).
+ */
+export async function rephraseAnswer(
+  answer: Answer,
+  provider?: LlmProvider
+): Promise<Answer> {
+  const activeProvider = provider ?? getLlmProvider();
+  if (activeProvider instanceof NullLlmProvider) {
+    return answer;
+  }
+
+  const items: RephraseItemInput[] = [];
+  const textBlockIndices: number[] = [];
+
+  answer.blocks.forEach((block, idx) => {
+    if (block.type === "text" && block.text.trim()) {
+      items.push({
+        id: `text_${idx}`,
+        text: block.text,
+        locale: answer.meta.locale,
+      });
+      textBlockIndices.push(idx);
+    }
+  });
+
+  if (items.length === 0) {
+    return answer;
+  }
+
+  try {
+    const rephrased = await activeProvider.rephrase(items);
+    const rephrasedMap = new Map(rephrased.map((r) => [r.id, r.text]));
+
+    const newBlocks = answer.blocks.map((block, idx) => {
+      if (block.type === "text") {
+        const candidate = rephrasedMap.get(`text_${idx}`);
+        if (candidate) {
+          return { ...block, text: candidate };
+        }
+      }
+      return block;
+    });
+
+    return {
+      ...answer,
+      blocks: newBlocks,
+    };
+  } catch {
+    return answer;
+  }
+}

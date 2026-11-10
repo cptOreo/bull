@@ -21,7 +21,7 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSendMessage = useCallback(
-    (text: string) => {
+    async (text: string) => {
       const now = new Date().toISOString();
 
       addChatMessage({
@@ -31,7 +31,7 @@ export default function HomePage() {
       });
       setIsLoading(true);
 
-      // Execute engine turn deterministically
+      // Execute engine turn (via API route with Gemini support, falling back to local engine)
       try {
         const turnInput: TurnInput = {
           message: text,
@@ -41,7 +41,21 @@ export default function HomePage() {
           events,
         };
 
-        const answer = handleTurn(turnInput, { snapshot });
+        let answer;
+        try {
+          const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(turnInput),
+          });
+          if (res.ok) {
+            answer = await res.json();
+          } else {
+            answer = handleTurn(turnInput, { snapshot });
+          }
+        } catch {
+          answer = handleTurn(turnInput, { snapshot });
+        }
 
         // Update profile if turn adjusted profile dimensions
         if (answer.profileState?.profile) {
