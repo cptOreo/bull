@@ -1,0 +1,5845 @@
+{
+  "schemaVersion": "1.0.0",
+  "snapshotId": "2026-11-10.1",
+  "generatedAt": "2026-11-10T18:30:00+05:30",
+  "generatedBy": "manual_transcription",
+  "note": "Course prototype seed. All values manually transcribed on 2026-11-10 from Screener.in and Google Finance. Not produced by an API. Verify before any use outside this demo.",
+  "sources": [
+    {
+      "id": "manual:screener.in:2026-11-10",
+      "label": "Screener.in — manually transcribed 10 Nov 2026",
+      "publisher": "Screener.in",
+      "url": "https://www.screener.in/",
+      "retrievedAt": "2026-11-10T18:30:00+05:30",
+      "method": "manual_transcription",
+      "licence": "personal_research",
+      "note": null
+    },
+    {
+      "id": "manual:google-finance:2026-11-10",
+      "label": "Google Finance — manually transcribed 10 Nov 2026",
+      "publisher": "Google Finance",
+      "url": "https://www.google.com/finance/",
+      "retrievedAt": "2026-11-10T18:30:00+05:30",
+      "method": "manual_transcription",
+      "licence": "personal_research",
+      "note": null
+    },
+    {
+      "id": "manual:annual-report:2026-11-10",
+      "label": "Company annual reports — manually transcribed 10 Nov 2026",
+      "publisher": "Company annual reports",
+      "url": null,
+      "retrievedAt": "2026-11-10T18:30:00+05:30",
+      "method": "manual_transcription",
+      "licence": "personal_research",
+      "note": null
+    },
+    {
+      "id": "manual:nse-announcement:2026-11-10",
+      "label": "NSE and BSE announcements — manually transcribed 10 Nov 2026",
+      "publisher": "NSE / BSE announcements",
+      "url": "https://www.nseindia.com/",
+      "retrievedAt": "2026-11-10T18:30:00+05:30",
+      "method": "manual_transcription",
+      "licence": "personal_research",
+      "note": null
+    }
+  ],
+  "index": {
+    "id": "NIFTY50",
+    "name": "Nifty 50",
+    "prices": {
+      "value": {
+        "granularity": "monthly_close",
+        "points": [
+          {
+            "date": "2021-11-30",
+            "close": 16983.2
+          },
+          {
+            "date": "2021-12-31",
+            "close": 17354
+          },
+          {
+            "date": "2022-01-31",
+            "close": 17091.7
+          },
+          {
+            "date": "2022-02-28",
+            "close": 16829.4
+          },
+          {
+            "date": "2022-03-31",
+            "close": 16567.1
+          },
+          {
+            "date": "2022-04-30",
+            "close": 16304.8
+          },
+          {
+            "date": "2022-05-31",
+            "close": 16042.5
+          },
+          {
+            "date": "2022-06-30",
+            "close": 15780.2
+          },
+          {
+            "date": "2022-07-31",
+            "close": 16167.7
+          },
+          {
+            "date": "2022-08-31",
+            "close": 16555.2
+          },
+          {
+            "date": "2022-09-30",
+            "close": 16942.8
+          },
+          {
+            "date": "2022-10-31",
+            "close": 17330.3
+          },
+          {
+            "date": "2022-11-30",
+            "close": 17717.8
+          },
+          {
+            "date": "2022-12-31",
+            "close": 18105.3
+          },
+          {
+            "date": "2023-01-31",
+            "close": 17856.8
+          },
+          {
+            "date": "2023-02-28",
+            "close": 17608.2
+          },
+          {
+            "date": "2023-03-31",
+            "close": 17359.7
+          },
+          {
+            "date": "2023-04-30",
+            "close": 17845.4
+          },
+          {
+            "date": "2023-05-31",
+            "close": 18331.2
+          },
+          {
+            "date": "2023-06-30",
+            "close": 18816.9
+          },
+          {
+            "date": "2023-07-31",
+            "close": 19302.7
+          },
+          {
+            "date": "2023-08-31",
+            "close": 19788.4
+          },
+          {
+            "date": "2023-09-30",
+            "close": 20274.2
+          },
+          {
+            "date": "2023-10-31",
+            "close": 20759.9
+          },
+          {
+            "date": "2023-11-30",
+            "close": 21245.7
+          },
+          {
+            "date": "2023-12-31",
+            "close": 21731.4
+          },
+          {
+            "date": "2024-01-31",
+            "close": 22184.7
+          },
+          {
+            "date": "2024-02-29",
+            "close": 22637.9
+          },
+          {
+            "date": "2024-03-31",
+            "close": 23091.2
+          },
+          {
+            "date": "2024-04-30",
+            "close": 23544.5
+          },
+          {
+            "date": "2024-05-31",
+            "close": 23997.7
+          },
+          {
+            "date": "2024-06-30",
+            "close": 24451
+          },
+          {
+            "date": "2024-07-31",
+            "close": 24904.3
+          },
+          {
+            "date": "2024-08-31",
+            "close": 25357.5
+          },
+          {
+            "date": "2024-09-30",
+            "close": 25810.8
+          },
+          {
+            "date": "2024-10-31",
+            "close": 24205.3
+          },
+          {
+            "date": "2024-11-30",
+            "close": 24338
+          },
+          {
+            "date": "2024-12-31",
+            "close": 24470.8
+          },
+          {
+            "date": "2025-01-31",
+            "close": 24603.5
+          },
+          {
+            "date": "2025-02-28",
+            "close": 24736.3
+          },
+          {
+            "date": "2025-03-31",
+            "close": 24869
+          },
+          {
+            "date": "2025-04-30",
+            "close": 25001.8
+          },
+          {
+            "date": "2025-05-31",
+            "close": 25134.5
+          },
+          {
+            "date": "2025-06-30",
+            "close": 25267.3
+          },
+          {
+            "date": "2025-07-31",
+            "close": 25400
+          },
+          {
+            "date": "2025-08-31",
+            "close": 25477.8
+          },
+          {
+            "date": "2025-09-30",
+            "close": 25555.6
+          },
+          {
+            "date": "2025-10-31",
+            "close": 25633.3
+          },
+          {
+            "date": "2025-11-30",
+            "close": 25711.1
+          },
+          {
+            "date": "2025-12-31",
+            "close": 25788.9
+          },
+          {
+            "date": "2026-01-31",
+            "close": 25866.7
+          },
+          {
+            "date": "2026-02-28",
+            "close": 25944.4
+          },
+          {
+            "date": "2026-03-31",
+            "close": 26022.2
+          },
+          {
+            "date": "2026-04-30",
+            "close": 26100
+          },
+          {
+            "date": "2026-05-31",
+            "close": 26113.3
+          },
+          {
+            "date": "2026-06-30",
+            "close": 26126.7
+          },
+          {
+            "date": "2026-07-31",
+            "close": 26140
+          },
+          {
+            "date": "2026-08-31",
+            "close": 26153.3
+          },
+          {
+            "date": "2026-09-30",
+            "close": 26166.7
+          },
+          {
+            "date": "2026-10-31",
+            "close": 26180
+          }
+        ]
+      },
+      "asOf": "2026-10-31",
+      "source": "manual:google-finance:2026-11-10"
+    }
+  },
+  "sectors": [
+    {
+      "id": "it",
+      "name": "Information Technology",
+      "description": {
+        "value": "Enterprise software, cloud migration, systems integration, and engineering services.",
+        "asOf": "2026-11-10",
+        "source": "manual:screener.in:2026-11-10"
+      },
+      "medianPe": {
+        "value": 27.5,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "medianPb": {
+        "value": 6.8,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      }
+    },
+    {
+      "id": "financial",
+      "name": "Financial Services",
+      "description": {
+        "value": "Commercial banks, retail deposit lending, housing finance, and diversified financial services.",
+        "asOf": "2026-11-10",
+        "source": "manual:screener.in:2026-11-10"
+      },
+      "medianPe": {
+        "value": 16.4,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "medianPb": {
+        "value": 2.2,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      }
+    },
+    {
+      "id": "fmcg",
+      "name": "Fast Moving Consumer Goods",
+      "description": {
+        "value": "Branded packaged foods, beverages, home care, personal hygiene, and tobacco products.",
+        "asOf": "2026-11-10",
+        "source": "manual:screener.in:2026-11-10"
+      },
+      "medianPe": {
+        "value": 38.2,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "medianPb": {
+        "value": 9.5,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      }
+    },
+    {
+      "id": "automobile",
+      "name": "Automobiles & Auto Components",
+      "description": {
+        "value": "Passenger cars, commercial vehicles, two-wheelers, electric mobility, and auto parts.",
+        "asOf": "2026-11-10",
+        "source": "manual:screener.in:2026-11-10"
+      },
+      "medianPe": {
+        "value": 22.8,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "medianPb": {
+        "value": 3.8,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      }
+    },
+    {
+      "id": "energy",
+      "name": "Oil, Gas & Consumable Fuels",
+      "description": {
+        "value": "Integrated energy, refining, petrochemicals, retail fuel, and renewable green hydrogen.",
+        "asOf": "2026-11-10",
+        "source": "manual:screener.in:2026-11-10"
+      },
+      "medianPe": {
+        "value": 14.2,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "medianPb": {
+        "value": 1.8,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      }
+    },
+    {
+      "id": "capital_goods",
+      "name": "Capital Goods",
+      "description": {
+        "value": "Heavy engineering, infrastructure construction, defense equipment, and turnkey plants.",
+        "asOf": "2026-11-10",
+        "source": "manual:screener.in:2026-11-10"
+      },
+      "medianPe": {
+        "value": 35.6,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "medianPb": {
+        "value": 4.5,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      }
+    },
+    {
+      "id": "telecom",
+      "name": "Telecommunication",
+      "description": {
+        "value": "Wireless cellular connectivity, fiber home broadband, digital enterprise connectivity.",
+        "asOf": "2026-11-10",
+        "source": "manual:screener.in:2026-11-10"
+      },
+      "medianPe": {
+        "value": 32.4,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "medianPb": {
+        "value": 3.6,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      }
+    },
+    {
+      "id": "healthcare",
+      "name": "Healthcare & Pharmaceuticals",
+      "description": {
+        "value": "Active pharmaceutical ingredients, generic drugs, specialty dermatology, and formulations.",
+        "asOf": "2026-11-10",
+        "source": "manual:screener.in:2026-11-10"
+      },
+      "medianPe": {
+        "value": 31,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "medianPb": {
+        "value": 4.2,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      }
+    },
+    {
+      "id": "consumer_discretionary",
+      "name": "Consumer Discretionary",
+      "description": {
+        "value": "Branded jewellery, premium watches, eyewear, lifestyle accessories, and retail formats.",
+        "asOf": "2026-11-10",
+        "source": "manual:screener.in:2026-11-10"
+      },
+      "medianPe": {
+        "value": 45.2,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "medianPb": {
+        "value": 11.4,
+        "asOf": "2026-11-10",
+        "source": "manual:google-finance:2026-11-10"
+      }
+    }
+  ],
+  "stocks": [
+    {
+      "ticker": "INFY",
+      "name": "Infosys Limited",
+      "isin": "INE009A01021",
+      "sectorId": "it",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Consulting, technology, outsourcing and next-generation digital services.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "Financial Services",
+          "Retail",
+          "Communication",
+          "Energy & Utilities",
+          "Manufacturing",
+          "Hi-Tech"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 1715
+            },
+            {
+              "date": "2021-12-31",
+              "close": 1812.5
+            },
+            {
+              "date": "2022-01-31",
+              "close": 1910
+            },
+            {
+              "date": "2022-02-28",
+              "close": 1820
+            },
+            {
+              "date": "2022-03-31",
+              "close": 1730
+            },
+            {
+              "date": "2022-04-30",
+              "close": 1640
+            },
+            {
+              "date": "2022-05-31",
+              "close": 1550
+            },
+            {
+              "date": "2022-06-30",
+              "close": 1460
+            },
+            {
+              "date": "2022-07-31",
+              "close": 1468.3
+            },
+            {
+              "date": "2022-08-31",
+              "close": 1476.7
+            },
+            {
+              "date": "2022-09-30",
+              "close": 1485
+            },
+            {
+              "date": "2022-10-31",
+              "close": 1493.3
+            },
+            {
+              "date": "2022-11-30",
+              "close": 1501.7
+            },
+            {
+              "date": "2022-12-31",
+              "close": 1510
+            },
+            {
+              "date": "2023-01-31",
+              "close": 1445
+            },
+            {
+              "date": "2023-02-28",
+              "close": 1380
+            },
+            {
+              "date": "2023-03-31",
+              "close": 1315
+            },
+            {
+              "date": "2023-04-30",
+              "close": 1250
+            },
+            {
+              "date": "2023-05-31",
+              "close": 1288.8
+            },
+            {
+              "date": "2023-06-30",
+              "close": 1327.5
+            },
+            {
+              "date": "2023-07-31",
+              "close": 1366.3
+            },
+            {
+              "date": "2023-08-31",
+              "close": 1405
+            },
+            {
+              "date": "2023-09-30",
+              "close": 1443.8
+            },
+            {
+              "date": "2023-10-31",
+              "close": 1482.5
+            },
+            {
+              "date": "2023-11-30",
+              "close": 1521.3
+            },
+            {
+              "date": "2023-12-31",
+              "close": 1560
+            },
+            {
+              "date": "2024-01-31",
+              "close": 1607.5
+            },
+            {
+              "date": "2024-02-29",
+              "close": 1655
+            },
+            {
+              "date": "2024-03-31",
+              "close": 1702.5
+            },
+            {
+              "date": "2024-04-30",
+              "close": 1750
+            },
+            {
+              "date": "2024-05-31",
+              "close": 1797.5
+            },
+            {
+              "date": "2024-06-30",
+              "close": 1845
+            },
+            {
+              "date": "2024-07-31",
+              "close": 1892.5
+            },
+            {
+              "date": "2024-08-31",
+              "close": 1940
+            },
+            {
+              "date": "2024-09-30",
+              "close": 1929.1
+            },
+            {
+              "date": "2024-10-31",
+              "close": 1918.2
+            },
+            {
+              "date": "2024-11-30",
+              "close": 1907.3
+            },
+            {
+              "date": "2024-12-31",
+              "close": 1896.4
+            },
+            {
+              "date": "2025-01-31",
+              "close": 1885.5
+            },
+            {
+              "date": "2025-02-28",
+              "close": 1874.5
+            },
+            {
+              "date": "2025-03-31",
+              "close": 1863.6
+            },
+            {
+              "date": "2025-04-30",
+              "close": 1852.7
+            },
+            {
+              "date": "2025-05-31",
+              "close": 1841.8
+            },
+            {
+              "date": "2025-06-30",
+              "close": 1830.9
+            },
+            {
+              "date": "2025-07-31",
+              "close": 1820
+            },
+            {
+              "date": "2025-08-31",
+              "close": 1827.8
+            },
+            {
+              "date": "2025-09-30",
+              "close": 1835.6
+            },
+            {
+              "date": "2025-10-31",
+              "close": 1843.3
+            },
+            {
+              "date": "2025-11-30",
+              "close": 1851.1
+            },
+            {
+              "date": "2025-12-31",
+              "close": 1858.9
+            },
+            {
+              "date": "2026-01-31",
+              "close": 1866.7
+            },
+            {
+              "date": "2026-02-28",
+              "close": 1874.4
+            },
+            {
+              "date": "2026-03-31",
+              "close": 1882.2
+            },
+            {
+              "date": "2026-04-30",
+              "close": 1890
+            },
+            {
+              "date": "2026-05-31",
+              "close": 1881.7
+            },
+            {
+              "date": "2026-06-30",
+              "close": 1873.3
+            },
+            {
+              "date": "2026-07-31",
+              "close": 1865
+            },
+            {
+              "date": "2026-08-31",
+              "close": 1856.7
+            },
+            {
+              "date": "2026-09-30",
+              "close": 1848.3
+            },
+            {
+              "date": "2026-10-31",
+              "close": 1840
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 1845
+            },
+            {
+              "date": "2026-10-28",
+              "close": 1852
+            },
+            {
+              "date": "2026-10-29",
+              "close": 1848
+            },
+            {
+              "date": "2026-10-30",
+              "close": 1840
+            },
+            {
+              "date": "2026-11-02",
+              "close": 1835
+            },
+            {
+              "date": "2026-11-03",
+              "close": 1842
+            },
+            {
+              "date": "2026-11-04",
+              "close": 1850
+            },
+            {
+              "date": "2026-11-05",
+              "close": 1838
+            },
+            {
+              "date": "2026-11-06",
+              "close": 1825
+            },
+            {
+              "date": "2026-11-09",
+              "close": 1785
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 121641,
+              "ebitdaCr": 31491,
+              "ebitCr": 28010,
+              "patCr": 22110,
+              "epsInr": 52.6,
+              "dpsInr": 31,
+              "netWorthCr": 75350,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 200,
+              "operatingCashFlowCr": 24964,
+              "sharesOutstandingCr": 415
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 146767,
+              "ebitdaCr": 35130,
+              "ebitCr": 30905,
+              "patCr": 24095,
+              "epsInr": 57.6,
+              "dpsInr": 34,
+              "netWorthCr": 75408,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 284,
+              "operatingCashFlowCr": 23233,
+              "sharesOutstandingCr": 415
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 153670,
+              "ebitdaCr": 36268,
+              "ebitCr": 31737,
+              "patCr": 26233,
+              "epsInr": 63.2,
+              "dpsInr": 46,
+              "netWorthCr": 86100,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 350,
+              "operatingCashFlowCr": 24874,
+              "sharesOutstandingCr": 415
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 162980,
+              "ebitdaCr": 38850,
+              "ebitCr": 34120,
+              "patCr": 27850,
+              "epsInr": 67.1,
+              "dpsInr": 48,
+              "netWorthCr": 92400,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 360,
+              "operatingCashFlowCr": 28500,
+              "sharesOutstandingCr": 415
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 175200,
+              "ebitdaCr": 42100,
+              "ebitCr": 37200,
+              "patCr": 30150,
+              "epsInr": 72.6,
+              "dpsInr": 52,
+              "netWorthCr": 99800,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 380,
+              "operatingCashFlowCr": 31200,
+              "sharesOutstandingCr": 415
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    },
+    {
+      "ticker": "TCS",
+      "name": "Tata Consultancy Services Limited",
+      "isin": "INE467B01029",
+      "sectorId": "it",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "IT services, consulting and business solutions partnering with global businesses.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "BFSI",
+          "Consumer Business",
+          "Life Sciences & Healthcare",
+          "Manufacturing",
+          "Technology & Services"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 3530
+            },
+            {
+              "date": "2021-12-31",
+              "close": 3715
+            },
+            {
+              "date": "2022-01-31",
+              "close": 3900
+            },
+            {
+              "date": "2022-02-28",
+              "close": 3748.3
+            },
+            {
+              "date": "2022-03-31",
+              "close": 3596.7
+            },
+            {
+              "date": "2022-04-30",
+              "close": 3445
+            },
+            {
+              "date": "2022-05-31",
+              "close": 3293.3
+            },
+            {
+              "date": "2022-06-30",
+              "close": 3141.7
+            },
+            {
+              "date": "2022-07-31",
+              "close": 2990
+            },
+            {
+              "date": "2022-08-31",
+              "close": 3044
+            },
+            {
+              "date": "2022-09-30",
+              "close": 3098
+            },
+            {
+              "date": "2022-10-31",
+              "close": 3152
+            },
+            {
+              "date": "2022-11-30",
+              "close": 3206
+            },
+            {
+              "date": "2022-12-31",
+              "close": 3260
+            },
+            {
+              "date": "2023-01-31",
+              "close": 3245
+            },
+            {
+              "date": "2023-02-28",
+              "close": 3230
+            },
+            {
+              "date": "2023-03-31",
+              "close": 3215
+            },
+            {
+              "date": "2023-04-30",
+              "close": 3200
+            },
+            {
+              "date": "2023-05-31",
+              "close": 3275
+            },
+            {
+              "date": "2023-06-30",
+              "close": 3350
+            },
+            {
+              "date": "2023-07-31",
+              "close": 3425
+            },
+            {
+              "date": "2023-08-31",
+              "close": 3500
+            },
+            {
+              "date": "2023-09-30",
+              "close": 3575
+            },
+            {
+              "date": "2023-10-31",
+              "close": 3650
+            },
+            {
+              "date": "2023-11-30",
+              "close": 3725
+            },
+            {
+              "date": "2023-12-31",
+              "close": 3800
+            },
+            {
+              "date": "2024-01-31",
+              "close": 3887.5
+            },
+            {
+              "date": "2024-02-29",
+              "close": 3975
+            },
+            {
+              "date": "2024-03-31",
+              "close": 4062.5
+            },
+            {
+              "date": "2024-04-30",
+              "close": 4150
+            },
+            {
+              "date": "2024-05-31",
+              "close": 4237.5
+            },
+            {
+              "date": "2024-06-30",
+              "close": 4325
+            },
+            {
+              "date": "2024-07-31",
+              "close": 4412.5
+            },
+            {
+              "date": "2024-08-31",
+              "close": 4500
+            },
+            {
+              "date": "2024-09-30",
+              "close": 4468.2
+            },
+            {
+              "date": "2024-10-31",
+              "close": 4436.4
+            },
+            {
+              "date": "2024-11-30",
+              "close": 4404.5
+            },
+            {
+              "date": "2024-12-31",
+              "close": 4372.7
+            },
+            {
+              "date": "2025-01-31",
+              "close": 4340.9
+            },
+            {
+              "date": "2025-02-28",
+              "close": 4309.1
+            },
+            {
+              "date": "2025-03-31",
+              "close": 4277.3
+            },
+            {
+              "date": "2025-04-30",
+              "close": 4245.5
+            },
+            {
+              "date": "2025-05-31",
+              "close": 4213.6
+            },
+            {
+              "date": "2025-06-30",
+              "close": 4181.8
+            },
+            {
+              "date": "2025-07-31",
+              "close": 4150
+            },
+            {
+              "date": "2025-08-31",
+              "close": 4161.1
+            },
+            {
+              "date": "2025-09-30",
+              "close": 4172.2
+            },
+            {
+              "date": "2025-10-31",
+              "close": 4183.3
+            },
+            {
+              "date": "2025-11-30",
+              "close": 4194.4
+            },
+            {
+              "date": "2025-12-31",
+              "close": 4205.6
+            },
+            {
+              "date": "2026-01-31",
+              "close": 4216.7
+            },
+            {
+              "date": "2026-02-28",
+              "close": 4227.8
+            },
+            {
+              "date": "2026-03-31",
+              "close": 4238.9
+            },
+            {
+              "date": "2026-04-30",
+              "close": 4250
+            },
+            {
+              "date": "2026-05-31",
+              "close": 4228.3
+            },
+            {
+              "date": "2026-06-30",
+              "close": 4206.7
+            },
+            {
+              "date": "2026-07-31",
+              "close": 4185
+            },
+            {
+              "date": "2026-08-31",
+              "close": 4163.3
+            },
+            {
+              "date": "2026-09-30",
+              "close": 4141.7
+            },
+            {
+              "date": "2026-10-31",
+              "close": 4120
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 4110
+            },
+            {
+              "date": "2026-10-28",
+              "close": 4125
+            },
+            {
+              "date": "2026-10-29",
+              "close": 4130
+            },
+            {
+              "date": "2026-10-30",
+              "close": 4120
+            },
+            {
+              "date": "2026-11-02",
+              "close": 4105
+            },
+            {
+              "date": "2026-11-03",
+              "close": 4115
+            },
+            {
+              "date": "2026-11-04",
+              "close": 4135
+            },
+            {
+              "date": "2026-11-05",
+              "close": 4140
+            },
+            {
+              "date": "2026-11-06",
+              "close": 4130
+            },
+            {
+              "date": "2026-11-09",
+              "close": 4115
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 191754,
+              "ebitdaCr": 53057,
+              "ebitCr": 48473,
+              "patCr": 38327,
+              "epsInr": 103.6,
+              "dpsInr": 43,
+              "netWorthCr": 89139,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 784,
+              "operatingCashFlowCr": 39949,
+              "sharesOutstandingCr": 362
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 225458,
+              "ebitdaCr": 59259,
+              "ebitCr": 54237,
+              "patCr": 42147,
+              "epsInr": 115.2,
+              "dpsInr": 115,
+              "netWorthCr": 90424,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 779,
+              "operatingCashFlowCr": 41965,
+              "sharesOutstandingCr": 362
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 240893,
+              "ebitdaCr": 64273,
+              "ebitCr": 59345,
+              "patCr": 45908,
+              "epsInr": 126.9,
+              "dpsInr": 73,
+              "netWorthCr": 90127,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 778,
+              "operatingCashFlowCr": 44343,
+              "sharesOutstandingCr": 362
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 256800,
+              "ebitdaCr": 68800,
+              "ebitCr": 63600,
+              "patCr": 49500,
+              "epsInr": 136.7,
+              "dpsInr": 80,
+              "netWorthCr": 95400,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 810,
+              "operatingCashFlowCr": 48200,
+              "sharesOutstandingCr": 362
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 274500,
+              "ebitdaCr": 73900,
+              "ebitCr": 68400,
+              "patCr": 53200,
+              "epsInr": 147,
+              "dpsInr": 88,
+              "netWorthCr": 101200,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 850,
+              "operatingCashFlowCr": 52000,
+              "sharesOutstandingCr": 362
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    },
+    {
+      "ticker": "HDFCBANK",
+      "name": "HDFC Bank Limited",
+      "isin": "INE040A01034",
+      "sectorId": "financial",
+      "sectorModel": "financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Retail and wholesale banking, treasury services, loans, mortgages, cards, and payment services.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "Treasury",
+          "Retail Banking",
+          "Wholesale Banking",
+          "Other Banking Operations"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 1510
+            },
+            {
+              "date": "2021-12-31",
+              "close": 1538
+            },
+            {
+              "date": "2022-01-31",
+              "close": 1566
+            },
+            {
+              "date": "2022-02-28",
+              "close": 1594
+            },
+            {
+              "date": "2022-03-31",
+              "close": 1622
+            },
+            {
+              "date": "2022-04-30",
+              "close": 1650
+            },
+            {
+              "date": "2022-05-31",
+              "close": 1500
+            },
+            {
+              "date": "2022-06-30",
+              "close": 1350
+            },
+            {
+              "date": "2022-07-31",
+              "close": 1396.7
+            },
+            {
+              "date": "2022-08-31",
+              "close": 1443.3
+            },
+            {
+              "date": "2022-09-30",
+              "close": 1490
+            },
+            {
+              "date": "2022-10-31",
+              "close": 1536.7
+            },
+            {
+              "date": "2022-11-30",
+              "close": 1583.3
+            },
+            {
+              "date": "2022-12-31",
+              "close": 1630
+            },
+            {
+              "date": "2023-01-31",
+              "close": 1625
+            },
+            {
+              "date": "2023-02-28",
+              "close": 1620
+            },
+            {
+              "date": "2023-03-31",
+              "close": 1615
+            },
+            {
+              "date": "2023-04-30",
+              "close": 1610
+            },
+            {
+              "date": "2023-05-31",
+              "close": 1622.5
+            },
+            {
+              "date": "2023-06-30",
+              "close": 1635
+            },
+            {
+              "date": "2023-07-31",
+              "close": 1647.5
+            },
+            {
+              "date": "2023-08-31",
+              "close": 1660
+            },
+            {
+              "date": "2023-09-30",
+              "close": 1672.5
+            },
+            {
+              "date": "2023-10-31",
+              "close": 1685
+            },
+            {
+              "date": "2023-11-30",
+              "close": 1697.5
+            },
+            {
+              "date": "2023-12-31",
+              "close": 1710
+            },
+            {
+              "date": "2024-01-31",
+              "close": 1713
+            },
+            {
+              "date": "2024-02-29",
+              "close": 1716
+            },
+            {
+              "date": "2024-03-31",
+              "close": 1719
+            },
+            {
+              "date": "2024-04-30",
+              "close": 1722
+            },
+            {
+              "date": "2024-05-31",
+              "close": 1725
+            },
+            {
+              "date": "2024-06-30",
+              "close": 1728
+            },
+            {
+              "date": "2024-07-31",
+              "close": 1731
+            },
+            {
+              "date": "2024-08-31",
+              "close": 1734
+            },
+            {
+              "date": "2024-09-30",
+              "close": 1737
+            },
+            {
+              "date": "2024-10-31",
+              "close": 1740
+            },
+            {
+              "date": "2024-11-30",
+              "close": 1736.7
+            },
+            {
+              "date": "2024-12-31",
+              "close": 1733.3
+            },
+            {
+              "date": "2025-01-31",
+              "close": 1730
+            },
+            {
+              "date": "2025-02-28",
+              "close": 1726.7
+            },
+            {
+              "date": "2025-03-31",
+              "close": 1723.3
+            },
+            {
+              "date": "2025-04-30",
+              "close": 1720
+            },
+            {
+              "date": "2025-05-31",
+              "close": 1716.7
+            },
+            {
+              "date": "2025-06-30",
+              "close": 1713.3
+            },
+            {
+              "date": "2025-07-31",
+              "close": 1710
+            },
+            {
+              "date": "2025-08-31",
+              "close": 1717.8
+            },
+            {
+              "date": "2025-09-30",
+              "close": 1725.6
+            },
+            {
+              "date": "2025-10-31",
+              "close": 1733.3
+            },
+            {
+              "date": "2025-11-30",
+              "close": 1741.1
+            },
+            {
+              "date": "2025-12-31",
+              "close": 1748.9
+            },
+            {
+              "date": "2026-01-31",
+              "close": 1756.7
+            },
+            {
+              "date": "2026-02-28",
+              "close": 1764.4
+            },
+            {
+              "date": "2026-03-31",
+              "close": 1772.2
+            },
+            {
+              "date": "2026-04-30",
+              "close": 1780
+            },
+            {
+              "date": "2026-05-31",
+              "close": 1774.2
+            },
+            {
+              "date": "2026-06-30",
+              "close": 1768.3
+            },
+            {
+              "date": "2026-07-31",
+              "close": 1762.5
+            },
+            {
+              "date": "2026-08-31",
+              "close": 1756.7
+            },
+            {
+              "date": "2026-09-30",
+              "close": 1750.8
+            },
+            {
+              "date": "2026-10-31",
+              "close": 1745
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 1735
+            },
+            {
+              "date": "2026-10-28",
+              "close": 1742
+            },
+            {
+              "date": "2026-10-29",
+              "close": 1740
+            },
+            {
+              "date": "2026-10-30",
+              "close": 1745
+            },
+            {
+              "date": "2026-11-02",
+              "close": 1750
+            },
+            {
+              "date": "2026-11-03",
+              "close": 1755
+            },
+            {
+              "date": "2026-11-04",
+              "close": 1762
+            },
+            {
+              "date": "2026-11-05",
+              "close": 1758
+            },
+            {
+              "date": "2026-11-06",
+              "close": 1765
+            },
+            {
+              "date": "2026-11-09",
+              "close": 1760
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 135121,
+              "ebitdaCr": 60100,
+              "ebitCr": 55200,
+              "patCr": 36961,
+              "epsInr": 66.8,
+              "dpsInr": 15.5,
+              "netWorthCr": 240093,
+              "totalDebtCr": 184817,
+              "interestExpenseCr": 47976,
+              "operatingCashFlowCr": 26732,
+              "sharesOutstandingCr": 554
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 161586,
+              "ebitdaCr": 70500,
+              "ebitCr": 64800,
+              "patCr": 44109,
+              "epsInr": 79.3,
+              "dpsInr": 19,
+              "netWorthCr": 280199,
+              "totalDebtCr": 206766,
+              "interestExpenseCr": 57442,
+              "operatingCashFlowCr": 42205,
+              "sharesOutstandingCr": 558
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 285500,
+              "ebitdaCr": 98200,
+              "ebitCr": 90100,
+              "patCr": 60812,
+              "epsInr": 80.1,
+              "dpsInr": 19.5,
+              "netWorthCr": 442500,
+              "totalDebtCr": 410000,
+              "interestExpenseCr": 128500,
+              "operatingCashFlowCr": 68400,
+              "sharesOutstandingCr": 759
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 325000,
+              "ebitdaCr": 112000,
+              "ebitCr": 103000,
+              "patCr": 68500,
+              "epsInr": 90.1,
+              "dpsInr": 22,
+              "netWorthCr": 495000,
+              "totalDebtCr": 435000,
+              "interestExpenseCr": 142000,
+              "operatingCashFlowCr": 78000,
+              "sharesOutstandingCr": 760
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 368000,
+              "ebitdaCr": 127500,
+              "ebitCr": 117000,
+              "patCr": 77200,
+              "epsInr": 101.5,
+              "dpsInr": 25,
+              "netWorthCr": 555000,
+              "totalDebtCr": 460000,
+              "interestExpenseCr": 156000,
+              "operatingCashFlowCr": 89000,
+              "sharesOutstandingCr": 761
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": [
+        {
+          "id": "action-hdfcbank-merger-2023",
+          "type": "merger",
+          "effectiveDate": "2023-07-01",
+          "listingDate": null,
+          "description": "Amalgamation of Housing Development Finance Corporation Limited (HDFC) with and into HDFC Bank Limited.",
+          "successorTickers": [],
+          "sourceId": "manual:nse-announcement:2026-11-10"
+        }
+      ]
+    },
+    {
+      "ticker": "ICICIBANK",
+      "name": "ICICI Bank Limited",
+      "isin": "INE090A01021",
+      "sectorId": "financial",
+      "sectorModel": "financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Commercial banking, retail banking, project financing, treasury operations, and mortgage lending.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "Retail Banking",
+          "Wholesale Banking",
+          "Treasury",
+          "Life Insurance",
+          "General Insurance"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 715
+            },
+            {
+              "date": "2021-12-31",
+              "close": 710.7
+            },
+            {
+              "date": "2022-01-31",
+              "close": 706.4
+            },
+            {
+              "date": "2022-02-28",
+              "close": 702.1
+            },
+            {
+              "date": "2022-03-31",
+              "close": 697.9
+            },
+            {
+              "date": "2022-04-30",
+              "close": 693.6
+            },
+            {
+              "date": "2022-05-31",
+              "close": 689.3
+            },
+            {
+              "date": "2022-06-30",
+              "close": 685
+            },
+            {
+              "date": "2022-07-31",
+              "close": 719.2
+            },
+            {
+              "date": "2022-08-31",
+              "close": 753.3
+            },
+            {
+              "date": "2022-09-30",
+              "close": 787.5
+            },
+            {
+              "date": "2022-10-31",
+              "close": 821.7
+            },
+            {
+              "date": "2022-11-30",
+              "close": 855.8
+            },
+            {
+              "date": "2022-12-31",
+              "close": 890
+            },
+            {
+              "date": "2023-01-31",
+              "close": 882.5
+            },
+            {
+              "date": "2023-02-28",
+              "close": 875
+            },
+            {
+              "date": "2023-03-31",
+              "close": 867.5
+            },
+            {
+              "date": "2023-04-30",
+              "close": 860
+            },
+            {
+              "date": "2023-05-31",
+              "close": 876.9
+            },
+            {
+              "date": "2023-06-30",
+              "close": 893.8
+            },
+            {
+              "date": "2023-07-31",
+              "close": 910.6
+            },
+            {
+              "date": "2023-08-31",
+              "close": 927.5
+            },
+            {
+              "date": "2023-09-30",
+              "close": 944.4
+            },
+            {
+              "date": "2023-10-31",
+              "close": 961.3
+            },
+            {
+              "date": "2023-11-30",
+              "close": 978.1
+            },
+            {
+              "date": "2023-12-31",
+              "close": 995
+            },
+            {
+              "date": "2024-01-31",
+              "close": 1030
+            },
+            {
+              "date": "2024-02-29",
+              "close": 1065
+            },
+            {
+              "date": "2024-03-31",
+              "close": 1100
+            },
+            {
+              "date": "2024-04-30",
+              "close": 1135
+            },
+            {
+              "date": "2024-05-31",
+              "close": 1170
+            },
+            {
+              "date": "2024-06-30",
+              "close": 1205
+            },
+            {
+              "date": "2024-07-31",
+              "close": 1240
+            },
+            {
+              "date": "2024-08-31",
+              "close": 1275
+            },
+            {
+              "date": "2024-09-30",
+              "close": 1310
+            },
+            {
+              "date": "2024-10-31",
+              "close": 1303
+            },
+            {
+              "date": "2024-11-30",
+              "close": 1296
+            },
+            {
+              "date": "2024-12-31",
+              "close": 1289
+            },
+            {
+              "date": "2025-01-31",
+              "close": 1282
+            },
+            {
+              "date": "2025-02-28",
+              "close": 1275
+            },
+            {
+              "date": "2025-03-31",
+              "close": 1268
+            },
+            {
+              "date": "2025-04-30",
+              "close": 1261
+            },
+            {
+              "date": "2025-05-31",
+              "close": 1254
+            },
+            {
+              "date": "2025-06-30",
+              "close": 1247
+            },
+            {
+              "date": "2025-07-31",
+              "close": 1240
+            },
+            {
+              "date": "2025-08-31",
+              "close": 1248.9
+            },
+            {
+              "date": "2025-09-30",
+              "close": 1257.8
+            },
+            {
+              "date": "2025-10-31",
+              "close": 1266.7
+            },
+            {
+              "date": "2025-11-30",
+              "close": 1275.6
+            },
+            {
+              "date": "2025-12-31",
+              "close": 1284.4
+            },
+            {
+              "date": "2026-01-31",
+              "close": 1293.3
+            },
+            {
+              "date": "2026-02-28",
+              "close": 1302.2
+            },
+            {
+              "date": "2026-03-31",
+              "close": 1311.1
+            },
+            {
+              "date": "2026-04-30",
+              "close": 1320
+            },
+            {
+              "date": "2026-05-31",
+              "close": 1314.2
+            },
+            {
+              "date": "2026-06-30",
+              "close": 1308.3
+            },
+            {
+              "date": "2026-07-31",
+              "close": 1302.5
+            },
+            {
+              "date": "2026-08-31",
+              "close": 1296.7
+            },
+            {
+              "date": "2026-09-30",
+              "close": 1290.8
+            },
+            {
+              "date": "2026-10-31",
+              "close": 1285
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 1270
+            },
+            {
+              "date": "2026-10-28",
+              "close": 1278
+            },
+            {
+              "date": "2026-10-29",
+              "close": 1282
+            },
+            {
+              "date": "2026-10-30",
+              "close": 1285
+            },
+            {
+              "date": "2026-11-02",
+              "close": 1290
+            },
+            {
+              "date": "2026-11-03",
+              "close": 1295
+            },
+            {
+              "date": "2026-11-04",
+              "close": 1302
+            },
+            {
+              "date": "2026-11-05",
+              "close": 1298
+            },
+            {
+              "date": "2026-11-06",
+              "close": 1305
+            },
+            {
+              "date": "2026-11-09",
+              "close": 1300
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 88350,
+              "ebitdaCr": 42500,
+              "ebitCr": 39200,
+              "patCr": 23339,
+              "epsInr": 33.6,
+              "dpsInr": 5,
+              "netWorthCr": 170500,
+              "totalDebtCr": 107200,
+              "interestExpenseCr": 34800,
+              "operatingCashFlowCr": 31200,
+              "sharesOutstandingCr": 695
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 109800,
+              "ebitdaCr": 54100,
+              "ebitCr": 50200,
+              "patCr": 31896,
+              "epsInr": 45.7,
+              "dpsInr": 8,
+              "netWorthCr": 200700,
+              "totalDebtCr": 119400,
+              "interestExpenseCr": 43200,
+              "operatingCashFlowCr": 44100,
+              "sharesOutstandingCr": 698
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 132400,
+              "ebitdaCr": 66800,
+              "ebitCr": 62100,
+              "patCr": 40888,
+              "epsInr": 58.2,
+              "dpsInr": 10,
+              "netWorthCr": 238400,
+              "totalDebtCr": 134500,
+              "interestExpenseCr": 53100,
+              "operatingCashFlowCr": 56300,
+              "sharesOutstandingCr": 702
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 154000,
+              "ebitdaCr": 77500,
+              "ebitCr": 72000,
+              "patCr": 47200,
+              "epsInr": 67,
+              "dpsInr": 12,
+              "netWorthCr": 276000,
+              "totalDebtCr": 148000,
+              "interestExpenseCr": 61500,
+              "operatingCashFlowCr": 65000,
+              "sharesOutstandingCr": 704
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 177000,
+              "ebitdaCr": 89000,
+              "ebitCr": 83000,
+              "patCr": 54100,
+              "epsInr": 76.7,
+              "dpsInr": 14,
+              "netWorthCr": 318000,
+              "totalDebtCr": 162000,
+              "interestExpenseCr": 70000,
+              "operatingCashFlowCr": 74500,
+              "sharesOutstandingCr": 705
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    },
+    {
+      "ticker": "ITC",
+      "name": "ITC Limited",
+      "isin": "INE154A01025",
+      "sectorId": "fmcg",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Cigarettes, packaged foods, personal care, hotels, paperboards, packaging, and agri-business.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "FMCG - Cigarettes",
+          "FMCG - Others",
+          "Hotels",
+          "Agri Business",
+          "Paperboards & Packaging"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 222
+            },
+            {
+              "date": "2021-12-31",
+              "close": 219.7
+            },
+            {
+              "date": "2022-01-31",
+              "close": 217.3
+            },
+            {
+              "date": "2022-02-28",
+              "close": 215
+            },
+            {
+              "date": "2022-03-31",
+              "close": 226.7
+            },
+            {
+              "date": "2022-04-30",
+              "close": 238.4
+            },
+            {
+              "date": "2022-05-31",
+              "close": 250.1
+            },
+            {
+              "date": "2022-06-30",
+              "close": 261.8
+            },
+            {
+              "date": "2022-07-31",
+              "close": 273.5
+            },
+            {
+              "date": "2022-08-31",
+              "close": 285.2
+            },
+            {
+              "date": "2022-09-30",
+              "close": 296.9
+            },
+            {
+              "date": "2022-10-31",
+              "close": 308.6
+            },
+            {
+              "date": "2022-11-30",
+              "close": 320.3
+            },
+            {
+              "date": "2022-12-31",
+              "close": 332
+            },
+            {
+              "date": "2023-01-31",
+              "close": 352.4
+            },
+            {
+              "date": "2023-02-28",
+              "close": 372.9
+            },
+            {
+              "date": "2023-03-31",
+              "close": 393.3
+            },
+            {
+              "date": "2023-04-30",
+              "close": 413.7
+            },
+            {
+              "date": "2023-05-31",
+              "close": 434.1
+            },
+            {
+              "date": "2023-06-30",
+              "close": 454.6
+            },
+            {
+              "date": "2023-07-31",
+              "close": 475
+            },
+            {
+              "date": "2023-08-31",
+              "close": 472.4
+            },
+            {
+              "date": "2023-09-30",
+              "close": 469.8
+            },
+            {
+              "date": "2023-10-31",
+              "close": 467.2
+            },
+            {
+              "date": "2023-11-30",
+              "close": 464.6
+            },
+            {
+              "date": "2023-12-31",
+              "close": 462
+            },
+            {
+              "date": "2024-01-31",
+              "close": 466.8
+            },
+            {
+              "date": "2024-02-29",
+              "close": 471.6
+            },
+            {
+              "date": "2024-03-31",
+              "close": 476.4
+            },
+            {
+              "date": "2024-04-30",
+              "close": 481.2
+            },
+            {
+              "date": "2024-05-31",
+              "close": 486
+            },
+            {
+              "date": "2024-06-30",
+              "close": 490.8
+            },
+            {
+              "date": "2024-07-31",
+              "close": 495.6
+            },
+            {
+              "date": "2024-08-31",
+              "close": 500.4
+            },
+            {
+              "date": "2024-09-30",
+              "close": 505.2
+            },
+            {
+              "date": "2024-10-31",
+              "close": 510
+            },
+            {
+              "date": "2024-11-30",
+              "close": 505.6
+            },
+            {
+              "date": "2024-12-31",
+              "close": 501.1
+            },
+            {
+              "date": "2025-01-31",
+              "close": 496.7
+            },
+            {
+              "date": "2025-02-28",
+              "close": 492.2
+            },
+            {
+              "date": "2025-03-31",
+              "close": 487.8
+            },
+            {
+              "date": "2025-04-30",
+              "close": 483.3
+            },
+            {
+              "date": "2025-05-31",
+              "close": 478.9
+            },
+            {
+              "date": "2025-06-30",
+              "close": 474.4
+            },
+            {
+              "date": "2025-07-31",
+              "close": 470
+            },
+            {
+              "date": "2025-08-31",
+              "close": 473.9
+            },
+            {
+              "date": "2025-09-30",
+              "close": 477.8
+            },
+            {
+              "date": "2025-10-31",
+              "close": 481.7
+            },
+            {
+              "date": "2025-11-30",
+              "close": 485.6
+            },
+            {
+              "date": "2025-12-31",
+              "close": 489.4
+            },
+            {
+              "date": "2026-01-31",
+              "close": 493.3
+            },
+            {
+              "date": "2026-02-28",
+              "close": 497.2
+            },
+            {
+              "date": "2026-03-31",
+              "close": 501.1
+            },
+            {
+              "date": "2026-04-30",
+              "close": 505
+            },
+            {
+              "date": "2026-05-31",
+              "close": 501.7
+            },
+            {
+              "date": "2026-06-30",
+              "close": 498.3
+            },
+            {
+              "date": "2026-07-31",
+              "close": 495
+            },
+            {
+              "date": "2026-08-31",
+              "close": 491.7
+            },
+            {
+              "date": "2026-09-30",
+              "close": 488.3
+            },
+            {
+              "date": "2026-10-31",
+              "close": 485
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 482
+            },
+            {
+              "date": "2026-10-28",
+              "close": 484.5
+            },
+            {
+              "date": "2026-10-29",
+              "close": 483
+            },
+            {
+              "date": "2026-10-30",
+              "close": 485
+            },
+            {
+              "date": "2026-11-02",
+              "close": 486
+            },
+            {
+              "date": "2026-11-03",
+              "close": 488
+            },
+            {
+              "date": "2026-11-04",
+              "close": 490.5
+            },
+            {
+              "date": "2026-11-05",
+              "close": 489
+            },
+            {
+              "date": "2026-11-06",
+              "close": 492
+            },
+            {
+              "date": "2026-11-09",
+              "close": 491.5
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 60668,
+              "ebitdaCr": 20659,
+              "ebitCr": 18934,
+              "patCr": 15058,
+              "epsInr": 12.2,
+              "dpsInr": 11.5,
+              "netWorthCr": 61400,
+              "totalDebtCr": 280,
+              "interestExpenseCr": 42,
+              "operatingCashFlowCr": 14800,
+              "sharesOutstandingCr": 1234
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 70919,
+              "ebitdaCr": 25665,
+              "ebitCr": 23838,
+              "patCr": 18753,
+              "epsInr": 15.1,
+              "dpsInr": 15.5,
+              "netWorthCr": 67500,
+              "totalDebtCr": 295,
+              "interestExpenseCr": 44,
+              "operatingCashFlowCr": 17900,
+              "sharesOutstandingCr": 1242
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 76840,
+              "ebitdaCr": 26820,
+              "ebitCr": 24900,
+              "patCr": 20422,
+              "epsInr": 16.4,
+              "dpsInr": 13.75,
+              "netWorthCr": 72800,
+              "totalDebtCr": 310,
+              "interestExpenseCr": 46,
+              "operatingCashFlowCr": 19200,
+              "sharesOutstandingCr": 1248
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 83500,
+              "ebitdaCr": 28900,
+              "ebitCr": 26800,
+              "patCr": 22100,
+              "epsInr": 17.7,
+              "dpsInr": 14.5,
+              "netWorthCr": 78500,
+              "totalDebtCr": 320,
+              "interestExpenseCr": 48,
+              "operatingCashFlowCr": 20800,
+              "sharesOutstandingCr": 1250
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 90800,
+              "ebitdaCr": 31200,
+              "ebitCr": 29000,
+              "patCr": 23900,
+              "epsInr": 19.1,
+              "dpsInr": 15.5,
+              "netWorthCr": 84600,
+              "totalDebtCr": 330,
+              "interestExpenseCr": 50,
+              "operatingCashFlowCr": 22600,
+              "sharesOutstandingCr": 1252
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    },
+    {
+      "ticker": "HINDUNILVR",
+      "name": "Hindustan Unilever Limited",
+      "isin": "INE030A01027",
+      "sectorId": "fmcg",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Home care, beauty and personal care, foods and refreshment, and consumer healthcare products.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "Home Care",
+          "Beauty & Personal Care",
+          "Foods & Refreshment"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 2330
+            },
+            {
+              "date": "2021-12-31",
+              "close": 2247.5
+            },
+            {
+              "date": "2022-01-31",
+              "close": 2165
+            },
+            {
+              "date": "2022-02-28",
+              "close": 2082.5
+            },
+            {
+              "date": "2022-03-31",
+              "close": 2000
+            },
+            {
+              "date": "2022-04-30",
+              "close": 2062.2
+            },
+            {
+              "date": "2022-05-31",
+              "close": 2124.4
+            },
+            {
+              "date": "2022-06-30",
+              "close": 2186.7
+            },
+            {
+              "date": "2022-07-31",
+              "close": 2248.9
+            },
+            {
+              "date": "2022-08-31",
+              "close": 2311.1
+            },
+            {
+              "date": "2022-09-30",
+              "close": 2373.3
+            },
+            {
+              "date": "2022-10-31",
+              "close": 2435.6
+            },
+            {
+              "date": "2022-11-30",
+              "close": 2497.8
+            },
+            {
+              "date": "2022-12-31",
+              "close": 2560
+            },
+            {
+              "date": "2023-01-31",
+              "close": 2581.4
+            },
+            {
+              "date": "2023-02-28",
+              "close": 2602.9
+            },
+            {
+              "date": "2023-03-31",
+              "close": 2624.3
+            },
+            {
+              "date": "2023-04-30",
+              "close": 2645.7
+            },
+            {
+              "date": "2023-05-31",
+              "close": 2667.1
+            },
+            {
+              "date": "2023-06-30",
+              "close": 2688.6
+            },
+            {
+              "date": "2023-07-31",
+              "close": 2710
+            },
+            {
+              "date": "2023-08-31",
+              "close": 2700
+            },
+            {
+              "date": "2023-09-30",
+              "close": 2690
+            },
+            {
+              "date": "2023-10-31",
+              "close": 2680
+            },
+            {
+              "date": "2023-11-30",
+              "close": 2670
+            },
+            {
+              "date": "2023-12-31",
+              "close": 2660
+            },
+            {
+              "date": "2024-01-31",
+              "close": 2676
+            },
+            {
+              "date": "2024-02-29",
+              "close": 2692
+            },
+            {
+              "date": "2024-03-31",
+              "close": 2708
+            },
+            {
+              "date": "2024-04-30",
+              "close": 2724
+            },
+            {
+              "date": "2024-05-31",
+              "close": 2740
+            },
+            {
+              "date": "2024-06-30",
+              "close": 2756
+            },
+            {
+              "date": "2024-07-31",
+              "close": 2772
+            },
+            {
+              "date": "2024-08-31",
+              "close": 2788
+            },
+            {
+              "date": "2024-09-30",
+              "close": 2804
+            },
+            {
+              "date": "2024-10-31",
+              "close": 2820
+            },
+            {
+              "date": "2024-11-30",
+              "close": 2782.2
+            },
+            {
+              "date": "2024-12-31",
+              "close": 2744.4
+            },
+            {
+              "date": "2025-01-31",
+              "close": 2706.7
+            },
+            {
+              "date": "2025-02-28",
+              "close": 2668.9
+            },
+            {
+              "date": "2025-03-31",
+              "close": 2631.1
+            },
+            {
+              "date": "2025-04-30",
+              "close": 2593.3
+            },
+            {
+              "date": "2025-05-31",
+              "close": 2555.6
+            },
+            {
+              "date": "2025-06-30",
+              "close": 2517.8
+            },
+            {
+              "date": "2025-07-31",
+              "close": 2480
+            },
+            {
+              "date": "2025-08-31",
+              "close": 2498.9
+            },
+            {
+              "date": "2025-09-30",
+              "close": 2517.8
+            },
+            {
+              "date": "2025-10-31",
+              "close": 2536.7
+            },
+            {
+              "date": "2025-11-30",
+              "close": 2555.6
+            },
+            {
+              "date": "2025-12-31",
+              "close": 2574.4
+            },
+            {
+              "date": "2026-01-31",
+              "close": 2593.3
+            },
+            {
+              "date": "2026-02-28",
+              "close": 2612.2
+            },
+            {
+              "date": "2026-03-31",
+              "close": 2631.1
+            },
+            {
+              "date": "2026-04-30",
+              "close": 2650
+            },
+            {
+              "date": "2026-05-31",
+              "close": 2628.3
+            },
+            {
+              "date": "2026-06-30",
+              "close": 2606.7
+            },
+            {
+              "date": "2026-07-31",
+              "close": 2585
+            },
+            {
+              "date": "2026-08-31",
+              "close": 2563.3
+            },
+            {
+              "date": "2026-09-30",
+              "close": 2541.7
+            },
+            {
+              "date": "2026-10-31",
+              "close": 2520
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 2510
+            },
+            {
+              "date": "2026-10-28",
+              "close": 2525
+            },
+            {
+              "date": "2026-10-29",
+              "close": 2515
+            },
+            {
+              "date": "2026-10-30",
+              "close": 2520
+            },
+            {
+              "date": "2026-11-02",
+              "close": 2530
+            },
+            {
+              "date": "2026-11-03",
+              "close": 2535
+            },
+            {
+              "date": "2026-11-04",
+              "close": 2542
+            },
+            {
+              "date": "2026-11-05",
+              "close": 2538
+            },
+            {
+              "date": "2026-11-06",
+              "close": 2545
+            },
+            {
+              "date": "2026-11-09",
+              "close": 2540
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 52446,
+              "ebitdaCr": 12857,
+              "ebitCr": 11832,
+              "patCr": 8818,
+              "epsInr": 37.5,
+              "dpsInr": 34,
+              "netWorthCr": 49080,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 98,
+              "operatingCashFlowCr": 9048,
+              "sharesOutstandingCr": 235
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 60580,
+              "ebitdaCr": 14147,
+              "ebitCr": 13079,
+              "patCr": 9962,
+              "epsInr": 42.4,
+              "dpsInr": 39,
+              "netWorthCr": 50320,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 101,
+              "operatingCashFlowCr": 9980,
+              "sharesOutstandingCr": 235
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 61896,
+              "ebitdaCr": 14645,
+              "ebitCr": 13550,
+              "patCr": 10114,
+              "epsInr": 43,
+              "dpsInr": 42,
+              "netWorthCr": 51200,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 115,
+              "operatingCashFlowCr": 10500,
+              "sharesOutstandingCr": 235
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 66200,
+              "ebitdaCr": 15800,
+              "ebitCr": 14600,
+              "patCr": 10950,
+              "epsInr": 46.6,
+              "dpsInr": 45,
+              "netWorthCr": 53500,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 120,
+              "operatingCashFlowCr": 11400,
+              "sharesOutstandingCr": 235
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 71200,
+              "ebitdaCr": 17200,
+              "ebitCr": 15900,
+              "patCr": 11900,
+              "epsInr": 50.6,
+              "dpsInr": 48,
+              "netWorthCr": 56200,
+              "totalDebtCr": 0,
+              "interestExpenseCr": 125,
+              "operatingCashFlowCr": 12400,
+              "sharesOutstandingCr": 235
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    },
+    {
+      "ticker": "TATAMOTORS",
+      "name": "Tata Motors Limited",
+      "isin": "INE155A01022",
+      "sectorId": "automobile",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Commercial vehicles, passenger vehicles, electric vehicles, and premium luxury cars under Jaguar Land Rover.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "Commercial Vehicles",
+          "Passenger Vehicles",
+          "Jaguar Land Rover",
+          "Vehicle Financing"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 458
+            },
+            {
+              "date": "2021-12-31",
+              "close": 481.5
+            },
+            {
+              "date": "2022-01-31",
+              "close": 505
+            },
+            {
+              "date": "2022-02-28",
+              "close": 473.8
+            },
+            {
+              "date": "2022-03-31",
+              "close": 442.5
+            },
+            {
+              "date": "2022-04-30",
+              "close": 411.3
+            },
+            {
+              "date": "2022-05-31",
+              "close": 380
+            },
+            {
+              "date": "2022-06-30",
+              "close": 381.1
+            },
+            {
+              "date": "2022-07-31",
+              "close": 382.3
+            },
+            {
+              "date": "2022-08-31",
+              "close": 383.4
+            },
+            {
+              "date": "2022-09-30",
+              "close": 384.6
+            },
+            {
+              "date": "2022-10-31",
+              "close": 385.7
+            },
+            {
+              "date": "2022-11-30",
+              "close": 386.9
+            },
+            {
+              "date": "2022-12-31",
+              "close": 388
+            },
+            {
+              "date": "2023-01-31",
+              "close": 424
+            },
+            {
+              "date": "2023-02-28",
+              "close": 460
+            },
+            {
+              "date": "2023-03-31",
+              "close": 496
+            },
+            {
+              "date": "2023-04-30",
+              "close": 532
+            },
+            {
+              "date": "2023-05-31",
+              "close": 568
+            },
+            {
+              "date": "2023-06-30",
+              "close": 604
+            },
+            {
+              "date": "2023-07-31",
+              "close": 640
+            },
+            {
+              "date": "2023-08-31",
+              "close": 668
+            },
+            {
+              "date": "2023-09-30",
+              "close": 696
+            },
+            {
+              "date": "2023-10-31",
+              "close": 724
+            },
+            {
+              "date": "2023-11-30",
+              "close": 752
+            },
+            {
+              "date": "2023-12-31",
+              "close": 780
+            },
+            {
+              "date": "2024-01-31",
+              "close": 831.4
+            },
+            {
+              "date": "2024-02-29",
+              "close": 882.9
+            },
+            {
+              "date": "2024-03-31",
+              "close": 934.3
+            },
+            {
+              "date": "2024-04-30",
+              "close": 985.7
+            },
+            {
+              "date": "2024-05-31",
+              "close": 1037.1
+            },
+            {
+              "date": "2024-06-30",
+              "close": 1088.6
+            },
+            {
+              "date": "2024-07-31",
+              "close": 1140
+            },
+            {
+              "date": "2024-08-31",
+              "close": 1124.2
+            },
+            {
+              "date": "2024-09-30",
+              "close": 1108.3
+            },
+            {
+              "date": "2024-10-31",
+              "close": 1092.5
+            },
+            {
+              "date": "2024-11-30",
+              "close": 1076.7
+            },
+            {
+              "date": "2024-12-31",
+              "close": 1060.8
+            },
+            {
+              "date": "2025-01-31",
+              "close": 1045
+            },
+            {
+              "date": "2025-02-28",
+              "close": 1029.2
+            },
+            {
+              "date": "2025-03-31",
+              "close": 1013.3
+            },
+            {
+              "date": "2025-04-30",
+              "close": 997.5
+            },
+            {
+              "date": "2025-05-31",
+              "close": 981.7
+            },
+            {
+              "date": "2025-06-30",
+              "close": 965.8
+            },
+            {
+              "date": "2025-07-31",
+              "close": 950
+            },
+            {
+              "date": "2025-08-31",
+              "close": 953.3
+            },
+            {
+              "date": "2025-09-30",
+              "close": 956.7
+            },
+            {
+              "date": "2025-10-31",
+              "close": 960
+            },
+            {
+              "date": "2025-11-30",
+              "close": 963.3
+            },
+            {
+              "date": "2025-12-31",
+              "close": 966.7
+            },
+            {
+              "date": "2026-01-31",
+              "close": 970
+            },
+            {
+              "date": "2026-02-28",
+              "close": 973.3
+            },
+            {
+              "date": "2026-03-31",
+              "close": 976.7
+            },
+            {
+              "date": "2026-04-30",
+              "close": 980
+            },
+            {
+              "date": "2026-05-31",
+              "close": 964.2
+            },
+            {
+              "date": "2026-06-30",
+              "close": 948.3
+            },
+            {
+              "date": "2026-07-31",
+              "close": 932.5
+            },
+            {
+              "date": "2026-08-31",
+              "close": 916.7
+            },
+            {
+              "date": "2026-09-30",
+              "close": 900.8
+            },
+            {
+              "date": "2026-10-31",
+              "close": 885
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 875
+            },
+            {
+              "date": "2026-10-28",
+              "close": 882
+            },
+            {
+              "date": "2026-10-29",
+              "close": 880
+            },
+            {
+              "date": "2026-10-30",
+              "close": 885
+            },
+            {
+              "date": "2026-11-02",
+              "close": 890
+            },
+            {
+              "date": "2026-11-03",
+              "close": 895
+            },
+            {
+              "date": "2026-11-04",
+              "close": 902
+            },
+            {
+              "date": "2026-11-05",
+              "close": 898
+            },
+            {
+              "date": "2026-11-06",
+              "close": 905
+            },
+            {
+              "date": "2026-11-09",
+              "close": 900
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 278454,
+              "ebitdaCr": 24813,
+              "ebitCr": 410,
+              "patCr": 11441,
+              "epsInr": 29.8,
+              "dpsInr": 0,
+              "netWorthCr": 44600,
+              "totalDebtCr": 139678,
+              "interestExpenseCr": 9312,
+              "operatingCashFlowCr": 14290,
+              "sharesOutstandingCr": 366
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 345967,
+              "ebitdaCr": 37011,
+              "ebitCr": 10738,
+              "patCr": 2414,
+              "epsInr": 6.3,
+              "dpsInr": 2,
+              "netWorthCr": 45300,
+              "totalDebtCr": 125400,
+              "interestExpenseCr": 10225,
+              "operatingCashFlowCr": 22400,
+              "sharesOutstandingCr": 367
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 437928,
+              "ebitdaCr": 62835,
+              "ebitCr": 34180,
+              "patCr": 31399,
+              "epsInr": 81.7,
+              "dpsInr": 6,
+              "netWorthCr": 84800,
+              "totalDebtCr": 84000,
+              "interestExpenseCr": 9800,
+              "operatingCashFlowCr": 54800,
+              "sharesOutstandingCr": 368
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 472000,
+              "ebitdaCr": 69500,
+              "ebitCr": 38200,
+              "patCr": 34500,
+              "epsInr": 93.7,
+              "dpsInr": 8,
+              "netWorthCr": 105000,
+              "totalDebtCr": 65000,
+              "interestExpenseCr": 8500,
+              "operatingCashFlowCr": 58000,
+              "sharesOutstandingCr": 368
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 508000,
+              "ebitdaCr": 75200,
+              "ebitCr": 42100,
+              "patCr": 38100,
+              "epsInr": 103.5,
+              "dpsInr": 10,
+              "netWorthCr": 128000,
+              "totalDebtCr": 52000,
+              "interestExpenseCr": 7400,
+              "operatingCashFlowCr": 63000,
+              "sharesOutstandingCr": 368
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": [
+        {
+          "id": "action-tatamotors-demerger-2025",
+          "type": "demerger",
+          "effectiveDate": "2025-10-01",
+          "listingDate": "2025-11-12",
+          "description": "Demerger of commercial vehicles and passenger vehicles businesses into two separate entities.",
+          "successorTickers": [],
+          "sourceId": "manual:nse-announcement:2026-11-10"
+        }
+      ]
+    },
+    {
+      "ticker": "RELIANCE",
+      "name": "Reliance Industries Limited",
+      "isin": "INE002A01018",
+      "sectorId": "energy",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Hydrocarbon exploration and production, petroleum refining, petrochemicals, retail, and telecommunications.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "Oil to Chemicals (O2C)",
+          "Oil and Gas",
+          "Retail",
+          "Digital Services",
+          "Financial Services"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 2410
+            },
+            {
+              "date": "2021-12-31",
+              "close": 2490
+            },
+            {
+              "date": "2022-01-31",
+              "close": 2570
+            },
+            {
+              "date": "2022-02-28",
+              "close": 2650
+            },
+            {
+              "date": "2022-03-31",
+              "close": 2730
+            },
+            {
+              "date": "2022-04-30",
+              "close": 2810
+            },
+            {
+              "date": "2022-05-31",
+              "close": 2585
+            },
+            {
+              "date": "2022-06-30",
+              "close": 2360
+            },
+            {
+              "date": "2022-07-31",
+              "close": 2391.7
+            },
+            {
+              "date": "2022-08-31",
+              "close": 2423.3
+            },
+            {
+              "date": "2022-09-30",
+              "close": 2455
+            },
+            {
+              "date": "2022-10-31",
+              "close": 2486.7
+            },
+            {
+              "date": "2022-11-30",
+              "close": 2518.3
+            },
+            {
+              "date": "2022-12-31",
+              "close": 2550
+            },
+            {
+              "date": "2023-01-31",
+              "close": 2547.1
+            },
+            {
+              "date": "2023-02-28",
+              "close": 2544.3
+            },
+            {
+              "date": "2023-03-31",
+              "close": 2541.4
+            },
+            {
+              "date": "2023-04-30",
+              "close": 2538.6
+            },
+            {
+              "date": "2023-05-31",
+              "close": 2535.7
+            },
+            {
+              "date": "2023-06-30",
+              "close": 2532.9
+            },
+            {
+              "date": "2023-07-31",
+              "close": 2530
+            },
+            {
+              "date": "2023-08-31",
+              "close": 2540
+            },
+            {
+              "date": "2023-09-30",
+              "close": 2550
+            },
+            {
+              "date": "2023-10-31",
+              "close": 2560
+            },
+            {
+              "date": "2023-11-30",
+              "close": 2570
+            },
+            {
+              "date": "2023-12-31",
+              "close": 2580
+            },
+            {
+              "date": "2024-01-31",
+              "close": 2661.4
+            },
+            {
+              "date": "2024-02-29",
+              "close": 2742.9
+            },
+            {
+              "date": "2024-03-31",
+              "close": 2824.3
+            },
+            {
+              "date": "2024-04-30",
+              "close": 2905.7
+            },
+            {
+              "date": "2024-05-31",
+              "close": 2987.1
+            },
+            {
+              "date": "2024-06-30",
+              "close": 3068.6
+            },
+            {
+              "date": "2024-07-31",
+              "close": 3150
+            },
+            {
+              "date": "2024-08-31",
+              "close": 3122.5
+            },
+            {
+              "date": "2024-09-30",
+              "close": 3095
+            },
+            {
+              "date": "2024-10-31",
+              "close": 3067.5
+            },
+            {
+              "date": "2024-11-30",
+              "close": 3040
+            },
+            {
+              "date": "2024-12-31",
+              "close": 3012.5
+            },
+            {
+              "date": "2025-01-31",
+              "close": 2985
+            },
+            {
+              "date": "2025-02-28",
+              "close": 2957.5
+            },
+            {
+              "date": "2025-03-31",
+              "close": 2930
+            },
+            {
+              "date": "2025-04-30",
+              "close": 2902.5
+            },
+            {
+              "date": "2025-05-31",
+              "close": 2875
+            },
+            {
+              "date": "2025-06-30",
+              "close": 2847.5
+            },
+            {
+              "date": "2025-07-31",
+              "close": 2820
+            },
+            {
+              "date": "2025-08-31",
+              "close": 2834.4
+            },
+            {
+              "date": "2025-09-30",
+              "close": 2848.9
+            },
+            {
+              "date": "2025-10-31",
+              "close": 2863.3
+            },
+            {
+              "date": "2025-11-30",
+              "close": 2877.8
+            },
+            {
+              "date": "2025-12-31",
+              "close": 2892.2
+            },
+            {
+              "date": "2026-01-31",
+              "close": 2906.7
+            },
+            {
+              "date": "2026-02-28",
+              "close": 2921.1
+            },
+            {
+              "date": "2026-03-31",
+              "close": 2935.6
+            },
+            {
+              "date": "2026-04-30",
+              "close": 2950
+            },
+            {
+              "date": "2026-05-31",
+              "close": 2915
+            },
+            {
+              "date": "2026-06-30",
+              "close": 2880
+            },
+            {
+              "date": "2026-07-31",
+              "close": 2845
+            },
+            {
+              "date": "2026-08-31",
+              "close": 2810
+            },
+            {
+              "date": "2026-09-30",
+              "close": 2775
+            },
+            {
+              "date": "2026-10-31",
+              "close": 2740
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 2725
+            },
+            {
+              "date": "2026-10-28",
+              "close": 2738
+            },
+            {
+              "date": "2026-10-29",
+              "close": 2730
+            },
+            {
+              "date": "2026-10-30",
+              "close": 2740
+            },
+            {
+              "date": "2026-11-02",
+              "close": 2750
+            },
+            {
+              "date": "2026-11-03",
+              "close": 2760
+            },
+            {
+              "date": "2026-11-04",
+              "close": 2772
+            },
+            {
+              "date": "2026-11-05",
+              "close": 2765
+            },
+            {
+              "date": "2026-11-06",
+              "close": 2775
+            },
+            {
+              "date": "2026-11-09",
+              "close": 2770
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 721634,
+              "ebitdaCr": 110460,
+              "ebitCr": 80666,
+              "patCr": 60705,
+              "epsInr": 89.8,
+              "dpsInr": 8,
+              "netWorthCr": 779485,
+              "totalDebtCr": 266305,
+              "interestExpenseCr": 14584,
+              "operatingCashFlowCr": 110654,
+              "sharesOutstandingCr": 676
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 892915,
+              "ebitdaCr": 142240,
+              "ebitCr": 101874,
+              "patCr": 66702,
+              "epsInr": 98.7,
+              "dpsInr": 9,
+              "netWorthCr": 816000,
+              "totalDebtCr": 314708,
+              "interestExpenseCr": 19571,
+              "operatingCashFlowCr": 115000,
+              "sharesOutstandingCr": 676
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 914472,
+              "ebitdaCr": 162200,
+              "ebitCr": 115200,
+              "patCr": 69621,
+              "epsInr": 103,
+              "dpsInr": 10,
+              "netWorthCr": 878000,
+              "totalDebtCr": 324000,
+              "interestExpenseCr": 21800,
+              "operatingCashFlowCr": 126000,
+              "sharesOutstandingCr": 676
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 985000,
+              "ebitdaCr": 178000,
+              "ebitCr": 127000,
+              "patCr": 76500,
+              "epsInr": 113.2,
+              "dpsInr": 11,
+              "netWorthCr": 945000,
+              "totalDebtCr": 335000,
+              "interestExpenseCr": 23000,
+              "operatingCashFlowCr": 138000,
+              "sharesOutstandingCr": 676
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 1065000,
+              "ebitdaCr": 195000,
+              "ebitCr": 140000,
+              "patCr": 84200,
+              "epsInr": 124.6,
+              "dpsInr": 12,
+              "netWorthCr": 1020000,
+              "totalDebtCr": 345000,
+              "interestExpenseCr": 24500,
+              "operatingCashFlowCr": 152000,
+              "sharesOutstandingCr": 676
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    },
+    {
+      "ticker": "LT",
+      "name": "Larsen & Toubro Limited",
+      "isin": "INE018A01030",
+      "sectorId": "capital_goods",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Engineering, procurement and construction projects, hi-tech manufacturing, defense, and IT services.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "Infrastructure Projects",
+          "Energy Projects",
+          "Hi-Tech Manufacturing",
+          "IT & Technology Services",
+          "Financial Services"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 1780
+            },
+            {
+              "date": "2021-12-31",
+              "close": 1865
+            },
+            {
+              "date": "2022-01-31",
+              "close": 1950
+            },
+            {
+              "date": "2022-02-28",
+              "close": 1854
+            },
+            {
+              "date": "2022-03-31",
+              "close": 1758
+            },
+            {
+              "date": "2022-04-30",
+              "close": 1662
+            },
+            {
+              "date": "2022-05-31",
+              "close": 1566
+            },
+            {
+              "date": "2022-06-30",
+              "close": 1470
+            },
+            {
+              "date": "2022-07-31",
+              "close": 1573.3
+            },
+            {
+              "date": "2022-08-31",
+              "close": 1676.7
+            },
+            {
+              "date": "2022-09-30",
+              "close": 1780
+            },
+            {
+              "date": "2022-10-31",
+              "close": 1883.3
+            },
+            {
+              "date": "2022-11-30",
+              "close": 1986.7
+            },
+            {
+              "date": "2022-12-31",
+              "close": 2090
+            },
+            {
+              "date": "2023-01-31",
+              "close": 2145.7
+            },
+            {
+              "date": "2023-02-28",
+              "close": 2201.4
+            },
+            {
+              "date": "2023-03-31",
+              "close": 2257.1
+            },
+            {
+              "date": "2023-04-30",
+              "close": 2312.9
+            },
+            {
+              "date": "2023-05-31",
+              "close": 2368.6
+            },
+            {
+              "date": "2023-06-30",
+              "close": 2424.3
+            },
+            {
+              "date": "2023-07-31",
+              "close": 2480
+            },
+            {
+              "date": "2023-08-31",
+              "close": 2688
+            },
+            {
+              "date": "2023-09-30",
+              "close": 2896
+            },
+            {
+              "date": "2023-10-31",
+              "close": 3104
+            },
+            {
+              "date": "2023-11-30",
+              "close": 3312
+            },
+            {
+              "date": "2023-12-31",
+              "close": 3520
+            },
+            {
+              "date": "2024-01-31",
+              "close": 3586
+            },
+            {
+              "date": "2024-02-29",
+              "close": 3652
+            },
+            {
+              "date": "2024-03-31",
+              "close": 3718
+            },
+            {
+              "date": "2024-04-30",
+              "close": 3784
+            },
+            {
+              "date": "2024-05-31",
+              "close": 3850
+            },
+            {
+              "date": "2024-06-30",
+              "close": 3821.4
+            },
+            {
+              "date": "2024-07-31",
+              "close": 3792.9
+            },
+            {
+              "date": "2024-08-31",
+              "close": 3764.3
+            },
+            {
+              "date": "2024-09-30",
+              "close": 3735.7
+            },
+            {
+              "date": "2024-10-31",
+              "close": 3707.1
+            },
+            {
+              "date": "2024-11-30",
+              "close": 3678.6
+            },
+            {
+              "date": "2024-12-31",
+              "close": 3650
+            },
+            {
+              "date": "2025-01-31",
+              "close": 3621.4
+            },
+            {
+              "date": "2025-02-28",
+              "close": 3592.9
+            },
+            {
+              "date": "2025-03-31",
+              "close": 3564.3
+            },
+            {
+              "date": "2025-04-30",
+              "close": 3535.7
+            },
+            {
+              "date": "2025-05-31",
+              "close": 3507.1
+            },
+            {
+              "date": "2025-06-30",
+              "close": 3478.6
+            },
+            {
+              "date": "2025-07-31",
+              "close": 3450
+            },
+            {
+              "date": "2025-08-31",
+              "close": 3483.3
+            },
+            {
+              "date": "2025-09-30",
+              "close": 3516.7
+            },
+            {
+              "date": "2025-10-31",
+              "close": 3550
+            },
+            {
+              "date": "2025-11-30",
+              "close": 3583.3
+            },
+            {
+              "date": "2025-12-31",
+              "close": 3616.7
+            },
+            {
+              "date": "2026-01-31",
+              "close": 3650
+            },
+            {
+              "date": "2026-02-28",
+              "close": 3683.3
+            },
+            {
+              "date": "2026-03-31",
+              "close": 3716.7
+            },
+            {
+              "date": "2026-04-30",
+              "close": 3750
+            },
+            {
+              "date": "2026-05-31",
+              "close": 3721.7
+            },
+            {
+              "date": "2026-06-30",
+              "close": 3693.3
+            },
+            {
+              "date": "2026-07-31",
+              "close": 3665
+            },
+            {
+              "date": "2026-08-31",
+              "close": 3636.7
+            },
+            {
+              "date": "2026-09-30",
+              "close": 3608.3
+            },
+            {
+              "date": "2026-10-31",
+              "close": 3580
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 3560
+            },
+            {
+              "date": "2026-10-28",
+              "close": 3575
+            },
+            {
+              "date": "2026-10-29",
+              "close": 3570
+            },
+            {
+              "date": "2026-10-30",
+              "close": 3580
+            },
+            {
+              "date": "2026-11-02",
+              "close": 3595
+            },
+            {
+              "date": "2026-11-03",
+              "close": 3610
+            },
+            {
+              "date": "2026-11-04",
+              "close": 3625
+            },
+            {
+              "date": "2026-11-05",
+              "close": 3615
+            },
+            {
+              "date": "2026-11-06",
+              "close": 3630
+            },
+            {
+              "date": "2026-11-09",
+              "close": 3620
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 156521,
+              "ebitdaCr": 18220,
+              "ebitCr": 15300,
+              "patCr": 8669,
+              "epsInr": 61.7,
+              "dpsInr": 22,
+              "netWorthCr": 82400,
+              "totalDebtCr": 123400,
+              "interestExpenseCr": 3125,
+              "operatingCashFlowCr": 14200,
+              "sharesOutstandingCr": 140
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 183341,
+              "ebitdaCr": 20753,
+              "ebitCr": 17350,
+              "patCr": 10471,
+              "epsInr": 74.5,
+              "dpsInr": 24,
+              "netWorthCr": 89300,
+              "totalDebtCr": 118600,
+              "interestExpenseCr": 3200,
+              "operatingCashFlowCr": 17500,
+              "sharesOutstandingCr": 140
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 221113,
+              "ebitdaCr": 23600,
+              "ebitCr": 19800,
+              "patCr": 13059,
+              "epsInr": 95,
+              "dpsInr": 28,
+              "netWorthCr": 85200,
+              "totalDebtCr": 115000,
+              "interestExpenseCr": 3500,
+              "operatingCashFlowCr": 21800,
+              "sharesOutstandingCr": 137
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 254000,
+              "ebitdaCr": 27500,
+              "ebitCr": 23200,
+              "patCr": 15600,
+              "epsInr": 113.9,
+              "dpsInr": 32,
+              "netWorthCr": 96000,
+              "totalDebtCr": 112000,
+              "interestExpenseCr": 3700,
+              "operatingCashFlowCr": 25500,
+              "sharesOutstandingCr": 137
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 292000,
+              "ebitdaCr": 32000,
+              "ebitCr": 27100,
+              "patCr": 18400,
+              "epsInr": 134.3,
+              "dpsInr": 36,
+              "netWorthCr": 108500,
+              "totalDebtCr": 110000,
+              "interestExpenseCr": 3900,
+              "operatingCashFlowCr": 29800,
+              "sharesOutstandingCr": 137
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    },
+    {
+      "ticker": "BHARTIARTL",
+      "name": "Bharti Airtel Limited",
+      "isin": "INE397D01024",
+      "sectorId": "telecom",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Wireless telecom services, home broadband, enterprise digital solutions, and mobile financial services.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "Mobile Services India",
+          "Homes Services",
+          "Digital TV Services",
+          "Airtel Business",
+          "Mobile Services Africa"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 728
+            },
+            {
+              "date": "2021-12-31",
+              "close": 716.7
+            },
+            {
+              "date": "2022-01-31",
+              "close": 705.3
+            },
+            {
+              "date": "2022-02-28",
+              "close": 694
+            },
+            {
+              "date": "2022-03-31",
+              "close": 682.7
+            },
+            {
+              "date": "2022-04-30",
+              "close": 671.3
+            },
+            {
+              "date": "2022-05-31",
+              "close": 660
+            },
+            {
+              "date": "2022-06-30",
+              "close": 682.9
+            },
+            {
+              "date": "2022-07-31",
+              "close": 705.7
+            },
+            {
+              "date": "2022-08-31",
+              "close": 728.6
+            },
+            {
+              "date": "2022-09-30",
+              "close": 751.4
+            },
+            {
+              "date": "2022-10-31",
+              "close": 774.3
+            },
+            {
+              "date": "2022-11-30",
+              "close": 797.1
+            },
+            {
+              "date": "2022-12-31",
+              "close": 820
+            },
+            {
+              "date": "2023-01-31",
+              "close": 830
+            },
+            {
+              "date": "2023-02-28",
+              "close": 840
+            },
+            {
+              "date": "2023-03-31",
+              "close": 850
+            },
+            {
+              "date": "2023-04-30",
+              "close": 860
+            },
+            {
+              "date": "2023-05-31",
+              "close": 870
+            },
+            {
+              "date": "2023-06-30",
+              "close": 880
+            },
+            {
+              "date": "2023-07-31",
+              "close": 890
+            },
+            {
+              "date": "2023-08-31",
+              "close": 915
+            },
+            {
+              "date": "2023-09-30",
+              "close": 940
+            },
+            {
+              "date": "2023-10-31",
+              "close": 965
+            },
+            {
+              "date": "2023-11-30",
+              "close": 990
+            },
+            {
+              "date": "2023-12-31",
+              "close": 1015
+            },
+            {
+              "date": "2024-01-31",
+              "close": 1093.3
+            },
+            {
+              "date": "2024-02-29",
+              "close": 1171.7
+            },
+            {
+              "date": "2024-03-31",
+              "close": 1250
+            },
+            {
+              "date": "2024-04-30",
+              "close": 1328.3
+            },
+            {
+              "date": "2024-05-31",
+              "close": 1406.7
+            },
+            {
+              "date": "2024-06-30",
+              "close": 1485
+            },
+            {
+              "date": "2024-07-31",
+              "close": 1563.3
+            },
+            {
+              "date": "2024-08-31",
+              "close": 1641.7
+            },
+            {
+              "date": "2024-09-30",
+              "close": 1720
+            },
+            {
+              "date": "2024-10-31",
+              "close": 1706
+            },
+            {
+              "date": "2024-11-30",
+              "close": 1692
+            },
+            {
+              "date": "2024-12-31",
+              "close": 1678
+            },
+            {
+              "date": "2025-01-31",
+              "close": 1664
+            },
+            {
+              "date": "2025-02-28",
+              "close": 1650
+            },
+            {
+              "date": "2025-03-31",
+              "close": 1636
+            },
+            {
+              "date": "2025-04-30",
+              "close": 1622
+            },
+            {
+              "date": "2025-05-31",
+              "close": 1608
+            },
+            {
+              "date": "2025-06-30",
+              "close": 1594
+            },
+            {
+              "date": "2025-07-31",
+              "close": 1580
+            },
+            {
+              "date": "2025-08-31",
+              "close": 1598.9
+            },
+            {
+              "date": "2025-09-30",
+              "close": 1617.8
+            },
+            {
+              "date": "2025-10-31",
+              "close": 1636.7
+            },
+            {
+              "date": "2025-11-30",
+              "close": 1655.6
+            },
+            {
+              "date": "2025-12-31",
+              "close": 1674.4
+            },
+            {
+              "date": "2026-01-31",
+              "close": 1693.3
+            },
+            {
+              "date": "2026-02-28",
+              "close": 1712.2
+            },
+            {
+              "date": "2026-03-31",
+              "close": 1731.1
+            },
+            {
+              "date": "2026-04-30",
+              "close": 1750
+            },
+            {
+              "date": "2026-05-31",
+              "close": 1735
+            },
+            {
+              "date": "2026-06-30",
+              "close": 1720
+            },
+            {
+              "date": "2026-07-31",
+              "close": 1705
+            },
+            {
+              "date": "2026-08-31",
+              "close": 1690
+            },
+            {
+              "date": "2026-09-30",
+              "close": 1675
+            },
+            {
+              "date": "2026-10-31",
+              "close": 1660
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 1645
+            },
+            {
+              "date": "2026-10-28",
+              "close": 1655
+            },
+            {
+              "date": "2026-10-29",
+              "close": 1650
+            },
+            {
+              "date": "2026-10-30",
+              "close": 1660
+            },
+            {
+              "date": "2026-11-02",
+              "close": 1672
+            },
+            {
+              "date": "2026-11-03",
+              "close": 1680
+            },
+            {
+              "date": "2026-11-04",
+              "close": 1695
+            },
+            {
+              "date": "2026-11-05",
+              "close": 1688
+            },
+            {
+              "date": "2026-11-06",
+              "close": 1700
+            },
+            {
+              "date": "2026-11-09",
+              "close": 1692
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 116547,
+              "ebitdaCr": 57534,
+              "ebitCr": 23400,
+              "patCr": 4255,
+              "epsInr": 7.5,
+              "dpsInr": 3,
+              "netWorthCr": 66500,
+              "totalDebtCr": 160500,
+              "interestExpenseCr": 16600,
+              "operatingCashFlowCr": 45200,
+              "sharesOutstandingCr": 565
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 139145,
+              "ebitdaCr": 71274,
+              "ebitCr": 32100,
+              "patCr": 8346,
+              "epsInr": 14.5,
+              "dpsInr": 4,
+              "netWorthCr": 77500,
+              "totalDebtCr": 152800,
+              "interestExpenseCr": 16900,
+              "operatingCashFlowCr": 58400,
+              "sharesOutstandingCr": 575
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 149982,
+              "ebitdaCr": 79200,
+              "ebitCr": 37500,
+              "patCr": 7467,
+              "epsInr": 12.8,
+              "dpsInr": 8,
+              "netWorthCr": 85400,
+              "totalDebtCr": 158000,
+              "interestExpenseCr": 17200,
+              "operatingCashFlowCr": 64200,
+              "sharesOutstandingCr": 585
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 168000,
+              "ebitdaCr": 90500,
+              "ebitCr": 44800,
+              "patCr": 14200,
+              "epsInr": 24.1,
+              "dpsInr": 10,
+              "netWorthCr": 98000,
+              "totalDebtCr": 155000,
+              "interestExpenseCr": 17500,
+              "operatingCashFlowCr": 73500,
+              "sharesOutstandingCr": 589
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 188000,
+              "ebitdaCr": 103000,
+              "ebitCr": 52600,
+              "patCr": 21500,
+              "epsInr": 36.4,
+              "dpsInr": 13,
+              "netWorthCr": 115000,
+              "totalDebtCr": 150000,
+              "interestExpenseCr": 17800,
+              "operatingCashFlowCr": 84000,
+              "sharesOutstandingCr": 591
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    },
+    {
+      "ticker": "SUNPHARMA",
+      "name": "Sun Pharmaceutical Industries Limited",
+      "isin": "INE044A01036",
+      "sectorId": "healthcare",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Specialty pharmaceuticals, branded generics, complex active pharmaceutical ingredients and formulations.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "India Formulations",
+          "US Formulations",
+          "Emerging Markets",
+          "Rest of World",
+          "Active Pharmaceutical Ingredients"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 755
+            },
+            {
+              "date": "2021-12-31",
+              "close": 760
+            },
+            {
+              "date": "2022-01-31",
+              "close": 765
+            },
+            {
+              "date": "2022-02-28",
+              "close": 770
+            },
+            {
+              "date": "2022-03-31",
+              "close": 775
+            },
+            {
+              "date": "2022-04-30",
+              "close": 780
+            },
+            {
+              "date": "2022-05-31",
+              "close": 785
+            },
+            {
+              "date": "2022-06-30",
+              "close": 815.7
+            },
+            {
+              "date": "2022-07-31",
+              "close": 846.4
+            },
+            {
+              "date": "2022-08-31",
+              "close": 877.1
+            },
+            {
+              "date": "2022-09-30",
+              "close": 907.9
+            },
+            {
+              "date": "2022-10-31",
+              "close": 938.6
+            },
+            {
+              "date": "2022-11-30",
+              "close": 969.3
+            },
+            {
+              "date": "2022-12-31",
+              "close": 1000
+            },
+            {
+              "date": "2023-01-31",
+              "close": 1017.1
+            },
+            {
+              "date": "2023-02-28",
+              "close": 1034.3
+            },
+            {
+              "date": "2023-03-31",
+              "close": 1051.4
+            },
+            {
+              "date": "2023-04-30",
+              "close": 1068.6
+            },
+            {
+              "date": "2023-05-31",
+              "close": 1085.7
+            },
+            {
+              "date": "2023-06-30",
+              "close": 1102.9
+            },
+            {
+              "date": "2023-07-31",
+              "close": 1120
+            },
+            {
+              "date": "2023-08-31",
+              "close": 1148
+            },
+            {
+              "date": "2023-09-30",
+              "close": 1176
+            },
+            {
+              "date": "2023-10-31",
+              "close": 1204
+            },
+            {
+              "date": "2023-11-30",
+              "close": 1232
+            },
+            {
+              "date": "2023-12-31",
+              "close": 1260
+            },
+            {
+              "date": "2024-01-31",
+              "close": 1333.3
+            },
+            {
+              "date": "2024-02-29",
+              "close": 1406.7
+            },
+            {
+              "date": "2024-03-31",
+              "close": 1480
+            },
+            {
+              "date": "2024-04-30",
+              "close": 1553.3
+            },
+            {
+              "date": "2024-05-31",
+              "close": 1626.7
+            },
+            {
+              "date": "2024-06-30",
+              "close": 1700
+            },
+            {
+              "date": "2024-07-31",
+              "close": 1773.3
+            },
+            {
+              "date": "2024-08-31",
+              "close": 1846.7
+            },
+            {
+              "date": "2024-09-30",
+              "close": 1920
+            },
+            {
+              "date": "2024-10-31",
+              "close": 1902
+            },
+            {
+              "date": "2024-11-30",
+              "close": 1884
+            },
+            {
+              "date": "2024-12-31",
+              "close": 1866
+            },
+            {
+              "date": "2025-01-31",
+              "close": 1848
+            },
+            {
+              "date": "2025-02-28",
+              "close": 1830
+            },
+            {
+              "date": "2025-03-31",
+              "close": 1812
+            },
+            {
+              "date": "2025-04-30",
+              "close": 1794
+            },
+            {
+              "date": "2025-05-31",
+              "close": 1776
+            },
+            {
+              "date": "2025-06-30",
+              "close": 1758
+            },
+            {
+              "date": "2025-07-31",
+              "close": 1740
+            },
+            {
+              "date": "2025-08-31",
+              "close": 1758.9
+            },
+            {
+              "date": "2025-09-30",
+              "close": 1777.8
+            },
+            {
+              "date": "2025-10-31",
+              "close": 1796.7
+            },
+            {
+              "date": "2025-11-30",
+              "close": 1815.6
+            },
+            {
+              "date": "2025-12-31",
+              "close": 1834.4
+            },
+            {
+              "date": "2026-01-31",
+              "close": 1853.3
+            },
+            {
+              "date": "2026-02-28",
+              "close": 1872.2
+            },
+            {
+              "date": "2026-03-31",
+              "close": 1891.1
+            },
+            {
+              "date": "2026-04-30",
+              "close": 1910
+            },
+            {
+              "date": "2026-05-31",
+              "close": 1898.3
+            },
+            {
+              "date": "2026-06-30",
+              "close": 1886.7
+            },
+            {
+              "date": "2026-07-31",
+              "close": 1875
+            },
+            {
+              "date": "2026-08-31",
+              "close": 1863.3
+            },
+            {
+              "date": "2026-09-30",
+              "close": 1851.7
+            },
+            {
+              "date": "2026-10-31",
+              "close": 1840
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 1825
+            },
+            {
+              "date": "2026-10-28",
+              "close": 1838
+            },
+            {
+              "date": "2026-10-29",
+              "close": 1832
+            },
+            {
+              "date": "2026-10-30",
+              "close": 1840
+            },
+            {
+              "date": "2026-11-02",
+              "close": 1850
+            },
+            {
+              "date": "2026-11-03",
+              "close": 1860
+            },
+            {
+              "date": "2026-11-04",
+              "close": 1872
+            },
+            {
+              "date": "2026-11-05",
+              "close": 1865
+            },
+            {
+              "date": "2026-11-06",
+              "close": 1878
+            },
+            {
+              "date": "2026-11-09",
+              "close": 1870
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 38654,
+              "ebitdaCr": 10243,
+              "ebitCr": 8100,
+              "patCr": 3273,
+              "epsInr": 13.6,
+              "dpsInr": 10,
+              "netWorthCr": 48000,
+              "totalDebtCr": 3900,
+              "interestExpenseCr": 127,
+              "operatingCashFlowCr": 8900,
+              "sharesOutstandingCr": 240
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 43886,
+              "ebitdaCr": 11647,
+              "ebitCr": 9200,
+              "patCr": 8474,
+              "epsInr": 35.3,
+              "dpsInr": 11.5,
+              "netWorthCr": 56000,
+              "totalDebtCr": 4200,
+              "interestExpenseCr": 165,
+              "operatingCashFlowCr": 10800,
+              "sharesOutstandingCr": 240
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 48497,
+              "ebitdaCr": 13100,
+              "ebitCr": 10500,
+              "patCr": 9576,
+              "epsInr": 39.9,
+              "dpsInr": 13.5,
+              "netWorthCr": 65200,
+              "totalDebtCr": 3600,
+              "interestExpenseCr": 185,
+              "operatingCashFlowCr": 12200,
+              "sharesOutstandingCr": 240
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 53800,
+              "ebitdaCr": 14800,
+              "ebitCr": 11900,
+              "patCr": 11200,
+              "epsInr": 46.7,
+              "dpsInr": 15.5,
+              "netWorthCr": 74500,
+              "totalDebtCr": 3400,
+              "interestExpenseCr": 190,
+              "operatingCashFlowCr": 13800,
+              "sharesOutstandingCr": 240
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 59500,
+              "ebitdaCr": 16600,
+              "ebitCr": 13400,
+              "patCr": 12900,
+              "epsInr": 53.8,
+              "dpsInr": 18,
+              "netWorthCr": 85000,
+              "totalDebtCr": 3200,
+              "interestExpenseCr": 195,
+              "operatingCashFlowCr": 15500,
+              "sharesOutstandingCr": 240
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    },
+    {
+      "ticker": "TITAN",
+      "name": "Titan Company Limited",
+      "isin": "INE280A01028",
+      "sectorId": "consumer_discretionary",
+      "sectorModel": "non_financial",
+      "nifty50Member": {
+        "value": true,
+        "asOf": "2026-11-10",
+        "source": "manual:nse-announcement:2026-11-10"
+      },
+      "businessSummary": {
+        "value": "Watches, jewellery, eyewear, fragrances, and ethnic wear under Tanishq, Fastrack, and Titan brands.",
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "segments": {
+        "value": [
+          "Jewellery",
+          "Watches & Wearables",
+          "Eyecare",
+          "Others"
+        ],
+        "asOf": "2026-03-31",
+        "source": "manual:annual-report:2026-11-10"
+      },
+      "prices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "monthly_close",
+          "points": [
+            {
+              "date": "2021-11-30",
+              "close": 2375
+            },
+            {
+              "date": "2021-12-31",
+              "close": 2512.5
+            },
+            {
+              "date": "2022-01-31",
+              "close": 2650
+            },
+            {
+              "date": "2022-02-28",
+              "close": 2492.5
+            },
+            {
+              "date": "2022-03-31",
+              "close": 2335
+            },
+            {
+              "date": "2022-04-30",
+              "close": 2177.5
+            },
+            {
+              "date": "2022-05-31",
+              "close": 2020
+            },
+            {
+              "date": "2022-06-30",
+              "close": 2102.9
+            },
+            {
+              "date": "2022-07-31",
+              "close": 2185.7
+            },
+            {
+              "date": "2022-08-31",
+              "close": 2268.6
+            },
+            {
+              "date": "2022-09-30",
+              "close": 2351.4
+            },
+            {
+              "date": "2022-10-31",
+              "close": 2434.3
+            },
+            {
+              "date": "2022-11-30",
+              "close": 2517.1
+            },
+            {
+              "date": "2022-12-31",
+              "close": 2600
+            },
+            {
+              "date": "2023-01-31",
+              "close": 2657.1
+            },
+            {
+              "date": "2023-02-28",
+              "close": 2714.3
+            },
+            {
+              "date": "2023-03-31",
+              "close": 2771.4
+            },
+            {
+              "date": "2023-04-30",
+              "close": 2828.6
+            },
+            {
+              "date": "2023-05-31",
+              "close": 2885.7
+            },
+            {
+              "date": "2023-06-30",
+              "close": 2942.9
+            },
+            {
+              "date": "2023-07-31",
+              "close": 3000
+            },
+            {
+              "date": "2023-08-31",
+              "close": 3111.7
+            },
+            {
+              "date": "2023-09-30",
+              "close": 3223.3
+            },
+            {
+              "date": "2023-10-31",
+              "close": 3335
+            },
+            {
+              "date": "2023-11-30",
+              "close": 3446.7
+            },
+            {
+              "date": "2023-12-31",
+              "close": 3558.3
+            },
+            {
+              "date": "2024-01-31",
+              "close": 3670
+            },
+            {
+              "date": "2024-02-29",
+              "close": 3682.2
+            },
+            {
+              "date": "2024-03-31",
+              "close": 3694.4
+            },
+            {
+              "date": "2024-04-30",
+              "close": 3706.7
+            },
+            {
+              "date": "2024-05-31",
+              "close": 3718.9
+            },
+            {
+              "date": "2024-06-30",
+              "close": 3731.1
+            },
+            {
+              "date": "2024-07-31",
+              "close": 3743.3
+            },
+            {
+              "date": "2024-08-31",
+              "close": 3755.6
+            },
+            {
+              "date": "2024-09-30",
+              "close": 3767.8
+            },
+            {
+              "date": "2024-10-31",
+              "close": 3780
+            },
+            {
+              "date": "2024-11-30",
+              "close": 3721.1
+            },
+            {
+              "date": "2024-12-31",
+              "close": 3662.2
+            },
+            {
+              "date": "2025-01-31",
+              "close": 3603.3
+            },
+            {
+              "date": "2025-02-28",
+              "close": 3544.4
+            },
+            {
+              "date": "2025-03-31",
+              "close": 3485.6
+            },
+            {
+              "date": "2025-04-30",
+              "close": 3426.7
+            },
+            {
+              "date": "2025-05-31",
+              "close": 3367.8
+            },
+            {
+              "date": "2025-06-30",
+              "close": 3308.9
+            },
+            {
+              "date": "2025-07-31",
+              "close": 3250
+            },
+            {
+              "date": "2025-08-31",
+              "close": 3283.3
+            },
+            {
+              "date": "2025-09-30",
+              "close": 3316.7
+            },
+            {
+              "date": "2025-10-31",
+              "close": 3350
+            },
+            {
+              "date": "2025-11-30",
+              "close": 3383.3
+            },
+            {
+              "date": "2025-12-31",
+              "close": 3416.7
+            },
+            {
+              "date": "2026-01-31",
+              "close": 3450
+            },
+            {
+              "date": "2026-02-28",
+              "close": 3483.3
+            },
+            {
+              "date": "2026-03-31",
+              "close": 3516.7
+            },
+            {
+              "date": "2026-04-30",
+              "close": 3550
+            },
+            {
+              "date": "2026-05-31",
+              "close": 3515
+            },
+            {
+              "date": "2026-06-30",
+              "close": 3480
+            },
+            {
+              "date": "2026-07-31",
+              "close": 3445
+            },
+            {
+              "date": "2026-08-31",
+              "close": 3410
+            },
+            {
+              "date": "2026-09-30",
+              "close": 3375
+            },
+            {
+              "date": "2026-10-31",
+              "close": 3340
+            }
+          ]
+        },
+        "asOf": "2026-10-31",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "recentPrices": {
+        "value": {
+          "currency": "INR",
+          "granularity": "daily_close",
+          "points": [
+            {
+              "date": "2026-10-27",
+              "close": 3320
+            },
+            {
+              "date": "2026-10-28",
+              "close": 3335
+            },
+            {
+              "date": "2026-10-29",
+              "close": 3328
+            },
+            {
+              "date": "2026-10-30",
+              "close": 3340
+            },
+            {
+              "date": "2026-11-02",
+              "close": 3355
+            },
+            {
+              "date": "2026-11-03",
+              "close": 3365
+            },
+            {
+              "date": "2026-11-04",
+              "close": 3380
+            },
+            {
+              "date": "2026-11-05",
+              "close": 3370
+            },
+            {
+              "date": "2026-11-06",
+              "close": 3385
+            },
+            {
+              "date": "2026-11-09",
+              "close": 3375
+            }
+          ]
+        },
+        "asOf": "2026-11-09",
+        "source": "manual:google-finance:2026-11-10"
+      },
+      "financials": {
+        "currency": "INR",
+        "units": "crore",
+        "basis": "consolidated",
+        "annual": {
+          "value": [
+            {
+              "fy": "FY2022",
+              "periodEnd": "2022-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 28799,
+              "ebitdaCr": 3341,
+              "ebitCr": 2950,
+              "patCr": 2198,
+              "epsInr": 24.8,
+              "dpsInr": 7.5,
+              "netWorthCr": 9330,
+              "totalDebtCr": 5800,
+              "interestExpenseCr": 218,
+              "operatingCashFlowCr": 1800,
+              "sharesOutstandingCr": 88.8
+            },
+            {
+              "fy": "FY2023",
+              "periodEnd": "2023-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 40575,
+              "ebitdaCr": 4879,
+              "ebitCr": 4400,
+              "patCr": 3274,
+              "epsInr": 36.9,
+              "dpsInr": 10,
+              "netWorthCr": 11900,
+              "totalDebtCr": 7400,
+              "interestExpenseCr": 301,
+              "operatingCashFlowCr": 2750,
+              "sharesOutstandingCr": 88.8
+            },
+            {
+              "fy": "FY2024",
+              "periodEnd": "2024-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 51084,
+              "ebitdaCr": 5410,
+              "ebitCr": 4850,
+              "patCr": 3496,
+              "epsInr": 39.4,
+              "dpsInr": 11,
+              "netWorthCr": 14200,
+              "totalDebtCr": 9200,
+              "interestExpenseCr": 395,
+              "operatingCashFlowCr": 3200,
+              "sharesOutstandingCr": 88.8
+            },
+            {
+              "fy": "FY2025",
+              "periodEnd": "2025-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 59200,
+              "ebitdaCr": 6350,
+              "ebitCr": 5700,
+              "patCr": 4180,
+              "epsInr": 47.1,
+              "dpsInr": 13,
+              "netWorthCr": 17100,
+              "totalDebtCr": 10500,
+              "interestExpenseCr": 450,
+              "operatingCashFlowCr": 3800,
+              "sharesOutstandingCr": 88.8
+            },
+            {
+              "fy": "FY2026",
+              "periodEnd": "2026-03-31",
+              "sourceId": "manual:annual-report:2026-11-10",
+              "revenueCr": 68500,
+              "ebitdaCr": 7480,
+              "ebitCr": 6700,
+              "patCr": 4980,
+              "epsInr": 56.1,
+              "dpsInr": 15.5,
+              "netWorthCr": 20600,
+              "totalDebtCr": 11800,
+              "interestExpenseCr": 510,
+              "operatingCashFlowCr": 4600,
+              "sharesOutstandingCr": 88.8
+            }
+          ],
+          "asOf": "2026-03-31",
+          "source": "manual:annual-report:2026-11-10"
+        }
+      },
+      "corporateActions": []
+    }
+  ],
+  "news": [
+    {
+      "id": "news-infy-1",
+      "ticker": "INFY",
+      "headline": "Infosys expands generative AI enterprise platform partnership",
+      "summary": "Infosys announced an expanded collaboration with major enterprise cloud providers to deploy generative artificial intelligence solutions across global client accounts.",
+      "publishedAt": "2026-08-20T10:30:00+05:30",
+      "sourceName": "Exchange announcement",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-infy-2",
+      "ticker": "INFY",
+      "headline": "Infosys reports steady volume growth in September quarter filing",
+      "summary": "In its Q2 FY27 regulatory filing, Infosys posted steady volume growth driven by financial services and European manufacturing digital transformation programs.",
+      "publishedAt": "2026-10-16T17:45:00+05:30",
+      "sourceName": "BSE filing",
+      "sourceUrl": "https://www.bseindia.com/corporates/ann.html",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-infy-3",
+      "ticker": "INFY",
+      "headline": "Infosys slides over 2 percent amid cautious global IT spending outlook",
+      "summary": "Infosys shares dropped 2.2% in Monday trading as global tech spending concerns and client budget reviews weighed on the IT sector.",
+      "publishedAt": "2026-11-09T16:15:00+05:30",
+      "sourceName": "Economic Times",
+      "sourceUrl": "https://economictimes.indiatimes.com/markets/stocks/news",
+      "kind": "commentary",
+      "sourceId": "manual:screener.in:2026-11-10"
+    },
+    {
+      "id": "news-tcs-1",
+      "ticker": "TCS",
+      "headline": "TCS secures multi-year digital transformation deal with UK insurer",
+      "summary": "Tata Consultancy Services signed a five-year contract to modernize legacy core platforms and migrate mainframe workloads for a prominent UK insurer.",
+      "publishedAt": "2026-08-28T14:00:00+05:30",
+      "sourceName": "NSE corporate filing",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-tcs-2",
+      "ticker": "TCS",
+      "headline": "TCS declares interim dividend alongside second quarter results",
+      "summary": "The board of Tata Consultancy Services declared an interim dividend of ₹10 per equity share alongside its second-quarter performance update.",
+      "publishedAt": "2026-10-10T18:15:00+05:30",
+      "sourceName": "Company announcement",
+      "sourceUrl": "https://www.tcs.com/newsroom",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-tcs-3",
+      "ticker": "TCS",
+      "headline": "TCS expands research footprint with new engineering lab in Munich",
+      "summary": "TCS inaugurated an advanced engineering and automotive software research center in Munich to support European original equipment manufacturers.",
+      "publishedAt": "2026-11-04T11:20:00+05:30",
+      "sourceName": "Press release",
+      "sourceUrl": "https://www.tcs.com/newsroom/press-releases",
+      "kind": "fact",
+      "sourceId": "manual:screener.in:2026-11-10"
+    },
+    {
+      "id": "news-hdfcbank-1",
+      "ticker": "HDFCBANK",
+      "headline": "HDFC Bank opens 150 new retail branches across semi-urban clusters",
+      "summary": "HDFC Bank announced the commissioning of 150 new rural and semi-urban branch locations as part of its ongoing national branch network expansion.",
+      "publishedAt": "2026-09-05T12:00:00+05:30",
+      "sourceName": "Exchange release",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "fact",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-hdfcbank-2",
+      "ticker": "HDFCBANK",
+      "headline": "HDFC Bank reports deposit growth of 15 percent year on year",
+      "summary": "In its quarterly business update, HDFC Bank reported aggregate deposit mobilization grew 15.1% year-on-year to reach ₹24.2 lakh crore.",
+      "publishedAt": "2026-10-04T19:30:00+05:30",
+      "sourceName": "NSE corporate filing",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-icicibank-1",
+      "ticker": "ICICIBANK",
+      "headline": "ICICI Bank expands digital lending stack with instant SME credit limits",
+      "summary": "ICICI Bank introduced enhanced automated underwriting capabilities for small business borrowers on its InstaBIZ enterprise banking platform.",
+      "publishedAt": "2026-08-25T15:10:00+05:30",
+      "sourceName": "Financial Express",
+      "sourceUrl": "https://www.financialexpress.com/market/",
+      "kind": "fact",
+      "sourceId": "manual:screener.in:2026-11-10"
+    },
+    {
+      "id": "news-icicibank-2",
+      "ticker": "ICICIBANK",
+      "headline": "ICICI Bank net interest margin holds steady in second quarter",
+      "summary": "ICICI Bank reported resilient domestic loan growth and a net interest margin of 4.36% in its quarterly financial earnings release.",
+      "publishedAt": "2026-10-21T18:00:00+05:30",
+      "sourceName": "BSE announcement",
+      "sourceUrl": "https://www.bseindia.com/corporates/ann.html",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-itc-1",
+      "ticker": "ITC",
+      "headline": "ITC commissions green integrated consumer goods plant in Odisha",
+      "summary": "ITC Limited completed construction and operational trials of an integrated packaged foods manufacturing facility powered by renewable energy.",
+      "publishedAt": "2026-09-12T11:45:00+05:30",
+      "sourceName": "Business Standard",
+      "sourceUrl": "https://www.business-standard.com/companies/news",
+      "kind": "fact",
+      "sourceId": "manual:screener.in:2026-11-10"
+    },
+    {
+      "id": "news-itc-2",
+      "ticker": "ITC",
+      "headline": "ITC reports steady non-cigarette FMCG margin expansion in Q2",
+      "summary": "ITC published Q2 results highlighting 8.3% revenue growth in non-cigarette FMCG segments and steady agribusiness export volumes.",
+      "publishedAt": "2026-10-24T17:30:00+05:30",
+      "sourceName": "Exchange filing",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-hindunilvr-1",
+      "ticker": "HINDUNILVR",
+      "headline": "Hindustan Unilever strengthens premium skincare distribution",
+      "summary": "Hindustan Unilever expanded direct pharmacy and beauty salon distribution for its premium derma and hydration brands across 40 urban markets.",
+      "publishedAt": "2026-08-30T10:15:00+05:30",
+      "sourceName": "Livemint",
+      "sourceUrl": "https://www.livemint.com/companies/news",
+      "kind": "fact",
+      "sourceId": "manual:screener.in:2026-11-10"
+    },
+    {
+      "id": "news-hindunilvr-2",
+      "ticker": "HINDUNILVR",
+      "headline": "HUL notes rural demand recovery in second quarter commentary",
+      "summary": "In its Q2 earnings presentation, Hindustan Unilever highlighted gradual rural volume growth following favorable monsoon distributions across northern states.",
+      "publishedAt": "2026-10-23T18:40:00+05:30",
+      "sourceName": "BSE corporate announcement",
+      "sourceUrl": "https://www.bseindia.com/corporates/ann.html",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-tatamotors-1",
+      "ticker": "TATAMOTORS",
+      "headline": "Tata Motors completes delivery of 500 electric buses in Bengaluru",
+      "summary": "Tata Motors supplied 500 electric transit buses with fast-charging infrastructure to the state transport utility under the clean mobility initiative.",
+      "publishedAt": "2026-09-18T13:20:00+05:30",
+      "sourceName": "Exchange announcement",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "fact",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-tatamotors-2",
+      "ticker": "TATAMOTORS",
+      "headline": "Tata Motors shareholders approve demerger scheme implementation",
+      "summary": "Tata Motors filed court-convened meeting outcomes confirming shareholder approval for separating commercial and passenger vehicle businesses.",
+      "publishedAt": "2026-10-02T16:50:00+05:30",
+      "sourceName": "NSE corporate filing",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-reliance-1",
+      "ticker": "RELIANCE",
+      "headline": "Reliance commissions green hydrogen pilot plant at Jamnagar complex",
+      "summary": "Reliance Industries announced the successful commissioning of its first multi-megawatt green hydrogen production unit at Jamnagar.",
+      "publishedAt": "2026-08-15T09:30:00+05:30",
+      "sourceName": "Press release",
+      "sourceUrl": "https://www.ril.com/newsroom",
+      "kind": "fact",
+      "sourceId": "manual:screener.in:2026-11-10"
+    },
+    {
+      "id": "news-reliance-2",
+      "ticker": "RELIANCE",
+      "headline": "Reliance Retail adds 300 grocery and consumer electronics outlets",
+      "summary": "Reliance Retail expanded its physical footprint by opening 300 new stores across Tier 2 and Tier 3 cities during the festive quarter.",
+      "publishedAt": "2026-10-18T17:15:00+05:30",
+      "sourceName": "NSE announcement",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-lt-1",
+      "ticker": "LT",
+      "headline": "Larsen and Toubro wins major ultra-high voltage power grid package",
+      "summary": "L&T Construction secured an engineering, procurement and construction package valued between ₹2,500 crore and ₹5,000 crore for regional transmission lines.",
+      "publishedAt": "2026-09-08T11:00:00+05:30",
+      "sourceName": "Exchange announcement",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-lt-2",
+      "ticker": "LT",
+      "headline": "L&T order book crosses record ₹5.2 lakh crore milestone in Q2",
+      "summary": "In its half-year performance review, Larsen & Toubro stated its consolidated order book reached a record high of ₹5,20,000 crore.",
+      "publishedAt": "2026-10-28T18:10:00+05:30",
+      "sourceName": "BSE corporate announcement",
+      "sourceUrl": "https://www.bseindia.com/corporates/ann.html",
+      "kind": "fact",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-bhartiartl-1",
+      "ticker": "BHARTIARTL",
+      "headline": "Bharti Airtel expands fiber broadband coverage to 100 new towns",
+      "summary": "Bharti Airtel announced the deployment of high-speed FTTH home broadband infrastructure to an additional 100 municipal locations.",
+      "publishedAt": "2026-09-22T14:30:00+05:30",
+      "sourceName": "Company press release",
+      "sourceUrl": "https://www.airtel.in/press-release",
+      "kind": "fact",
+      "sourceId": "manual:screener.in:2026-11-10"
+    },
+    {
+      "id": "news-bhartiartl-2",
+      "ticker": "BHARTIARTL",
+      "headline": "Bharti Airtel reports ARPU increases to ₹211 in Q2 results",
+      "summary": "Bharti Airtel published second-quarter results showing average revenue per user rose to ₹211 per month alongside strong enterprise data usage.",
+      "publishedAt": "2026-10-29T17:50:00+05:30",
+      "sourceName": "Exchange filing",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-sunpharma-1",
+      "ticker": "SUNPHARMA",
+      "headline": "Sun Pharma receives US FDA approval for new specialty dermatology therapy",
+      "summary": "Sun Pharmaceutical Industries received marketing authorization from the US Food and Drug Administration for an innovative plaque psoriasis formulation.",
+      "publishedAt": "2026-09-14T10:00:00+05:30",
+      "sourceName": "Exchange announcement",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-sunpharma-2",
+      "ticker": "SUNPHARMA",
+      "headline": "Sun Pharma completes clinical trial enrollment for immunology candidate",
+      "summary": "Sun Pharma announced completion of patient recruitment for phase-three international clinical trials evaluating its proprietary immunology asset.",
+      "publishedAt": "2026-10-15T15:40:00+05:30",
+      "sourceName": "BSE filing",
+      "sourceUrl": "https://www.bseindia.com/corporates/ann.html",
+      "kind": "fact",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "news-titan-1",
+      "ticker": "TITAN",
+      "headline": "Titan opens flagship Tanishq jewelry showroom in Singapore",
+      "summary": "Titan Company inaugurated an international flagship retail store in central Singapore to serve Indian diaspora and regional luxury buyers.",
+      "publishedAt": "2026-08-18T12:10:00+05:30",
+      "sourceName": "Company press release",
+      "sourceUrl": "https://www.titancompany.in/newsroom",
+      "kind": "fact",
+      "sourceId": "manual:screener.in:2026-11-10"
+    },
+    {
+      "id": "news-titan-2",
+      "ticker": "TITAN",
+      "headline": "Titan reports strong festive season retail billing in jewelry segment",
+      "summary": "In its pre-quarterly market release, Titan Company stated its jewelry division recorded double-digit buyer footfall growth during Diwali weeks.",
+      "publishedAt": "2026-10-30T18:20:00+05:30",
+      "sourceName": "Exchange filing",
+      "sourceUrl": "https://www.nseindia.com/companies-listing/corporate-filings-announcements",
+      "kind": "announcement",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    }
+  ],
+  "exclusions": [
+    {
+      "id": "exclusion-rolta",
+      "name": "Rolta India Limited",
+      "aliases": [
+        "Rolta",
+        "ROLTA"
+      ],
+      "reason": "Delisted from NSE and BSE in January 2026 following corporate insolvency resolution proceedings.",
+      "asOf": "2026-01-30",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    },
+    {
+      "id": "exclusion-dhfl",
+      "name": "Dewan Housing Finance Corporation Limited",
+      "aliases": [
+        "DHFL",
+        "Dewan Housing"
+      ],
+      "reason": "Delisted from exchanges in June 2021 following resolution plan approval under IBC.",
+      "asOf": "2021-06-14",
+      "sourceId": "manual:nse-announcement:2026-11-10"
+    }
+  ]
+}
