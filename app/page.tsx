@@ -40,7 +40,7 @@ const CURIOSITY_PILLS = [
   },
   {
     label: "Tata Motors Business Model",
-    prompt: "Explain Tata Motors like a business owner over a cup of chai.",
+    prompt: "Explain how Tata Motors makes money across passenger, EV, and commercial vehicle divisions.",
   },
   {
     label: "Bank Debt Rule",
@@ -540,7 +540,7 @@ export default function HomePage() {
             )}
           >
             <span className="text-sm">💬 AI Financial Tutor</span>
-            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">Investor over Chai</span>
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">Plain-English Tutor</span>
           </button>
         </div>
 

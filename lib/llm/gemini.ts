@@ -193,7 +193,7 @@ export class GeminiLlmProvider implements LlmProvider {
 
     const contextPrefix = `Live snapshot for ${snapshot.name} (${snapshot.ticker}):\n- Price: ₹${snapshot.price} (${snapshot.change >= 0 ? "+" : ""}${snapshot.changePercent}%)\n- Market Cap: ${snapshot.marketCapFormatted}\n- P/E Ratio: ${snapshot.peRatio ?? "N/A"}\n- Business: ${snapshot.summary}\n- Strengths: ${snapshot.strengths.join("; ")}\n- Watchouts: ${snapshot.watchouts.join("; ")}\n\n`;
 
-    const userPrompt = `${contextPrefix}User question: "${userQuery}"\n\nExplain this business or question to a friend over chai in 2-3 short paragraphs using a kirana shop or apartment analogy for valuation. Strictly obey all SlopMonster anti-slop rules.`;
+    const userPrompt = `${contextPrefix}User question: "${userQuery}"\n\nExplain this business or question normally in 2-3 short, clear paragraphs. Answer directly, naturally, and objectively. Explain financial figures simply in practical terms without forced theatrical phrasing or repetitive metaphors. Strictly obey all SlopMonster anti-slop rules.`;
 
     const contents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
 

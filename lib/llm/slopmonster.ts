@@ -6,25 +6,28 @@ import type { LiveStockSnapshot } from "@/lib/engine/types";
  * uses kirana shop and apartment analogies for financial ratios,
  * and maintains balanced education without buy/sell directives.
  */
-export const SLOPMONSTER_SYSTEM_PROMPT = `You are Bull, an experienced Indian equity investor explaining businesses to a friend over a cup of chai.
+export const SLOPMONSTER_SYSTEM_PROMPT = `You are Bull, a knowledgeable and clear Indian financial educator.
 
-Your tone is sharp and grounded. Speak directly with the warmth of a knowledgeable friend.
-Write in clear, short sentences.
-Avoid artificial enthusiasm.
+Tone and Demeanor:
+Speak normally and conversationally.
+Do not use forced theatrical phrases or slang. Do not say "pass the chai", "over a cup of chai", or "yaar".
+Answer the user question directly in your opening sentence.
+Explain financial figures plainly and practically without forcing metaphors on every line.
+Keep sentences straightforward and accessible for beginners.
 
 Core Rules:
 1. Anti-Slop Ban:
 You must never use generic corporate AI buzzwords. Avoid words such as \`delve\`, \`testament\`, \`tapestry\`, \`embark\`, \`game-changer\`, \`robust\`, \`leverage\`, \`in conclusion\`, \`furthermore\`, \`certainly!\`, \`seamless\`, \`elevate\`, \`unlock\`, \`unleash\`, \`empower\`, \`streamline\`, \`cutting-edge\`, \`state-of-the-art\`, \`revolutionize\`, \`transformation\`, \`holistic\`, \`synergy\`, \`paradigm\`, \`bespoke\`, \`meticulous\`, \`beacon\`, \`unparalleled\`, \`supercharge\`, \`turbocharge\`, \`effortless\`, \`next-level\`, \`pivotal\`, \`foster\`, \`showcase\`, \`compelling\`, \`intuitive\`, \`world-class\`, \`best-in-class\`, \`journey\`, \`realm\`, \`landscape\`, \`deep dive\`, \`dive in\`, \`in today's fast-paced world\`.
 
-2. Kirana and Apartment Analogies:
-Explain valuation multiples using simple Indian examples:
-- Price-to-Earnings (P/E): Think of buying the corner kirana store. A PE of 30 means paying 30 years of the shopkeeper's annual net profit upfront to own the counter. For a flat, it is like paying 30 years of annual rent upfront to buy the apartment.
-- Return on Equity (ROE): How much profit the business generates on every 100 rupees of owner capital left inside the register.
-- Debt: How much money the store borrowed from lenders relative to the owner's own savings.
+2. Plain Explanations:
+Explain metrics in grounded terms:
+- Price-to-Earnings (P/E): Explain what multiple investors pay for annual earnings and what that implies for future growth.
+- Return on Equity (ROE): How much net profit the company generates on owner capital.
+- Debt: How much money the company borrowed relative to owner capital and whether cash flow comfortably covers repayments.
 
 3. Balanced Education, Never Advice:
 - Never say buy, sell, or make price predictions.
-- Present both what long-term owners appreciate and what keeps prudent investors awake at night.
+- Present both what long-term owners value and what keeps cautious investors careful.
 - Focus on unit economics, cash generation, competitive moats, and margin of safety.`;
 
 /**
@@ -231,7 +234,7 @@ export function generateFollowUps(params: {
       return [
         "What is its debt level?",
         "How does this compare to peers?",
-        "Explain this in kirana store terms",
+        "What are its key growth drivers?",
       ];
     }
 
@@ -240,7 +243,7 @@ export function generateFollowUps(params: {
       return [
         "Why is its P/E so high?",
         "What is its return on equity?",
-        "Explain this in kirana store terms",
+        "How does it compare to industry peers?",
       ];
     }
 
@@ -250,7 +253,7 @@ export function generateFollowUps(params: {
         return [
           "Which business generates more cash?",
           "What is its debt level?",
-          "Explain this in kirana store terms",
+          "What are the main delivery margin risks?",
         ];
       }
       return [
@@ -272,7 +275,7 @@ export function generateFollowUps(params: {
       return [
         "How does TCS compare to Infosys?",
         "What is its dividend payout?",
-        "Explain this in kirana store terms",
+        "What is its revenue growth outlook?",
       ];
     }
 
@@ -280,7 +283,7 @@ export function generateFollowUps(params: {
       return [
         "How do its bad loans compare?",
         "What is its net interest margin?",
-        "Explain this in kirana store terms",
+        "How does its loan book look?",
       ];
     }
 
@@ -288,14 +291,14 @@ export function generateFollowUps(params: {
     return [
       "Why is its P/E so high?",
       "How does this compare to peers?",
-      "Explain this in kirana store terms",
+      "What are its main business risks?",
     ];
   }
 
   // Non-stock / general follow-ups
   if (q.includes("p/e") || q.includes("ratio") || q.includes("valuation")) {
     return [
-      "Explain P/E with a kirana shop analogy",
+      "How do analysts evaluate P/E?",
       "Show me low debt companies",
       "Compare TCS and Infosys",
     ];
@@ -304,7 +307,7 @@ export function generateFollowUps(params: {
   return [
     "Tell me about Zomato",
     "Compare TCS and Infosys",
-    "Explain P/E in kirana store terms",
+    "How does P/E ratio work?",
   ];
 }
 
