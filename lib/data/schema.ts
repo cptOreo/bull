@@ -141,3 +141,43 @@ export const financialsSchema = z.strictObject({
   annual: DatedSchema(z.array(financialYearSchema)),
 });
 export type Financials = z.infer<typeof financialsSchema>;
+
+export const stockSchema = z.strictObject({
+  ticker: z.string().regex(/^[A-Z0-9&-]{2,15}$/, "Invalid ticker"),
+  name: z.string().min(1),
+  isin: z.string().regex(/^IN[A-Z0-9]{10}$/, "Invalid ISIN"),
+  sectorId: z.string().min(1),
+  sectorModel: z.enum(["non_financial", "financial"]),
+  nifty50Member: DatedSchema(z.boolean()),
+  businessSummary: DatedSchema(z.string().min(1).max(240, "A business summary must be at most 240 characters")),
+  segments: DatedSchema(z.array(z.string().min(1))),
+  prices: DatedSchema(priceSeriesSchema),
+  recentPrices: DatedSchema(priceSeriesSchema),
+  financials: financialsSchema,
+  corporateActions: z.array(corporateActionSchema),
+});
+export type Stock = z.infer<typeof stockSchema>;
+
+/**
+ * The base object is exported separately so the refinements in Task 6 can be
+ * layered on top without rewriting the shape.
+ */
+export const baseSnapshotSchema = z.strictObject({
+  schemaVersion: z.literal("1.0.0"),
+  snapshotId: z.string().regex(/^\d{4}-\d{2}-\d{2}\.\d+$/, "Invalid snapshot id"),
+  generatedAt: isoInstant,
+  generatedBy: z.enum(["manual_transcription", "api"]),
+  note: z.string().min(1),
+  sources: z.array(sourceSchema),
+  index: indexSeriesSchema,
+  sectors: z.array(sectorSchema),
+  stocks: z.array(stockSchema),
+  news: z.array(newsItemSchema),
+  exclusions: z.array(exclusionSchema),
+});
+
+/** Alias replaced in Task 6 by `baseSnapshotSchema.superRefine(refineSnapshot)`. */
+export const snapshotSchema = baseSnapshotSchema;
+
+export type Snapshot = z.infer<typeof baseSnapshotSchema>;
+

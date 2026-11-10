@@ -8,7 +8,9 @@ import {
   newsItemSchema,
   priceSeriesSchema,
   sectorSchema,
+  snapshotSchema,
   sourceSchema,
+  stockSchema,
 } from "@/lib/data/schema";
 
 const monthly = {
@@ -57,7 +59,7 @@ describe("source", () => {
     expect(sourceSchema.safeParse(source).success).toBe(true);
   });
 
-  it("rejects an api method with a null url", () => {
+  it("accepts an api method with a null url", () => {
     expect(sourceSchema.safeParse({ ...source, method: "api", url: null }).success).toBe(true);
   });
 
@@ -228,3 +230,148 @@ describe("financials", () => {
     expect(financialsSchema.safeParse(block).success).toBe(true);
   });
 });
+
+const stockFixture = {
+  ticker: "ITC",
+  name: "ITC Limited",
+  isin: "INE154A01025",
+  sectorId: "fmcg",
+  sectorModel: "non_financial" as const,
+  nifty50Member: { value: true, asOf: "2026-11-10", source: "manual:nse-announcement:2026-11-10" },
+  businessSummary: {
+    value: "Cigarettes, packaged foods, hotels and paperboards.",
+    asOf: "2026-03-31",
+    source: "manual:annual-report:2026-11-10",
+  },
+  segments: {
+    value: ["Cigarettes", "Foods", "Hotels", "Paperboards"],
+    asOf: "2026-03-31",
+    source: "manual:annual-report:2026-11-10",
+  },
+  prices: {
+    value: {
+      currency: "INR" as const,
+      granularity: "monthly_close" as const,
+      points: Array.from({ length: 12 }, (_, i) => ({
+        date: `2026-${String(i + 1).padStart(2, "0")}-28`,
+        close: 1400 + i * 5,
+      })),
+    },
+    asOf: "2026-12-28",
+    source: "manual:google-finance:2026-11-10",
+  },
+  recentPrices: {
+    value: {
+      currency: "INR" as const,
+      granularity: "daily_close" as const,
+      points: Array.from({ length: 10 }, (_, i) => ({
+        date: `2026-12-${String(i + 10).padStart(2, "0")}`,
+        close: 1480 + i,
+      })),
+    },
+    asOf: "2026-12-19",
+    source: "manual:google-finance:2026-11-10",
+  },
+  financials: {
+    currency: "INR" as const,
+    units: "crore" as const,
+    basis: "consolidated" as const,
+    annual: {
+      value: [
+        {
+          fy: "FY2026",
+          periodEnd: "2026-03-31",
+          sourceId: "manual:annual-report:2026-11-10",
+          revenueCr: 72000,
+          ebitdaCr: 26000,
+          ebitCr: 25400,
+          patCr: 20500,
+          epsInr: 16.4,
+          dpsInr: 13.75,
+          netWorthCr: 48000,
+          totalDebtCr: 1200,
+          interestExpenseCr: 120,
+          operatingCashFlowCr: 19000,
+          sharesOutstandingCr: 1250,
+        },
+      ],
+      asOf: "2026-03-31",
+      source: "manual:annual-report:2026-11-10",
+    },
+  },
+  corporateActions: [],
+};
+
+describe("stock", () => {
+  it("accepts a stock", () => {
+    expect(stockSchema.safeParse(stockFixture).success).toBe(true);
+  });
+
+  it("rejects a lowercase ticker", () => {
+    expect(stockSchema.safeParse({ ...stockFixture, ticker: "itc" }).success).toBe(false);
+  });
+
+  it("rejects a malformed ISIN", () => {
+    expect(stockSchema.safeParse({ ...stockFixture, isin: "INE154A" }).success).toBe(false);
+  });
+
+  it("rejects a business summary longer than 240 characters", () => {
+    expect(
+      stockSchema.safeParse({
+        ...stockFixture,
+        businessSummary: { ...stockFixture.businessSummary, value: "x".repeat(241) },
+      }).success,
+    ).toBe(false);
+  });
+
+  it("rejects an unknown sector model", () => {
+    expect(stockSchema.safeParse({ ...stockFixture, sectorModel: "bank" }).success).toBe(false);
+  });
+});
+
+describe("snapshot", () => {
+  const base = {
+    schemaVersion: "1.0.0",
+    snapshotId: "2026-11-10.1",
+    generatedAt: "2026-11-10T18:30:00+05:30",
+    generatedBy: "manual_transcription" as const,
+    note: "Course prototype seed.",
+    sources: [],
+    index: {
+      id: "NIFTY50" as const,
+      name: "Nifty 50",
+      prices: {
+        value: {
+          granularity: "monthly_close" as const,
+          points: Array.from({ length: 12 }, (_, i) => ({
+            date: `2026-${String(i + 1).padStart(2, "0")}-28`,
+            close: 22000 + i,
+          })),
+        },
+        asOf: "2026-12-28",
+        source: "manual:google-finance:2026-11-10",
+      },
+    },
+    sectors: [],
+    stocks: [],
+    news: [],
+    exclusions: [],
+  };
+
+  it("accepts a structurally valid shell", () => {
+    expect(snapshotSchema.safeParse(base).success).toBe(true);
+  });
+
+  it("rejects a snapshot id without a revision suffix", () => {
+    expect(snapshotSchema.safeParse({ ...base, snapshotId: "2026-11-10" }).success).toBe(false);
+  });
+
+  it("rejects an unknown schema version", () => {
+    expect(snapshotSchema.safeParse({ ...base, schemaVersion: "1.1.0" }).success).toBe(false);
+  });
+
+  it("rejects a top-level unknown key", () => {
+    expect(snapshotSchema.safeParse({ ...base, extra: true }).success).toBe(false);
+  });
+});
+
