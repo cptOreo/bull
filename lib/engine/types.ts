@@ -218,7 +218,8 @@ export type EventType =
   | "chart_viewed"
   | "shortlist_generated"
   | "risk_named"
-  | "quiz_completed";
+  | "quiz_completed"
+  | "comparison_viewed";
 
 export type LearningEvent = {
   type: EventType;
@@ -226,6 +227,17 @@ export type LearningEvent = {
   ticker?: string;
   score?: number;
   timestamp: string;
+  itemId?: string;
+  locale?: Locale;
+  data?: Record<string, unknown>;
+};
+
+export type ConceptState = {
+  conceptId: ConceptId;
+  state: MasteryState;
+  unlocked: boolean;
+  correctCheckItemIds: string[];
+  appliedMissionPassed: boolean;
 };
 
 export type CheckItem = {

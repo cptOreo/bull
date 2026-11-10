@@ -8,3 +8,4 @@ out/
 tsconfig.tsbuildinfo
 eval/results/*
 !eval/results/.gitkeep
+node_modules
