@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/engine/types";
+import type { Locale, LiveStockSnapshot } from "@/lib/engine/types";
 import {
   CircuitBreaker,
   DEFAULT_LLM_TIMEOUT_MS,
@@ -7,6 +7,9 @@ import {
   type RephraseItemOutput,
 } from "./provider";
 import { safeRephraseBatch } from "./verify";
+import { SLOPMONSTER_SYSTEM_PROMPT, containsSlop } from "./slopmonster";
+
+export { SLOPMONSTER_SYSTEM_PROMPT };
 
 export const GEMINI_REPHRASE_PROMPT =
   "Rephrase the following sentences naturally. DO NOT change, add or remove any numbers, percentages, or entities. DO NOT provide investment advice or price targets. Return ONLY a valid JSON array of objects with 'id' and 'text' keys matching the input items.";
@@ -168,6 +171,70 @@ export class GeminiLlmProvider implements LlmProvider {
       }
       return results;
     } catch {
+      return null;
+    }
+  }
+
+  async generateStockCommentary(
+    snapshot: LiveStockSnapshot,
+    userQuery: string,
+    signal?: AbortSignal
+  ): Promise<string | null> {
+    if (!this.apiKey || this.circuitBreaker.isOpen()) {
+      return null;
+    }
+
+    try {
+      const timeoutSignal = AbortSignal.timeout(this.timeoutMs);
+      const combinedSignal = signal ? AbortSignal.any([signal, timeoutSignal]) : timeoutSignal;
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+        this.model
+      )}:generateContent?key=${encodeURIComponent(this.apiKey)}`;
+
+      const userPrompt = `User question: "${userQuery}"\nLive snapshot for ${snapshot.name} (${snapshot.ticker}):\n- Price: ₹${snapshot.price} (${snapshot.change >= 0 ? "+" : ""}${snapshot.changePercent}%)\n- Market Cap: ${snapshot.marketCapFormatted}\n- P/E Ratio: ${snapshot.peRatio ?? "N/A"}\n- Business: ${snapshot.summary}\n- Strengths: ${snapshot.strengths.join("; ")}\n- Watchouts: ${snapshot.watchouts.join("; ")}\n\nExplain this business to a friend over chai in 2-3 short paragraphs using a kirana shop or apartment analogy for valuation. Strictly obey all SlopMonster anti-slop rules.`;
+
+      const payload = {
+        systemInstruction: {
+          parts: [{ text: SLOPMONSTER_SYSTEM_PROMPT }],
+        },
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: userPrompt }],
+          },
+        ],
+        generationConfig: {
+          temperature: 0.2,
+        },
+      };
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: combinedSignal,
+      });
+
+      if (!response.ok) {
+        return null;
+      }
+
+      const data = await response.json();
+      const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!rawContent || typeof rawContent !== "string") {
+        return null;
+      }
+
+      const cleaned = rawContent.trim();
+      if (containsSlop(cleaned)) {
+        return null; // Fall back to clean verified template
+      }
+
+      this.circuitBreaker.recordSuccess();
+      return cleaned;
+    } catch {
+      this.circuitBreaker.recordFailure();
       return null;
     }
   }
