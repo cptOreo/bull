@@ -220,6 +220,10 @@ export function BullProvider({ children, initialLocale }: BullProviderProps) {
     setProfileState(loadedProf.profile);
     setAssumedState(loadedProf.assumed);
     setEventsState(loadEvents());
+    const storedLocale = getItem<Locale | null>(STORAGE_KEYS.locale, null);
+    if (storedLocale && (storedLocale === "en" || storedLocale === "hi-en")) {
+      setLocaleState(storedLocale);
+    }
     setIsHydrated(true);
   }, []);
 
