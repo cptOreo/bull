@@ -1,6 +1,7 @@
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render } from "@testing-library/react"
+import { screen, fireEvent, waitFor } from "@testing-library/dom";
 
 import {
   CurriculumTracks,
