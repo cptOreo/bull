@@ -27,7 +27,7 @@ export class GeminiLlmProvider implements LlmProvider {
 
   constructor(options: GeminiProviderOptions = {}) {
     this.apiKey = options.apiKey ?? process.env.GEMINI_API_KEY;
-    this.model = options.model ?? "gemini-1.5-flash";
+    this.model = options.model ?? "gemini-3.5-flash";
     this.timeoutMs = options.timeoutMs ?? DEFAULT_LLM_TIMEOUT_MS;
     this.circuitBreaker = options.circuitBreaker ?? new CircuitBreaker();
   }
