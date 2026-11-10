@@ -13,6 +13,7 @@ export const copyEn = {
   nav: {
     chat: "Chat",
     shortlist: "Shortlist",
+    compare: "Compare",
     academy: "Learn",
     progress: "Progress",
     method: "How Bull works",

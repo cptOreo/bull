@@ -1,4 +1,4 @@
-import type { IndexSeries, Sector, Stock } from "@/lib/data/schema";
+import type { IndexSeries, Sector, Snapshot, Stock } from "@/lib/data/schema";
 import type { ChartPoint, ChartSegment, MetricSet, MetricValues, Ref } from "@/lib/engine/types";
 import { istDate, round1 } from "@/lib/engine/format";
 import { createDataRef, createDerivedRef } from "@/lib/engine/refs";
@@ -13,6 +13,15 @@ function daysBetween(asOf: string, now: string): number {
   const to = Date.parse(`${istDate(now)}T00:00:00+05:30`);
   if (Number.isNaN(from) || Number.isNaN(to)) return 0;
   return Math.max(0, Math.round((to - from) / 86_400_000));
+}
+
+export function getStockMetrics(
+  stock: Stock,
+  snapshot: Snapshot,
+  now: string,
+): MetricSet {
+  const sector = snapshot.sectors.find((s) => s.id === stock.sectorId) ?? snapshot.sectors[0];
+  return deriveMetrics(stock, sector, snapshot.index, now);
 }
 
 export function deriveMetrics(

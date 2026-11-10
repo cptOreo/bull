@@ -779,7 +779,6 @@ export function composeAnswer(
       snapshot.snapshotId,
       locale,
       now,
-      inspection.violations.join("; "),
     );
     assertSafeAnswer(safeFallback);
     return safeFallback;

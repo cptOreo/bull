@@ -15,6 +15,7 @@ export const copyHiEn: CopySchema = {
   nav: {
     chat: "Chat",
     shortlist: "Shortlist",
+    compare: "Compare",
     academy: "Learn",
     progress: "Progress",
     method: "Bull kaise kaam karta hai",
