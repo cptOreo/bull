@@ -210,12 +210,18 @@ function hasCue(text: string, cues: readonly string[]): boolean {
 }
 
 /**
- * Checks whether a profile is complete across all 5 fields (§6.3).
+ * Checks whether a profile is complete enough for shortlist scoring (§6.3, H1).
+ * Requires the four financial fields: goal, horizon, riskComfort, experience.
+ * (Locale defaults to the turn's active locale).
  */
 function isProfileFullyComplete(profile: PartialProfile | null): boolean {
   if (!profile) return false;
-  const required: ProfileField[] = ["goal", "horizon", "riskComfort", "experience", "locale"];
-  return required.every((field) => profile[field] !== undefined);
+  return (
+    profile.goal !== undefined &&
+    profile.horizon !== undefined &&
+    profile.riskComfort !== undefined &&
+    profile.experience !== undefined
+  );
 }
 
 /**
