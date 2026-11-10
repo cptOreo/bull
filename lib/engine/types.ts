@@ -217,6 +217,7 @@ export type Answer = {
     locale: Locale;
     generatedAt: string;
   };
+  followUps?: string[];
 };
 
 export type TurnInput = {

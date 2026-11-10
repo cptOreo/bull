@@ -25,6 +25,7 @@ export interface MessageBubbleProps {
   sender: "user" | "assistant";
   text?: string;
   blocks?: Block[];
+  followUps?: string[];
   timestamp?: string;
   locale?: Locale;
   onSelectOption?: (value: string) => void;
@@ -594,6 +595,7 @@ export function MessageBubble({
   sender,
   text,
   blocks = [],
+  followUps,
   timestamp,
   locale = "en",
   onSelectOption,
@@ -620,9 +622,9 @@ export function MessageBubble({
           isUser ? "items-end" : "items-start"
         )}
       >
-        {/* User simple text bubble */}
+        {/* User simple text bubble: crisp dark/light stone pill */}
         {isUser && text && (
-          <div className="rounded-2xl rounded-tr-xs bg-zinc-900 px-4 py-2.5 text-sm text-zinc-50 shadow-xs dark:bg-zinc-100 dark:text-zinc-900">
+          <div className="rounded-2xl rounded-tr-xs bg-stone-900 px-4 py-2.5 text-sm font-normal text-stone-50 shadow-xs dark:bg-stone-100 dark:text-stone-900">
             {text}
           </div>
         )}
@@ -726,6 +728,25 @@ export function MessageBubble({
                     return null;
                 }
               })}
+
+            {/* Dynamic Follow-up Suggestion Chips */}
+            {followUps && followUps.length > 0 && (
+              <div className="pt-2 flex flex-wrap gap-2" aria-label="Follow-up suggestions">
+                {followUps.map((chip, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => onSelectOption?.(chip)}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-stone-50/90 px-3 py-1.5 text-xs font-medium text-stone-800 transition-colors hover:border-stone-400 hover:bg-stone-100 hover:text-stone-950 active:scale-95 dark:border-stone-700 dark:bg-stone-850 dark:text-stone-200 dark:hover:border-stone-500 dark:hover:bg-stone-800 dark:hover:text-stone-50 cursor-pointer shadow-2xs"
+                  >
+                    <span>{chip}</span>
+                    <span className="text-stone-400 dark:text-stone-500 text-[11px]" aria-hidden="true">
+                      →
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         )}
 

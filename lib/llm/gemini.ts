@@ -178,7 +178,8 @@ export class GeminiLlmProvider implements LlmProvider {
   async generateStockCommentary(
     snapshot: LiveStockSnapshot,
     userQuery: string,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    history?: Array<{ role: "user" | "assistant"; content: string }>
   ): Promise<string | null> {
     if (!this.apiKey || this.circuitBreaker.isOpen()) {
       return null;
@@ -192,18 +193,41 @@ export class GeminiLlmProvider implements LlmProvider {
         this.model
       )}:generateContent?key=${encodeURIComponent(this.apiKey)}`;
 
-      const userPrompt = `User question: "${userQuery}"\nLive snapshot for ${snapshot.name} (${snapshot.ticker}):\n- Price: ₹${snapshot.price} (${snapshot.change >= 0 ? "+" : ""}${snapshot.changePercent}%)\n- Market Cap: ${snapshot.marketCapFormatted}\n- P/E Ratio: ${snapshot.peRatio ?? "N/A"}\n- Business: ${snapshot.summary}\n- Strengths: ${snapshot.strengths.join("; ")}\n- Watchouts: ${snapshot.watchouts.join("; ")}\n\nExplain this business to a friend over chai in 2-3 short paragraphs using a kirana shop or apartment analogy for valuation. Strictly obey all SlopMonster anti-slop rules.`;
+      const contextPrefix = `Live snapshot for ${snapshot.name} (${snapshot.ticker}):\n- Price: ₹${snapshot.price} (${snapshot.change >= 0 ? "+" : ""}${snapshot.changePercent}%)\n- Market Cap: ${snapshot.marketCapFormatted}\n- P/E Ratio: ${snapshot.peRatio ?? "N/A"}\n- Business: ${snapshot.summary}\n- Strengths: ${snapshot.strengths.join("; ")}\n- Watchouts: ${snapshot.watchouts.join("; ")}\n\n`;
+
+      const userPrompt = `${contextPrefix}User question: "${userQuery}"\n\nExplain this business or question to a friend over chai in 2-3 short paragraphs using a kirana shop or apartment analogy for valuation. Strictly obey all SlopMonster anti-slop rules.`;
+
+      const contents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
+
+      if (history && history.length > 0) {
+        for (const msg of history) {
+          if (!msg.content || !msg.content.trim()) continue;
+          const role = msg.role === "assistant" ? "model" : "user";
+          if (contents.length > 0 && contents[contents.length - 1].role === role) {
+            contents[contents.length - 1].parts[0].text += `\n\n${msg.content}`;
+          } else {
+            contents.push({
+              role,
+              parts: [{ text: msg.content }],
+            });
+          }
+        }
+      }
+
+      if (contents.length > 0 && contents[0].role === "model") {
+        contents.shift();
+      }
+
+      contents.push({
+        role: "user",
+        parts: [{ text: userPrompt }],
+      });
 
       const payload = {
         systemInstruction: {
           parts: [{ text: SLOPMONSTER_SYSTEM_PROMPT }],
         },
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: userPrompt }],
-          },
-        ],
+        contents,
         generationConfig: {
           temperature: 0.2,
         },
@@ -217,12 +241,14 @@ export class GeminiLlmProvider implements LlmProvider {
       });
 
       if (!response.ok) {
+        this.circuitBreaker.recordFailure();
         return null;
       }
 
       const data = await response.json();
       const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
       if (!rawContent || typeof rawContent !== "string") {
+        this.circuitBreaker.recordFailure();
         return null;
       }
 

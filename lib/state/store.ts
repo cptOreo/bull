@@ -139,6 +139,7 @@ export type ChatMessage = {
   sender: "user" | "assistant";
   text?: string;
   blocks?: unknown[];
+  followUps?: string[];
   timestamp: string;
 };
 
@@ -295,6 +296,7 @@ export function BullProvider({ children, initialLocale }: BullProviderProps) {
         sender: msg.sender,
         text: msg.text,
         blocks: msg.blocks,
+        followUps: msg.followUps,
       };
       setChatMessages((prev) => [...prev, fullMsg]);
     },

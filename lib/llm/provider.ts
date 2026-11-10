@@ -20,7 +20,8 @@ export interface LlmProvider {
   generateStockCommentary?(
     snapshot: LiveStockSnapshot,
     userQuery: string,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    history?: Array<{ role: "user" | "assistant"; content: string }>
   ): Promise<string | null>;
 }
 

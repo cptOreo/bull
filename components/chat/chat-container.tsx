@@ -165,6 +165,7 @@ export function ChatContainer({
                 sender={message.sender}
                 text={message.text}
                 blocks={message.blocks as Block[]}
+                followUps={message.followUps}
                 timestamp={message.timestamp}
                 locale={locale}
                 onSelectOption={(val) => handleSend(val)}
@@ -195,7 +196,7 @@ export function ChatContainer({
       {/* Quick Action Pill Bar */}
       <div className="border-t border-zinc-100 bg-zinc-50/50 px-4 py-2 dark:border-zinc-800 dark:bg-zinc-900/50">
         <div className="mx-auto flex max-w-3xl items-center gap-2 overflow-x-auto no-scrollbar py-0.5">
-          <span className="shrink-0 text-[11px] font-medium uppercase tracking-wider text-zinc-400">
+          <span className="shrink-0 text-xs font-medium text-zinc-500 dark:text-zinc-400">
             Quick:
           </span>
           {quickActions.map((qa) => (
@@ -205,7 +206,7 @@ export function ChatContainer({
               disabled={isLoading}
               onClick={() => handleSend(qa.prompt)}
               className={cn(
-                "inline-flex shrink-0 items-center rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-xs text-zinc-600 shadow-2xs transition-all",
+                "inline-flex shrink-0 items-center rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-xs text-zinc-700 shadow-2xs transition-all",
                 "hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900",
                 "dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:border-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-100",
                 "disabled:opacity-50 disabled:pointer-events-none cursor-pointer"
@@ -249,11 +250,11 @@ export function ChatContainer({
             />
 
             <div className="flex shrink-0 items-center gap-1.5 pb-0.5">
-              {input.length > 350 && (
+              {input.length > 0 && (
                 <span
                   className={cn(
-                    "font-mono text-[10px]",
-                    input.length >= MAX_CHARACTERS ? "text-rose-500 font-bold" : "text-zinc-400"
+                    "font-mono text-[11px] tabular-nums",
+                    input.length >= MAX_CHARACTERS ? "text-rose-500 font-bold" : "text-zinc-400 dark:text-zinc-500"
                   )}
                 >
                   {input.length}/{MAX_CHARACTERS}

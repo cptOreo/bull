@@ -327,6 +327,8 @@ interface StockCuratedData {
 const COMPANY_ALIASES: Record<string, string> = {
   zomato: "ZOMATO",
   blinkit: "ZOMATO",
+  swiggy: "SWIGGY",
+  instamart: "SWIGGY",
   "tata motors": "TATAMOTORS",
   tatamotors: "TATAMOTORS",
   "tata motor": "TATAMOTORS",
@@ -406,6 +408,33 @@ const CURATED_STOCKS: Record<string, StockCuratedData> = {
     watchouts: [
       "Heavy dark-store capex needed to defend turf against Zepto and Swiggy",
       "Demanding earnings multiple demands flawless execution every quarter",
+    ],
+  },
+  SWIGGY: {
+    ticker: "SWIGGY",
+    name: "Swiggy Limited",
+    price: 435.0,
+    change: 6.2,
+    changePercent: 1.45,
+    dayHigh: 442.0,
+    dayLow: 428.5,
+    fiftyTwoWeekHigh: 460.0,
+    fiftyTwoWeekLow: 390.0,
+    marketCap: 97500,
+    marketCapFormatted: "₹97,500 Cr",
+    peRatio: null,
+    dividendYield: 0.0,
+    sector: "Consumer Internet",
+    industry: "Quick Commerce & Food Delivery",
+    summary:
+      "Consumer technology platform running nationwide food delivery alongside Instamart, its 10-minute grocery service.",
+    strengths: [
+      "Instamart grocery delivery network scales alongside core food delivery orders",
+      "High repeat usage from premium urban households with steady order frequency",
+    ],
+    watchouts: [
+      "Ongoing dark store expansion requires continued capital investment",
+      "Intense rivalry against Blinkit and Zepto for local delivery market share",
     ],
   },
   PAYTM: {

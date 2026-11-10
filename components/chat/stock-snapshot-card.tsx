@@ -66,7 +66,7 @@ export function StockSnapshotCard({ snapshot, className }: StockSnapshotCardProp
         {/* Live Price Display & 1D Move Pill */}
         <div className="flex flex-wrap items-baseline justify-between gap-3 pt-1">
           <div>
-            <span className="text-[11px] font-medium uppercase tracking-wider text-zinc-400 block mb-0.5">
+            <span className="text-xs font-medium text-zinc-500 dark:text-zinc-400 block mb-0.5">
               Live Market Price
             </span>
             <div className="flex items-baseline gap-2.5">
@@ -168,7 +168,7 @@ export function StockSnapshotCard({ snapshot, className }: StockSnapshotCardProp
         {/* Why Investors Like It (2 bullets with checkmark icons) */}
         {snapshot.strengths && snapshot.strengths.length > 0 && (
           <div className="space-y-1.5">
-            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+            <h4 className="text-xs font-semibold text-emerald-800 dark:text-emerald-300 flex items-center gap-1.5">
               <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-100 text-[10px] text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold">
                 ✓
               </span>
@@ -190,7 +190,7 @@ export function StockSnapshotCard({ snapshot, className }: StockSnapshotCardProp
         {/* Things to Watch / Risks (1-2 bullets with alert icons) */}
         {snapshot.watchouts && snapshot.watchouts.length > 0 && (
           <div className="space-y-1.5">
-            <h4 className="text-[11px] font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
+            <h4 className="text-xs font-semibold text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
               <span className="flex h-4 w-4 items-center justify-center rounded-full bg-amber-100 text-[10px] text-amber-800 dark:bg-amber-950 dark:text-amber-300 font-bold">
                 ⚠
               </span>

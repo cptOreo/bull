@@ -57,8 +57,8 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-4 border-t border-zinc-200/60 dark:border-zinc-800/60 text-[11px] text-zinc-400">
-          <p>© 2026 Bull · IIIT Hyderabad Applied AI Product Management Capstone</p>
-          <p className="font-mono">Offline Snapshot: 10 Nov 2026 · Nifty 50 Universe</p>
+          <p>© 2026 Bull · Applied Financial Literacy & Stock Learning Studio</p>
+          <p className="font-mono">Live Quotes via Yahoo Finance · NSE, BSE & Global Equities</p>
         </div>
       </div>
     </footer>
