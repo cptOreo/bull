@@ -169,7 +169,7 @@ function makeScoredStock(
 ): ScoredStock {
   const stock = makeStock();
   const metrics = makeMetricSet();
-  const subScores: Record<Factor, SubScore> = {} as any;
+  const subScores = {} as Record<Factor, SubScore>;
   const factors: Factor[] = ["quality", "growth", "valuation", "income", "stability", "simplicity"];
 
   let composite = 0;
@@ -575,9 +575,9 @@ describe("composeLimitations", () => {
   it("supports Hinglish locale for limitations", () => {
     const limitations = composeLimitations({ asOfDate: "31 October 2026", locale: "hi-en" });
     expect(limitations).toHaveLength(4);
-    expect(limitations[0]).toContain("Paanch saal ki price series monthly close use karti hai");
+    expect(limitations[0]).toContain("Paanch saal ki price series monthly closes use karti hai");
     expect(limitations[1]).toContain("31 October 2026");
-    expect(limitations[3]).toContain("Bull sirf educational analysis deta hai");
+    expect(limitations[3]).toContain("Bull sirf sikhne ke liye educational analysis");
   });
 });
 
