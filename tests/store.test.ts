@@ -12,6 +12,7 @@ import {
   BullProvider,
   useBullState,
 } from "@/lib/state/store";
+import { useBull } from "@/lib/state/use-bull";
 import {
   loadProfile,
   saveProfile,
@@ -317,6 +318,22 @@ describe("lib/state/store - BullProvider and useBullState", () => {
     expect(result.current.profile).toEqual({});
     expect(result.current.events).toEqual([]);
     expect(result.current.xp).toBe(0);
+  });
+
+  it("useBull exposes complete hook API including reset alias", () => {
+    const wrapper = ({ children }: { children: React.ReactNode }) =>
+      React.createElement(BullProvider, { initialLocale: "en" }, children);
+
+    const { result } = renderHook(() => useBull(), { wrapper });
+
+    expect(typeof result.current.reset).toBe("function");
+    expect(typeof result.current.setProfile).toBe("function");
+    expect(typeof result.current.logEvent).toBe("function");
+    expect(typeof result.current.setLocale).toBe("function");
+    expect(result.current.xp).toBe(0);
+    expect(result.current.level.level).toBe(1);
+    expect(result.current.streak.current).toBe(0);
+    expect(result.current.badges.length).toBe(6);
   });
 });
 
