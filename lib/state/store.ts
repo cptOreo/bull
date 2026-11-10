@@ -28,7 +28,6 @@ import {
 } from "./profile";
 import {
   loadEvents,
-  saveEvents,
   clearEvents as clearEventsStorage,
   appendEvent as appendEventStorage,
   EVENTS_STORAGE_KEY,
@@ -44,20 +43,6 @@ export const STORAGE_KEYS = {
 
 // In-memory storage fallback for private mode or environments where localStorage throws
 const inMemoryStore = new Map<string, string>();
-
-function isLocalStorageAvailable(): boolean {
-  if (typeof window === "undefined" || !window.localStorage) {
-    return false;
-  }
-  try {
-    const testKey = "__bull_storage_test__";
-    window.localStorage.setItem(testKey, "1");
-    window.localStorage.removeItem(testKey);
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 /**
  * Reads a value from localStorage with fallback to in-memory storage.
@@ -206,7 +191,7 @@ export type BullContextType = BullState & {
 export const BullContext = createContext<BullContextType | null>(null);
 
 export type BullProviderProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   initialLocale?: Locale;
 };
 
