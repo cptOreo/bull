@@ -2,7 +2,6 @@
 
 import React, { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useBull } from "@/lib/state/use-bull";
 import { snapshot } from "@/lib/data/snapshot";
 import { handleTurn } from "@/lib/engine/answer";
@@ -10,7 +9,7 @@ import type { TurnInput } from "@/lib/engine/types";
 import { ChatContainer } from "@/components/chat/chat-container";
 import { SectorTag } from "@/components/shortlist/sector-tag";
 import { DataBadge } from "@/components/ui/data-badge";
-import { GlossaryTooltip, FINANCIAL_TERMS, lookupTerm } from "@/components/ui/glossary-tooltip";
+import { GlossaryTooltip, FINANCIAL_TERMS } from "@/components/ui/glossary-tooltip";
 import { copyEn } from "@/content/copy.en";
 import { copyHiEn } from "@/content/copy.hi-en";
 import { formatPrice, formatSignedPercent } from "@/lib/engine/format";
@@ -91,7 +90,6 @@ const STARTER_PROMPTS = [
 ];
 
 export default function HomePage() {
-  const router = useRouter();
   const { profile, locale, updateProfile, logEvent, chatMessages, addChatMessage, events } = useBull();
   const copy = locale === "hi-en" ? copyHiEn : copyEn;
 
@@ -271,7 +269,7 @@ export default function HomePage() {
               {copy.onboarding.welcomeTitle}
             </h1>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Explore India's leading companies through audited numbers, zero financial sales pitches, and intuitive real-world analogies.
+              Explore India&apos;s leading companies through audited numbers, zero financial sales pitches, and intuitive real-world analogies.
             </p>
           </div>
 

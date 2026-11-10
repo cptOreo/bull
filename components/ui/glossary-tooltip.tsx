@@ -348,7 +348,7 @@ export function GlossaryTooltip({
               <span>Real-World Analogy</span>
             </div>
             <p className="text-[11px] leading-relaxed italic text-amber-950 dark:text-amber-100">
-              "{data.analogy}"
+              &ldquo;{data.analogy}&rdquo;
             </p>
           </div>
 

@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   searchStocks,
   getLiveStockQuote,
@@ -6,7 +6,6 @@ import {
   generateHeuristics,
   formatMarketCap,
   getSnapshotFallback,
-  type LiveStockSnapshot,
 } from "@/lib/data/live";
 import { GET as searchRoute } from "@/app/api/stocks/search/route";
 
