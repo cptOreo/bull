@@ -88,10 +88,10 @@ export const CONCEPTS: ConceptDefinition[] = [
   },
   {
     id: "C5",
-    title: "Comparison: Margins, ROE and ROCE",
+    title: "Margins, ROE and ROCE",
     summary: "Profitability ratios evaluate how efficiently management turns capital and sales into net profit.",
-    unlockCondition: "Opening a comparison or stock page",
-    unlockHint: "Compare two companies to inspect how operating margins and returns on equity differ.",
+    unlockCondition: "Opening any stock page or viewing a comparison",
+    unlockHint: "Open any stock page or compare two companies to inspect how margins and return on equity differ.",
     step1Idea:
       "Return on Equity (ROE) shows the net profit generated for every rupee of shareholders' equity. Operating margins indicate how much profit remains from each rupee of revenue after paying production and overhead expenses.",
     step2OnStockTemplate:
@@ -138,8 +138,8 @@ export const CONCEPTS: ConceptDefinition[] = [
     id: "C8",
     title: "Diversification and concentration",
     summary: "Spreading capital across multiple sectors limits damage when one industry encounters headwinds.",
-    unlockCondition: "Shortlist generated with at least two sectors",
-    unlockHint: "Generate a shortlist with multiple sectors to learn how sector caps defend against concentration risk.",
+    unlockCondition: "Shortlist generated with at least three sectors",
+    unlockHint: "Generate a shortlist with at least three sectors to learn how sector caps defend against concentration risk.",
     step1Idea:
       "Holding stocks across different economic sectors protects an overall portfolio from industry-specific shocks. Capping exposure to any single sector ensures no lone regulatory or economic event imperils your capital.",
     step2OnStockTemplate:
@@ -741,6 +741,7 @@ export function evaluateUnlocks(
 
     if (e.type === "stock_viewed") {
       unlocks.C1 = true;
+      unlocks.C5 = true; // Opening any stock page unlocks C5 (§8.1)
       if (e.ticker) {
         const stock = stocksByTicker.get(e.ticker);
         if (stock) {
@@ -778,8 +779,8 @@ export function evaluateUnlocks(
         (typeof e.data?.sectorCount === "number" && e.data.sectorCount) ||
         (typeof e.data?.sectors === "number" && e.data.sectors) ||
         (Array.isArray(e.data?.sectors) && e.data.sectors.length);
-      // If explicit sector count is provided, check if >= 2. If not specified, default shortlist has multiple sectors
-      if (sectorCount === false || sectorCount === undefined || sectorCount >= 2) {
+      // C8 requires shortlist generated with at least 3 sectors (§8.1)
+      if (typeof sectorCount === "number" && sectorCount >= 3) {
         unlocks.C8 = true;
       }
     }

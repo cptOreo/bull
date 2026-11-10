@@ -25,10 +25,10 @@
   - **C2 (Price, market cap and what moves a price):** Unlocks on first `chart_viewed`.
   - **C3 (P/E and why the sector matters):** Unlocks on first `shortlist_generated`.
   - **C4 (Debt: debt-to-equity and interest cover):** Unlocks on viewing a stock with D/E >= 0.3 or bank/financial.
-  - **C5 (Comparison: Margins, ROE and ROCE):** Unlocks on `comparison_viewed` or viewing comparison.
+  - **C5 (Margins, ROE and ROCE):** Unlocks on opening any stock page (`stock_viewed`) or viewing comparison (`comparison_viewed`).
   - **C6 (Dividends and payout):** Unlocks on viewing a stock with DPS > 0.
   - **C7 (Reading a five-year chart, including drawdown and corporate actions):** Unlocks on viewing stock with drawdown > 20%.
-  - **C8 (Diversification and concentration):** Unlocks on `shortlist_generated` with multiple sectors (>= 2).
+  - **C8 (Diversification and concentration):** Unlocks on `shortlist_generated` with at least three sectors (>= 3).
 - **Mastery State Machine:**
   - Transitions: `locked` → `seen` → `practised` → `applied` → `mastered`.
   - Monotonicity enforced: state never decrements under any event sequence.
@@ -60,20 +60,20 @@
   - Deduplicated per concept for lesson, check, and mission: maximum from all 8 lessons, checks, and missions is exactly 8 × (20 + 10 + 30) = 480 XP.
   - Daily quiz is deduplicated per IST calendar day (15 XP per day).
   - Monotonic accumulation: XP sum never decreases.
-- **Levels (`calculateLevel`):**
-  - Level 1: 0–99 XP
-  - Level 2: 100–199 XP
-  - Level 3: 200–299 XP
-  - Level 4: 300+ XP
-  - Also integrates §8.7 titles: Curious (0), Observer (50), Reader (120), Analyst (220), Risk Spotter (350).
-- **Badges (`evaluateBadges`):**
-  - Exactly 6 badges with unambiguous unlocking rules:
-    1. `first_steps`: stock viewed or lesson/check completed.
-    2. `diversified`: C8 mission passed or multi-sector shortlist generated.
-    3. `debt_sleuth`: C4 check answered or mission passed.
-    4. `dividend_hunter`: C6 check answered or mission passed.
-    5. `risk_aware`: risks named on 3 distinct stocks or C7 check/mission passed.
-    6. `master_scout`: daily quiz passed or missions passed across 3+ concepts.
+- **Levels (`calculateLevel`, §8.7):**
+  - Level 0: "Curious" (0 XP, nextThreshold: 50, "Just starting")
+  - Level 1: "Observer" (50 XP, nextThreshold: 120, "Can read a stock page")
+  - Level 2: "Reader" (120 XP, nextThreshold: 220, "Can explain a ratio")
+  - Level 3: "Analyst" (220 XP, nextThreshold: 350, "Can compare two companies on the numbers")
+  - Level 4: "Risk Spotter" (350 XP, nextThreshold: null, "Can name what could go wrong")
+- **Badges (`evaluateBadges`, §8.8):**
+  - Exactly 6 badges strictly conforming to §8.8:
+    1. `risk_namer`: "Risk Namer" — Pass the "Name the risk" check on 3 distinct stocks.
+    2. `ratio_reader`: "Ratio Reader" — At least one correct check for each of C3, C4 and C5.
+    3. `diversifier`: "Diversifier" — Pass the C8 applied mission.
+    4. `patient_capital`: "Patient Capital" — Pass the C7 mission and view five-year charts for 3 distinct stocks.
+    5. `no_fomo`: "No-FOMO" — Answer the fixed "double your money" item in C8 correctly (`c8_check_3`).
+    6. `hinglish_pro`: "Hinglish Pro" — Answer three concept checks correctly while the locale is `hi-en`.
 - **IST Streak Calculation (`calculateStreak`, `toISTDate`):**
   - Computed in `Asia/Kolkata` (UTC+05:30) with exact calendar boundaries (e.g. 23:59 vs 00:01).
   - Rewards any concept check activity on an IST day.
@@ -88,7 +88,7 @@
 
 | Command | Status | Details |
 |---|---|---|
-| `npx vitest run tests/curriculum.test.ts tests/xp.test.ts` | **PASS** | 2 test files, 31 tests passed (0 failures) |
-| `npm test` | **PASS** | 13 test files, 199 tests passed (0 failures) |
+| `npx vitest run tests/curriculum.test.ts tests/xp.test.ts` | **PASS** | 2 test files, 30 tests passed (0 failures) |
+| `npm test` | **PASS** | 13 test files, 198 tests passed (0 failures) |
 | `npm run typecheck` | **PASS** | `tsc --noEmit` exited 0 (clean) |
 | `npm run lint` | **PASS** | `eslint .` exited 0 (0 warnings, 0 errors) |

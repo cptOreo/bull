@@ -98,47 +98,34 @@ export type LevelTier = {
 };
 
 export const LEVEL_TIERS = [
-  { level: 1, name: "Level 1", minXp: 0, nextThreshold: 100 },
-  { level: 2, name: "Level 2", minXp: 100, nextThreshold: 200 },
-  { level: 3, name: "Level 3", minXp: 200, nextThreshold: 300 },
-  { level: 4, name: "Level 4", minXp: 300, nextThreshold: null },
-] as const;
-
-export const SPEC_TITLES = [
-  { minXp: 350, title: "Risk Spotter", description: "Can name what could go wrong" },
-  { minXp: 220, title: "Analyst", description: "Can compare two companies on the numbers" },
-  { minXp: 120, title: "Reader", description: "Can explain a ratio" },
-  { minXp: 50, title: "Observer", description: "Can read a stock page" },
-  { minXp: 0, title: "Curious", description: "Just starting" },
+  { level: 0, name: "Curious", title: "Curious", minXp: 0, nextThreshold: 50, description: "Just starting" },
+  { level: 1, name: "Observer", title: "Observer", minXp: 50, nextThreshold: 120, description: "Can read a stock page" },
+  { level: 2, name: "Reader", title: "Reader", minXp: 120, nextThreshold: 220, description: "Can explain a ratio" },
+  { level: 3, name: "Analyst", title: "Analyst", minXp: 220, nextThreshold: 350, description: "Can compare two companies on the numbers" },
+  { level: 4, name: "Risk Spotter", title: "Risk Spotter", minXp: 350, nextThreshold: null, description: "Can name what could go wrong" },
 ] as const;
 
 export function calculateLevel(xp: number): LevelTier {
   const safeXp = Math.max(0, xp);
 
   let tier: (typeof LEVEL_TIERS)[number] = LEVEL_TIERS[0];
-  if (safeXp >= 300) {
+  if (safeXp >= 350) {
+    tier = LEVEL_TIERS[4];
+  } else if (safeXp >= 220) {
     tier = LEVEL_TIERS[3];
-  } else if (safeXp >= 200) {
+  } else if (safeXp >= 120) {
     tier = LEVEL_TIERS[2];
-  } else if (safeXp >= 100) {
+  } else if (safeXp >= 50) {
     tier = LEVEL_TIERS[1];
-  }
-
-  let spec: (typeof SPEC_TITLES)[number] = SPEC_TITLES[SPEC_TITLES.length - 1];
-  for (const s of SPEC_TITLES) {
-    if (safeXp >= s.minXp) {
-      spec = s;
-      break;
-    }
   }
 
   return {
     level: tier.level,
     name: tier.name,
-    title: spec.title,
+    title: tier.title,
     minXp: tier.minXp,
     nextThreshold: tier.nextThreshold,
-    description: spec.description,
+    description: tier.description,
     valueOf() {
       return this.level;
     },
@@ -149,12 +136,12 @@ export function calculateLevel(xp: number): LevelTier {
 }
 
 export type BadgeId =
-  | "first_steps"
-  | "diversified"
-  | "debt_sleuth"
-  | "dividend_hunter"
-  | "risk_aware"
-  | "master_scout";
+  | "risk_namer"
+  | "ratio_reader"
+  | "diversifier"
+  | "patient_capital"
+  | "no_fomo"
+  | "hinglish_pro";
 
 export type Badge = {
   id: BadgeId;
@@ -171,100 +158,102 @@ export const BADGE_DEFINITIONS: Array<{
   evaluate: (events: LearningEvent[]) => { unlocked: boolean; unlockedAt?: string };
 }> = [
   {
-    id: "first_steps",
-    name: "First Steps",
-    description: "Start your journey by viewing your first stock or completing a lesson.",
+    id: "risk_namer",
+    name: "Risk Namer",
+    description: "Pass the 'Name the risk' check on three distinct stocks.",
+    evaluate: (events) => {
+      const distinctRiskTickers = new Set<string>();
+      let unlockedAt: string | undefined;
+      for (const e of events) {
+        if (
+          (e.type === "risk_named" && e.ticker) ||
+          (e.type === "check_answered_correct" && e.ticker)
+        ) {
+          distinctRiskTickers.add(e.ticker);
+          if (distinctRiskTickers.size >= 3 && !unlockedAt) {
+            unlockedAt = e.timestamp;
+          }
+        }
+      }
+      return { unlocked: distinctRiskTickers.size >= 3, unlockedAt };
+    },
+  },
+  {
+    id: "ratio_reader",
+    name: "Ratio Reader",
+    description: "At least one correct check for each of C3, C4 and C5.",
+    evaluate: (events) => {
+      const c3 = events.find(
+        (e) => e.type === "check_answered_correct" && e.conceptId === "C3",
+      );
+      const c4 = events.find(
+        (e) => e.type === "check_answered_correct" && e.conceptId === "C4",
+      );
+      const c5 = events.find(
+        (e) => e.type === "check_answered_correct" && e.conceptId === "C5",
+      );
+      const unlocked = Boolean(c3 && c4 && c5);
+      const unlockedAt = unlocked
+        ? [c3, c4, c5].sort((a, b) => (a!.timestamp > b!.timestamp ? 1 : -1))[2]?.timestamp
+        : undefined;
+      return { unlocked, unlockedAt };
+    },
+  },
+  {
+    id: "diversifier",
+    name: "Diversifier",
+    description: "Pass the C8 applied mission.",
     evaluate: (events) => {
       const match = events.find(
-        (e) =>
-          e.type === "stock_viewed" ||
-          e.type === "lesson_completed" ||
-          e.type === "check_answered_correct",
+        (e) => e.type === "mission_passed" && e.conceptId === "C8",
       );
       return { unlocked: Boolean(match), unlockedAt: match?.timestamp };
     },
   },
   {
-    id: "diversified",
-    name: "Diversified",
-    description: "Generate a multi-sector shortlist or pass the diversification mission.",
+    id: "patient_capital",
+    name: "Patient Capital",
+    description: "Pass the C7 mission and view five-year charts for three distinct stocks.",
     evaluate: (events) => {
-      const match = events.find(
-        (e) =>
-          (e.type === "mission_passed" && e.conceptId === "C8") ||
-          (e.type === "shortlist_generated" &&
-            (typeof e.data?.sectorCount === "number" ? e.data.sectorCount >= 2 : true)),
+      const c7Mission = events.find(
+        (e) => e.type === "mission_passed" && e.conceptId === "C7",
       );
-      return { unlocked: Boolean(match), unlockedAt: match?.timestamp };
-    },
-  },
-  {
-    id: "debt_sleuth",
-    name: "Debt Sleuth",
-    description: "Solve a debt ratio check or pass the leverage mission.",
-    evaluate: (events) => {
-      const match = events.find(
-        (e) =>
-          e.conceptId === "C4" &&
-          (e.type === "check_answered_correct" || e.type === "mission_passed"),
-      );
-      return { unlocked: Boolean(match), unlockedAt: match?.timestamp };
-    },
-  },
-  {
-    id: "dividend_hunter",
-    name: "Dividend Hunter",
-    description: "Answer a dividend check or calculate cash yield accurately.",
-    evaluate: (events) => {
-      const match = events.find(
-        (e) =>
-          e.conceptId === "C6" &&
-          (e.type === "check_answered_correct" || e.type === "mission_passed"),
-      );
-      return { unlocked: Boolean(match), unlockedAt: match?.timestamp };
-    },
-  },
-  {
-    id: "risk_aware",
-    name: "Risk Aware",
-    description: "Identify risks on three distinct stocks or complete the drawdown mission.",
-    evaluate: (events) => {
-      const distinctRiskTickers = new Set(
+      const distinctChartTickers = new Set(
         events
-          .filter((e) => e.type === "risk_named" && e.ticker)
+          .filter((e) => e.type === "chart_viewed" && e.ticker)
           .map((e) => e.ticker!),
       );
-      if (distinctRiskTickers.size >= 3) {
-        const lastRisk = events.filter((e) => e.type === "risk_named")[2];
-        return { unlocked: true, unlockedAt: lastRisk?.timestamp };
-      }
-      const c7Match = events.find(
-        (e) =>
-          e.conceptId === "C7" &&
-          (e.type === "check_answered_correct" || e.type === "mission_passed"),
-      );
-      return { unlocked: Boolean(c7Match), unlockedAt: c7Match?.timestamp };
+      const unlocked = Boolean(c7Mission && distinctChartTickers.size >= 3);
+      const unlockedAt = unlocked ? c7Mission?.timestamp : undefined;
+      return { unlocked, unlockedAt };
     },
   },
   {
-    id: "master_scout",
-    name: "Master Scout",
-    description: "Pass a daily quiz or conquer applied missions across multiple concepts.",
+    id: "no_fomo",
+    name: "No-FOMO",
+    description: "Answer the fixed 'double your money' item in C8 correctly.",
     evaluate: (events) => {
-      const quizMatch = events.find((e) => e.type === "quiz_passed");
-      if (quizMatch) {
-        return { unlocked: true, unlockedAt: quizMatch.timestamp };
-      }
-      const distinctMissionConcepts = new Set(
-        events
-          .filter((e) => e.type === "mission_passed" && e.conceptId)
-          .map((e) => e.conceptId!),
+      const match = events.find(
+        (e) =>
+          e.type === "check_answered_correct" &&
+          (e.itemId === "c8_check_3" || (e.conceptId === "C8" && Boolean(e.data?.isNoFomo))),
       );
-      if (distinctMissionConcepts.size >= 3) {
-        const lastMission = events.filter((e) => e.type === "mission_passed")[2];
-        return { unlocked: true, unlockedAt: lastMission?.timestamp };
-      }
-      return { unlocked: false };
+      return { unlocked: Boolean(match), unlockedAt: match?.timestamp };
+    },
+  },
+  {
+    id: "hinglish_pro",
+    name: "Hinglish Pro",
+    description: "Answer three concept checks correctly while the locale is hi-en.",
+    evaluate: (events) => {
+      const hiEnChecks = events.filter(
+        (e) =>
+          e.type === "check_answered_correct" &&
+          (e.locale === "hi-en" || e.data?.locale === "hi-en"),
+      );
+      const unlocked = hiEnChecks.length >= 3;
+      const unlockedAt = unlocked ? hiEnChecks[2]?.timestamp : undefined;
+      return { unlocked, unlockedAt };
     },
   },
 ];
