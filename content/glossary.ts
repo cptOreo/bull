@@ -62,7 +62,7 @@ export const GLOSSARY: GlossaryEntry[] = [
         "Reflects the market premium or discount placed on the tangible and recorded net assets of the enterprise.",
       formula: "Current Share Price / Book Value Per Share",
       whyItMatters:
-        "Particularly informative for asset-intensive enterprises such as commercial banks, NBFCs, and heavy manufacturing.",
+        "Particularly informative for asset-intensive sectors like commercial banking or heavy manufacturing.",
       limitations:
         "Less revealing for modern software or service corporations whose core assets reside in intellectual property and people.",
     },
@@ -94,7 +94,7 @@ export const GLOSSARY: GlossaryEntry[] = [
       whyItMatters:
         "Consistent high returns on equity indicate disciplined capital allocation and sustainable business advantages.",
       limitations:
-        "Can be artificially elevated by heavy debt leverage, making fragile balance sheets appear deceptively productive.",
+        "Can look artificially high when a business carries heavy debt borrowings, masking balance sheet fragility.",
     },
     hiEn: {
       title: "Return on Equity (ROE)",
@@ -147,7 +147,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     en: {
       title: "Debt-to-Equity (D/E)",
       definition:
-        "The Debt-to-Equity ratio evaluates leverage by dividing total interest-bearing borrowings by total net worth.",
+        "The Debt-to-Equity ratio measures financial debt burden by dividing total interest-bearing borrowings by total net worth.",
       plainExplanation:
         "Reflects the financing ratio supplied by debt lenders compared to internal shareholder capital.",
       formula: "Total Interest-Bearing Debt / Total Net Worth",
@@ -159,7 +159,7 @@ export const GLOSSARY: GlossaryEntry[] = [
     hiEn: {
       title: "Debt-to-Equity (D/E)",
       definition:
-        "Debt-to-Equity ratio total interest wale loan ko company ke total net worth se divide karke leverage measure karta hai.",
+        "Debt-to-Equity ratio total interest wale loan ko company ke total net worth se divide karke karz ka bojh measure karta hai.",
       plainExplanation:
         "Ye dikhata hai ki company ke finance mein lenders ka paisa kitna hai aur internal owners ka kitna.",
       formula: "Total Interest-Bearing Debt / Total Net Worth",

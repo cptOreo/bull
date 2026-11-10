@@ -31,7 +31,7 @@ export const copyEn = {
         title: "Primary Goal",
         question:
           "What matters most for this money: growing wealth, regular dividends, learning how stocks work, or protecting capital?",
-        whyAsked: "Sets the baseline weights for stability, growth, valuation, and income.",
+        whyAsked: "Sets baseline weights for stability and long-term growth, along with valuation and dividend income.",
         options: {
           grow_wealth: "Grow wealth over time",
           dividends: "Regular dividend income",
@@ -75,7 +75,7 @@ export const copyEn = {
       locale: {
         title: "Language Preference",
         question: "How would you prefer explanations and numbers delivered?",
-        whyAsked: "Sets the interface language across chat, lessons, and metrics.",
+        whyAsked: "Sets interface language for chat discussions alongside learning modules and metrics.",
         options: {
           en: "English",
           "hi-en": "Hinglish",
@@ -162,8 +162,8 @@ export const copyEn = {
     dailyQuizButton: "Today's Quiz",
     quizTitle: "Daily Concept Check",
     conceptMapTitle: "Concept Map",
-    lockedHintPrefix: "Unlocks when: ",
-    unlockedLabel: "Unlocked",
+    lockedHintPrefix: "Opens when: ",
+    unlockedLabel: "Open",
     masteryStateLocked: "Locked",
     masteryStateSeen: "Seen",
     masteryStatePractised: "Practised",
@@ -198,7 +198,7 @@ export const copyEn = {
       "Bull is strictly an educational tool. We do not provide trading recommendations, price predictions, or personalised portfolio instructions.",
     coverageTitle: "Covered Companies",
     coverageBody:
-      "Bull covers 12 constituent companies from the Nifty 50 across diverse economic sectors.",
+      "Bull covers twelve stocks from the Nifty 50 across diverse economic sectors.",
   },
   disclaimers: {
     educationNote:
@@ -211,7 +211,7 @@ export const copyEn = {
   limitations: {
     title: "Important Limitations",
     item1: "Data reflects annual reports and exchange filings up to the snapshot date.",
-    item2: "Management quality, governance, and qualitative factors are not scored.",
+    item2: "Board decisions and subjective management factors remain outside our numerical score.",
     item3: "Shortlists are calculated deterministically from financial numbers alone.",
     item4: "Prices do not reflect intra-day swings or real-time trading sessions.",
   },

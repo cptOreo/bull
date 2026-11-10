@@ -10,6 +10,7 @@ import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip
 import { Progress } from "@/components/ui/progress";
 import { DataBadge } from "@/components/ui/data-badge";
 import { EducationNote } from "@/components/ui/education-note";
+import { GlossaryTooltip } from "@/components/ui/glossary-tooltip";
 
 describe("UI Primitives", () => {
   describe("Card", () => {
@@ -176,6 +177,51 @@ describe("UI Primitives", () => {
       expect(
         screen.getByText("Yeh educational analysis hai aur koi buy ya sell recommendation nahi hai.")
       ).toBeInTheDocument();
+    });
+  });
+
+  describe("GlossaryTooltip", () => {
+    it("renders financial term trigger and displays plain-English definition with real-world analogy on click", () => {
+      render(<GlossaryTooltip term="pe">P/E Ratio</GlossaryTooltip>);
+
+      const trigger = screen.getByRole("button", { name: /p\/e ratio/i });
+      expect(trigger).toBeInTheDocument();
+      expect(trigger).toHaveAttribute("aria-expanded", "false");
+
+      // Click to open popover
+      fireEvent.click(trigger);
+      expect(trigger).toHaveAttribute("aria-expanded", "true");
+
+      const tooltip = screen.getByRole("tooltip");
+      expect(tooltip).toBeInTheDocument();
+      expect(screen.getByText("Price-to-Earnings Ratio")).toBeInTheDocument();
+      expect(screen.getByText(/Compares current stock price to annual profit per share/i)).toBeInTheDocument();
+      expect(screen.getByText(/If an apartment costs ₹20L and brings ₹1L annual rent/i)).toBeInTheDocument();
+
+      // Dismiss via Escape key
+      fireEvent.keyDown(trigger, { key: "Escape" });
+      expect(trigger).toHaveAttribute("aria-expanded", "false");
+      expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+    });
+
+    it("supports all major beginner financial terms (Market Cap, Debt/Equity, ROCE, Dividend Yield, Drawdown)", () => {
+      const termsToVerify = [
+        { term: "marketCap", expectedTitle: "Market Capitalisation", expectedAnalogySnippet: "pizza sliced into 10 pieces" },
+        { term: "debtToEquity", expectedTitle: "Debt-to-Equity Ratio", expectedAnalogySnippet: "₹80L home loan" },
+        { term: "roce", expectedTitle: "Return on Capital Employed", expectedAnalogySnippet: "cafe with ₹10L total capital" },
+        { term: "dividendYield", expectedTitle: "Dividend Yield", expectedAnalogySnippet: "fixed deposit interest" },
+        { term: "drawdown", expectedTitle: "Maximum Drawdown", expectedAnalogySnippet: "roller-coaster test" },
+      ];
+
+      for (const item of termsToVerify) {
+        const { unmount } = render(<GlossaryTooltip term={item.term} />);
+        const trigger = screen.getByRole("button");
+        fireEvent.click(trigger);
+
+        expect(screen.getAllByText(item.expectedTitle).length).toBeGreaterThan(0);
+        expect(screen.getByText(new RegExp(item.expectedAnalogySnippet, "i"))).toBeInTheDocument();
+        unmount();
+      }
     });
   });
 });
