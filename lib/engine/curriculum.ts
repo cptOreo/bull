@@ -806,7 +806,7 @@ export type ConceptStateOptions = {
   shortlistedTickers?: string[];
 };
 
-const MASTERY_RANK: Record<MasteryState, number> = {
+export const MASTERY_RANK: Record<MasteryState, number> = {
   locked: 0,
   seen: 1,
   practised: 2,
