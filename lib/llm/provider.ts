@@ -34,15 +34,19 @@ export type RephraseInput = {
 
 export type RephraseOutput = Array<{ id: string; text: string }>;
 
-export const DEFAULT_LLM_TIMEOUT_MS = 8000;
+export const DEFAULT_LLM_TIMEOUT_MS = 25000;
 export const CIRCUIT_BREAKER_THRESHOLD = 3;
+export const CIRCUIT_BREAKER_COOLDOWN_MS = 30000;
 
 export class CircuitBreaker {
   private consecutiveFailures = 0;
   private readonly threshold: number;
+  private readonly cooldownMs: number;
+  private lastFailureTime = 0;
 
-  constructor(threshold = CIRCUIT_BREAKER_THRESHOLD) {
+  constructor(threshold = CIRCUIT_BREAKER_THRESHOLD, cooldownMs = CIRCUIT_BREAKER_COOLDOWN_MS) {
     this.threshold = threshold;
+    this.cooldownMs = cooldownMs;
   }
 
   recordSuccess(): void {
@@ -51,14 +55,22 @@ export class CircuitBreaker {
 
   recordFailure(): void {
     this.consecutiveFailures += 1;
+    this.lastFailureTime = Date.now();
   }
 
   isOpen(): boolean {
-    return this.consecutiveFailures >= this.threshold;
+    if (this.consecutiveFailures >= this.threshold) {
+      if (this.cooldownMs > 0 && Date.now() - this.lastFailureTime > this.cooldownMs) {
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 
   reset(): void {
     this.consecutiveFailures = 0;
+    this.lastFailureTime = 0;
   }
 
   get failureCount(): number {

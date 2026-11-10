@@ -30,7 +30,7 @@ export class GeminiLlmProvider implements LlmProvider {
 
   constructor(options: GeminiProviderOptions = {}) {
     this.apiKey = options.apiKey ?? process.env.GEMINI_API_KEY;
-    this.model = options.model ?? "gemini-3.5-flash";
+    this.model = options.model ?? process.env.GEMINI_MODEL ?? "gemini-3.5-flash-lite";
     this.timeoutMs = options.timeoutMs ?? DEFAULT_LLM_TIMEOUT_MS;
     this.circuitBreaker = options.circuitBreaker ?? new CircuitBreaker();
   }
@@ -71,16 +71,18 @@ export class GeminiLlmProvider implements LlmProvider {
     items: RephraseItemInput[],
     signal?: AbortSignal
   ): Promise<RephraseItemOutput[] | null> {
-    const maxAttempts = 2; // 1 initial + 1 retry
+    const fallbackModel =
+      this.model === "gemini-3.5-flash-lite" ? "gemini-3.5-flash" : "gemini-3.5-flash-lite";
+    const modelsToTry = [this.model, fallbackModel];
     let lastError: unknown;
 
-    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    for (const model of modelsToTry) {
       try {
         const timeoutSignal = AbortSignal.timeout(this.timeoutMs);
         const combinedSignal = signal ? AbortSignal.any([signal, timeoutSignal]) : timeoutSignal;
 
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-          this.model
+          model
         )}:generateContent?key=${encodeURIComponent(this.apiKey!)}`;
 
         const payload = {
@@ -107,7 +109,7 @@ export class GeminiLlmProvider implements LlmProvider {
         });
 
         if (!response.ok) {
-          if (attempt < maxAttempts && (response.status >= 500 || response.status === 429)) {
+          if (response.status >= 500 || response.status === 429) {
             continue;
           }
           return null;
@@ -116,15 +118,15 @@ export class GeminiLlmProvider implements LlmProvider {
         const data = await response.json();
         const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
         if (!rawContent || typeof rawContent !== "string") {
-          return null;
+          continue;
         }
 
-        return this.parseCandidates(rawContent);
+        const parsed = this.parseCandidates(rawContent);
+        if (parsed) {
+          return parsed;
+        }
       } catch (err) {
         lastError = err;
-        if (attempt >= maxAttempts) {
-          break;
-        }
       }
     }
 
@@ -185,84 +187,94 @@ export class GeminiLlmProvider implements LlmProvider {
       return null;
     }
 
-    try {
-      const timeoutSignal = AbortSignal.timeout(this.timeoutMs);
-      const combinedSignal = signal ? AbortSignal.any([signal, timeoutSignal]) : timeoutSignal;
+    const fallbackModel =
+      this.model === "gemini-3.5-flash-lite" ? "gemini-3.5-flash" : "gemini-3.5-flash-lite";
+    const modelsToTry = [this.model, fallbackModel];
 
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-        this.model
-      )}:generateContent?key=${encodeURIComponent(this.apiKey)}`;
+    const contextPrefix = `Live snapshot for ${snapshot.name} (${snapshot.ticker}):\n- Price: ₹${snapshot.price} (${snapshot.change >= 0 ? "+" : ""}${snapshot.changePercent}%)\n- Market Cap: ${snapshot.marketCapFormatted}\n- P/E Ratio: ${snapshot.peRatio ?? "N/A"}\n- Business: ${snapshot.summary}\n- Strengths: ${snapshot.strengths.join("; ")}\n- Watchouts: ${snapshot.watchouts.join("; ")}\n\n`;
 
-      const contextPrefix = `Live snapshot for ${snapshot.name} (${snapshot.ticker}):\n- Price: ₹${snapshot.price} (${snapshot.change >= 0 ? "+" : ""}${snapshot.changePercent}%)\n- Market Cap: ${snapshot.marketCapFormatted}\n- P/E Ratio: ${snapshot.peRatio ?? "N/A"}\n- Business: ${snapshot.summary}\n- Strengths: ${snapshot.strengths.join("; ")}\n- Watchouts: ${snapshot.watchouts.join("; ")}\n\n`;
+    const userPrompt = `${contextPrefix}User question: "${userQuery}"\n\nExplain this business or question to a friend over chai in 2-3 short paragraphs using a kirana shop or apartment analogy for valuation. Strictly obey all SlopMonster anti-slop rules.`;
 
-      const userPrompt = `${contextPrefix}User question: "${userQuery}"\n\nExplain this business or question to a friend over chai in 2-3 short paragraphs using a kirana shop or apartment analogy for valuation. Strictly obey all SlopMonster anti-slop rules.`;
+    const contents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
 
-      const contents: Array<{ role: "user" | "model"; parts: Array<{ text: string }> }> = [];
-
-      if (history && history.length > 0) {
-        for (const msg of history) {
-          if (!msg.content || !msg.content.trim()) continue;
-          const role = msg.role === "assistant" ? "model" : "user";
-          if (contents.length > 0 && contents[contents.length - 1].role === role) {
-            contents[contents.length - 1].parts[0].text += `\n\n${msg.content}`;
-          } else {
-            contents.push({
-              role,
-              parts: [{ text: msg.content }],
-            });
-          }
+    if (history && history.length > 0) {
+      for (const msg of history) {
+        if (!msg.content || !msg.content.trim()) continue;
+        const role = msg.role === "assistant" ? "model" : "user";
+        if (contents.length > 0 && contents[contents.length - 1].role === role) {
+          contents[contents.length - 1].parts[0].text += `\n\n${msg.content}`;
+        } else {
+          contents.push({
+            role,
+            parts: [{ text: msg.content }],
+          });
         }
       }
-
-      if (contents.length > 0 && contents[0].role === "model") {
-        contents.shift();
-      }
-
-      contents.push({
-        role: "user",
-        parts: [{ text: userPrompt }],
-      });
-
-      const payload = {
-        systemInstruction: {
-          parts: [{ text: SLOPMONSTER_SYSTEM_PROMPT }],
-        },
-        contents,
-        generationConfig: {
-          temperature: 0.2,
-        },
-      };
-
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        signal: combinedSignal,
-      });
-
-      if (!response.ok) {
-        this.circuitBreaker.recordFailure();
-        return null;
-      }
-
-      const data = await response.json();
-      const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!rawContent || typeof rawContent !== "string") {
-        this.circuitBreaker.recordFailure();
-        return null;
-      }
-
-      const cleaned = rawContent.trim();
-      if (containsSlop(cleaned)) {
-        return null; // Fall back to clean verified template
-      }
-
-      this.circuitBreaker.recordSuccess();
-      return cleaned;
-    } catch {
-      this.circuitBreaker.recordFailure();
-      return null;
     }
+
+    if (contents.length > 0 && contents[0].role === "model") {
+      contents.shift();
+    }
+
+    contents.push({
+      role: "user",
+      parts: [{ text: userPrompt }],
+    });
+
+    const payload = {
+      systemInstruction: {
+        parts: [{ text: SLOPMONSTER_SYSTEM_PROMPT }],
+      },
+      contents,
+      generationConfig: {
+        temperature: 0.2,
+      },
+    };
+
+    for (const model of modelsToTry) {
+      try {
+        const timeoutSignal = AbortSignal.timeout(this.timeoutMs);
+        const combinedSignal = signal ? AbortSignal.any([signal, timeoutSignal]) : timeoutSignal;
+
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
+          model
+        )}:generateContent?key=${encodeURIComponent(this.apiKey)}`;
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          signal: combinedSignal,
+        });
+
+        if (!response.ok) {
+          if (response.status >= 500 || response.status === 429) {
+            continue;
+          }
+          this.circuitBreaker.recordFailure();
+          return null;
+        }
+
+        const data = await response.json();
+        const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!rawContent || typeof rawContent !== "string") {
+          continue;
+        }
+
+        const cleaned = rawContent.trim();
+        if (containsSlop(cleaned)) {
+          return null; // Fall back to clean verified template
+        }
+
+        this.circuitBreaker.recordSuccess();
+        return cleaned;
+      } catch {
+        // Continue to fallback model
+      }
+    }
+
+    this.circuitBreaker.recordFailure();
+    return null;
   }
 }
 
