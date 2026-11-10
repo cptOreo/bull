@@ -110,11 +110,18 @@ describe("curriculum - concept unlock conditions", () => {
     expect(evaluateUnlocks(ltEvents, snapshot).C4).toBe(true);
   });
 
-  it("unlocks C5 on comparison_viewed", () => {
-    const events: LearningEvent[] = [
+  it("unlocks C5 on opening any stock page or on comparison_viewed", () => {
+    // 1. comparison_viewed unlocks C5
+    const compEvents: LearningEvent[] = [
       { type: "comparison_viewed", timestamp: "2026-11-10T10:00:00Z" },
     ];
-    expect(evaluateUnlocks(events, snapshot).C5).toBe(true);
+    expect(evaluateUnlocks(compEvents, snapshot).C5).toBe(true);
+
+    // 2. stock_viewed (opening any stock page) also unlocks C5 (§8.1)
+    const stockEvents: LearningEvent[] = [
+      { type: "stock_viewed", ticker: "INFY", timestamp: "2026-11-10T10:00:00Z" },
+    ];
+    expect(evaluateUnlocks(stockEvents, snapshot).C5).toBe(true);
   });
 
   it("unlocks C6 on viewing stock with DPS > 0", () => {
@@ -139,15 +146,26 @@ describe("curriculum - concept unlock conditions", () => {
     expect(evaluateUnlocks(iciciEvents, snapshot).C7).toBe(false);
   });
 
-  it("unlocks C8 on shortlist generated with multiple sectors", () => {
-    const events: LearningEvent[] = [
+  it("unlocks C8 on shortlist generated with at least 3 sectors", () => {
+    // 2 sectors -> C8 stays locked (requires at least 3 sectors per §8.1)
+    const twoSectorEvents: LearningEvent[] = [
+      {
+        type: "shortlist_generated",
+        timestamp: "2026-11-10T10:00:00Z",
+        data: { sectorCount: 2 },
+      },
+    ];
+    expect(evaluateUnlocks(twoSectorEvents, snapshot).C8).toBe(false);
+
+    // 3 sectors -> C8 unlocks
+    const threeSectorEvents: LearningEvent[] = [
       {
         type: "shortlist_generated",
         timestamp: "2026-11-10T10:00:00Z",
         data: { sectorCount: 3 },
       },
     ];
-    expect(evaluateUnlocks(events, snapshot).C8).toBe(true);
+    expect(evaluateUnlocks(threeSectorEvents, snapshot).C8).toBe(true);
   });
 });
 

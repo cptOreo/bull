@@ -85,49 +85,42 @@ describe("xp - closed whitelist calculation", () => {
 });
 
 describe("xp - levels", () => {
-  it("computes levels 1 through 4 based on XP thresholds (0-99, 100-199, 200-299, 300+)", () => {
-    // Level 1: 0-99
-    expect(calculateLevel(0).level).toBe(1);
+  it("computes levels 0 through 4 based on XP thresholds (§8.7)", () => {
+    // Level 0: Curious (0-49 XP, next: 50)
+    expect(calculateLevel(0).level).toBe(0);
+    expect(calculateLevel(0).name).toBe("Curious");
+    expect(calculateLevel(0).nextThreshold).toBe(50);
+    expect(calculateLevel(49).level).toBe(0);
+
+    // Level 1: Observer (50-119 XP, next: 120)
     expect(calculateLevel(50).level).toBe(1);
-    expect(calculateLevel(99).level).toBe(1);
+    expect(calculateLevel(50).name).toBe("Observer");
+    expect(calculateLevel(50).nextThreshold).toBe(120);
+    expect(calculateLevel(119).level).toBe(1);
 
-    // Level 2: 100-199
-    expect(calculateLevel(100).level).toBe(2);
-    expect(calculateLevel(150).level).toBe(2);
-    expect(calculateLevel(199).level).toBe(2);
+    // Level 2: Reader (120-219 XP, next: 220)
+    expect(calculateLevel(120).level).toBe(2);
+    expect(calculateLevel(120).name).toBe("Reader");
+    expect(calculateLevel(120).nextThreshold).toBe(220);
+    expect(calculateLevel(219).level).toBe(2);
 
-    // Level 3: 200-299
-    expect(calculateLevel(200).level).toBe(3);
-    expect(calculateLevel(250).level).toBe(3);
-    expect(calculateLevel(299).level).toBe(3);
+    // Level 3: Analyst (220-349 XP, next: 350)
+    expect(calculateLevel(220).level).toBe(3);
+    expect(calculateLevel(220).name).toBe("Analyst");
+    expect(calculateLevel(220).nextThreshold).toBe(350);
+    expect(calculateLevel(349).level).toBe(3);
 
-    // Level 4: 300+
-    expect(calculateLevel(300).level).toBe(4);
+    // Level 4: Risk Spotter (350+ XP, next: null)
+    expect(calculateLevel(350).level).toBe(4);
+    expect(calculateLevel(350).name).toBe("Risk Spotter");
+    expect(calculateLevel(350).nextThreshold).toBeNull();
     expect(calculateLevel(480).level).toBe(4);
     expect(calculateLevel(1000).level).toBe(4);
-  });
-
-  it("supports level names and spec titles (Curious, Observer, Reader, Analyst, Risk Spotter)", () => {
-    const lvl0 = calculateLevel(0);
-    expect(lvl0.name).toBe("Level 1");
-    expect(lvl0.title).toBe("Curious");
-
-    const lvl50 = calculateLevel(50);
-    expect(lvl50.title).toBe("Observer");
-
-    const lvl120 = calculateLevel(120);
-    expect(lvl120.title).toBe("Reader");
-
-    const lvl220 = calculateLevel(220);
-    expect(lvl220.title).toBe("Analyst");
-
-    const lvl350 = calculateLevel(350);
-    expect(lvl350.title).toBe("Risk Spotter");
   });
 });
 
 describe("xp - badges", () => {
-  it("evaluates the 6 badges with clear unlocking criteria", () => {
+  it("evaluates the 6 badges with clear unlocking criteria (§8.8)", () => {
     // 1. Initial state: all locked
     const emptyBadges = evaluateBadges([]);
     expect(emptyBadges).toHaveLength(6);
@@ -135,57 +128,69 @@ describe("xp - badges", () => {
 
     const badgeIds = emptyBadges.map((b) => b.id);
     expect(badgeIds).toEqual([
-      "first_steps",
-      "diversified",
-      "debt_sleuth",
-      "dividend_hunter",
-      "risk_aware",
-      "master_scout",
+      "risk_namer",
+      "ratio_reader",
+      "diversifier",
+      "patient_capital",
+      "no_fomo",
+      "hinglish_pro",
     ]);
 
-    // 2. Unlock first_steps
-    const stepEvents: LearningEvent[] = [
-      { type: "stock_viewed", ticker: "INFY", timestamp: "2026-11-10T10:00:00Z" },
-    ];
-    const b1 = evaluateBadges(stepEvents);
-    expect(b1.find((b) => b.id === "first_steps")?.unlocked).toBe(true);
-
-    // 3. Unlock debt_sleuth
-    const debtEvents: LearningEvent[] = [
-      { type: "check_answered_correct", conceptId: "C4", timestamp: "2026-11-10T10:00:00Z" },
-    ];
-    const b2 = evaluateBadges(debtEvents);
-    expect(b2.find((b) => b.id === "debt_sleuth")?.unlocked).toBe(true);
-
-    // 4. Unlock dividend_hunter
-    const divEvents: LearningEvent[] = [
-      { type: "mission_passed", conceptId: "C6", timestamp: "2026-11-10T10:00:00Z" },
-    ];
-    const b3 = evaluateBadges(divEvents);
-    expect(b3.find((b) => b.id === "dividend_hunter")?.unlocked).toBe(true);
-
-    // 5. Unlock diversified
-    const divMissionEvents: LearningEvent[] = [
-      { type: "mission_passed", conceptId: "C8", timestamp: "2026-11-10T10:00:00Z" },
-    ];
-    const b4 = evaluateBadges(divMissionEvents);
-    expect(b4.find((b) => b.id === "diversified")?.unlocked).toBe(true);
-
-    // 6. Unlock risk_aware (3 distinct stocks with risk named)
+    // 2. Unlock risk_namer: pass name the risk check on 3 distinct stocks
     const riskEvents: LearningEvent[] = [
       { type: "risk_named", ticker: "INFY", timestamp: "2026-11-10T10:00:00Z" },
       { type: "risk_named", ticker: "TCS", timestamp: "2026-11-10T10:01:00Z" },
       { type: "risk_named", ticker: "LT", timestamp: "2026-11-10T10:02:00Z" },
     ];
-    const b5 = evaluateBadges(riskEvents);
-    expect(b5.find((b) => b.id === "risk_aware")?.unlocked).toBe(true);
+    const b1 = evaluateBadges(riskEvents);
+    expect(b1.find((b) => b.id === "risk_namer")?.unlocked).toBe(true);
 
-    // 7. Unlock master_scout (quiz_passed or 3 missions)
-    const scoutEvents: LearningEvent[] = [
-      { type: "quiz_passed", timestamp: "2026-11-10T10:00:00Z" },
+    // 3. Unlock ratio_reader: at least one correct check for C3, C4 and C5
+    const ratioEvents: LearningEvent[] = [
+      { type: "check_answered_correct", conceptId: "C3", timestamp: "2026-11-10T10:00:00Z" },
+      { type: "check_answered_correct", conceptId: "C4", timestamp: "2026-11-10T10:01:00Z" },
+      { type: "check_answered_correct", conceptId: "C5", timestamp: "2026-11-10T10:02:00Z" },
     ];
-    const b6 = evaluateBadges(scoutEvents);
-    expect(b6.find((b) => b.id === "master_scout")?.unlocked).toBe(true);
+    const b2 = evaluateBadges(ratioEvents);
+    expect(b2.find((b) => b.id === "ratio_reader")?.unlocked).toBe(true);
+
+    // 4. Unlock diversifier: pass C8 applied mission
+    const divEvents: LearningEvent[] = [
+      { type: "mission_passed", conceptId: "C8", timestamp: "2026-11-10T10:00:00Z" },
+    ];
+    const b3 = evaluateBadges(divEvents);
+    expect(b3.find((b) => b.id === "diversifier")?.unlocked).toBe(true);
+
+    // 5. Unlock patient_capital: pass C7 mission and view five-year charts on 3 distinct stocks
+    const patientEvents: LearningEvent[] = [
+      { type: "mission_passed", conceptId: "C7", timestamp: "2026-11-10T10:00:00Z" },
+      { type: "chart_viewed", ticker: "INFY", timestamp: "2026-11-10T10:01:00Z" },
+      { type: "chart_viewed", ticker: "TCS", timestamp: "2026-11-10T10:02:00Z" },
+      { type: "chart_viewed", ticker: "LT", timestamp: "2026-11-10T10:03:00Z" },
+    ];
+    const b4 = evaluateBadges(patientEvents);
+    expect(b4.find((b) => b.id === "patient_capital")?.unlocked).toBe(true);
+
+    // 6. Unlock no_fomo: answer the fixed "double your money" item in C8 correctly
+    const fomoEvents: LearningEvent[] = [
+      {
+        type: "check_answered_correct",
+        conceptId: "C8",
+        itemId: "c8_check_3",
+        timestamp: "2026-11-10T10:00:00Z",
+      },
+    ];
+    const b5 = evaluateBadges(fomoEvents);
+    expect(b5.find((b) => b.id === "no_fomo")?.unlocked).toBe(true);
+
+    // 7. Unlock hinglish_pro: answer 3 checks correctly while locale is hi-en
+    const hinglishEvents: LearningEvent[] = [
+      { type: "check_answered_correct", conceptId: "C1", locale: "hi-en", timestamp: "2026-11-10T10:00:00Z" },
+      { type: "check_answered_correct", conceptId: "C2", locale: "hi-en", timestamp: "2026-11-10T10:01:00Z" },
+      { type: "check_answered_correct", conceptId: "C3", locale: "hi-en", timestamp: "2026-11-10T10:02:00Z" },
+    ];
+    const b6 = evaluateBadges(hinglishEvents);
+    expect(b6.find((b) => b.id === "hinglish_pro")?.unlocked).toBe(true);
   });
 });
 
