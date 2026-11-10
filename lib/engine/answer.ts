@@ -672,13 +672,13 @@ export function composeAnswer(
       } else if (topic === "concentration") {
         explanation =
           locale === "hi-en"
-            ? "Apni saari capital kisi ek stock mein daalna bohot bada concentration risk create karta hai. Bull kisi single stock ka recommendation ya return promise nahi deta. Aap apni preferences ke mutabiq diversified shortlist dekh sakte hain."
-            : "Concentrating capital into a single security exposes investors to significant drawdown risk. Bull does not recommend individual stocks or promise financial returns. You can explore a spread-out shortlist across multiple sectors after completing intake.";
+            ? "Bull investment advice, buy ya sell recommendation, ya target price provide nahi karta."
+            : "Bull does not recommend stocks, manage portfolios, or promise returns.";
       } else {
         explanation =
           locale === "hi-en"
-            ? "Bull ek educational tool hai aur koi buy ya sell advice, target price, ya recommendation provide nahi karta. Aap companies ke financial ratios ko dekh kar khud study kar sakte hain."
-            : "Bull is strictly an educational tool and does not provide buy or sell advice, target prices, or recommendations. We provide financial data so you can study companies independently.";
+            ? "Bull investment advice, buy ya sell recommendation, ya target price provide nahi karta."
+            : "Bull does not provide investment advice, buy or sell recommendations, or target prices.";
       }
 
       blocks.push({
