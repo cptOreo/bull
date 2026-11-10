@@ -87,7 +87,7 @@ describe("LLM 6-Pillar Rephrase Verification Suite", () => {
 
     it("accepts candidate when numbers appear in a different order", () => {
       const rephrased =
-        "As of 31 Mar 2024, compared to the 15.0% benchmark, this firm reports an ROE of 28.5%.";
+        "As of 31 Mar 2024, compared to the 15.0% benchmark, this company reports an ROE of 28.5% for capital efficiency.";
       expect(verifyRephrase(baseEnglish, rephrased, "en")).toBe(true);
     });
   });
@@ -129,23 +129,22 @@ describe("LLM 6-Pillar Rephrase Verification Suite", () => {
   });
 
   describe("Pillar 3: Length Bounds", () => {
-    it("rejects candidate that is too short (< 20% of original length)", () => {
-      const rephrased = "ROE is 28.5%.";
+    it("rejects candidate that is too short (< 70% of original length)", () => {
+      const rephrased = "ROE is 28.5% as of 31 Mar 2024.";
       expect(verifyRephrase(baseEnglish, rephrased, "en")).toBe(false);
     });
 
-    it("rejects candidate that is too long (> 150% of original length)", () => {
-      const filler = " Furthermore, it is very important to consider this detailed background repeatedly.";
+    it("rejects candidate that is too long (> 130% of original length)", () => {
+      const filler = " Note that capital allocation discipline remains essential across all market cycles.";
       const rephrased =
         "Capital efficiency is your priority; this firm reports an ROE of 28.5% as of 31 Mar 2024, exceeding the sector benchmark of 15.0%." +
-        filler +
         filler;
       expect(verifyRephrase(baseEnglish, rephrased, "en")).toBe(false);
     });
 
-    it("accepts candidate within valid length bounds (20% to 150%)", () => {
+    it("accepts candidate within valid length bounds (within 30%)", () => {
       const rephrased =
-        "You track capital efficiency; firm ROE is 28.5% vs 15.0% sector benchmark as of 31 Mar 2024.";
+        "Capital efficiency is your focus; this firm reports an ROE of 28.5% as of 31 Mar 2024, beating the sector benchmark of 15.0%.";
       expect(verifyRephrase(baseEnglish, rephrased, "en")).toBe(true);
     });
   });
@@ -180,6 +179,20 @@ describe("LLM 6-Pillar Rephrase Verification Suite", () => {
         "<b>Capital efficiency</b> is your priority; ROE is 28.5% as of 31 Mar 2024 vs 15.0% benchmark.";
       expect(verifyRephrase(baseEnglish, rephrased, "en")).toBe(false);
     });
+
+    it("rejects candidate containing URLs (http/https/www)", () => {
+      const withHttp =
+        "Capital efficiency is your priority; visit http://example.com for ROE 28.5% as of 31 Mar 2024 vs 15.0% benchmark.";
+      expect(verifyRephrase(baseEnglish, withHttp, "en")).toBe(false);
+
+      const withHttps =
+        "Capital efficiency is your priority; check https://bull.in for ROE 28.5% as of 31 Mar 2024 vs 15.0% benchmark.";
+      expect(verifyRephrase(baseEnglish, withHttps, "en")).toBe(false);
+
+      const withWww =
+        "Capital efficiency is your priority; see www.example.com for ROE 28.5% as of 31 Mar 2024 vs 15.0% benchmark.";
+      expect(verifyRephrase(baseEnglish, withWww, "en")).toBe(false);
+    });
   });
 
   describe("Pillar 5: Language/Script", () => {
@@ -189,7 +202,13 @@ describe("LLM 6-Pillar Rephrase Verification Suite", () => {
       expect(verifyRephrase(baseHinglish, devanagariText, "hi-en")).toBe(false);
     });
 
-    it("accepts Hinglish (hi-en) written strictly in Roman script", () => {
+    it("rejects Hinglish (hi-en) text lacking any romanized Hindi marker (§11.4)", () => {
+      const pureEnglish =
+        "Capital efficiency is your priority; this firm reports an ROE of 28.5% as of 31 Mar 2024, exceeding the sector benchmark of 15.0%.";
+      expect(verifyRephrase(baseHinglish, pureEnglish, "hi-en")).toBe(false);
+    });
+
+    it("accepts Hinglish (hi-en) written strictly in Roman script with Hindi markers", () => {
       const romanHinglish =
         "Aap capital efficiency par focus karte hain; company ka ROE 28.5% hai 31 Mar 2024 ko, jo benchmark 15.0% se zyada hai.";
       expect(verifyRephrase(baseHinglish, romanHinglish, "hi-en")).toBe(true);

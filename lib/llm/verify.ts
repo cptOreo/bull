@@ -5,9 +5,9 @@ import type { RephraseItemInput, RephraseItemOutput } from "./provider";
  * 6-Pillar Rephrase Verification Engine (§11.4):
  * 1. Numeric Preservation: multiset identity of all numbers, currency, ratios, and percentages.
  * 2. Entity Preservation: tickers, company names, and financial metrics preserved without illegal additions.
- * 3. Length Bounds: rephrased text must be between 20% and 150% of original character length.
- * 4. Shape Preservation: single sentence ending with a period, no internal linebreaks, fences, or HTML.
- * 5. Language/Script: Hinglish (hi-en) must remain in Roman script (zero Devanagari characters).
+ * 3. Length Bounds: rephrased text must be within 30% of original character length (§11.4).
+ * 4. Shape Preservation: single sentence ending with a period, no internal linebreaks, fences, HTML, or URLs.
+ * 5. Language/Script: Hinglish (hi-en) must remain in Roman script with at least one romanized Hindi marker.
  * 6. Safety: zero advice words (buy, sell, target, guaranteed, multibagger, recommend).
  */
 
@@ -15,6 +15,11 @@ const ADVICE_WORDS_REGEX =
   /\b(buy|buys|buying|sell|sells|selling|target|targets|guaranteed|guarantee|guarantees|multibagger|multibaggers|recommend|recommends|recommended|recommending|recommendation|recommendations)\b/i;
 
 const DEVANAGARI_REGEX = /[\u0900-\u097F\uA8E0-\uA8FF]/;
+
+const HINGLISH_MARKERS_REGEX =
+  /\b(hai|hain|ka|ke|ki|ko|mein|par|se|aur|bhi|aap|aapne|yeh|iski|iska|iske|tha|thi|hoga|hogi|dhyan|muqable|karte|karta|karti|karein)\b|\bis\s+(?:company|firm|stock|share|holding)\b/i;
+
+const URL_REGEX = /\bhttps?:\/\/\S+|\bwww\.\S+/i;
 
 const NUMERIC_TOKEN_REGEX =
   /(?:-?\s*₹\s*|-?\s*Rs\.?\s*)\d+(?:,\d+)*(?:\.\d+)?|\b\d+:\d+\b|-?\b\d+(?:\.\d+)?[xX]\b|-?\b\d+(?:,\d+)*(?:\.\d+)?%|-?\b\d+(?:,\d+)*(?:\.\d+)?\b/g;
@@ -144,20 +149,20 @@ function checkEntityPreservation(original: string, rephrased: string): boolean {
 }
 
 /**
- * Checks Pillar 3: Length Bounds (between 20% and 150% of original character length).
+ * Checks Pillar 3: Length Bounds (within 30% of original character length, §11.4).
  */
 function checkLengthBounds(original: string, rephrased: string): boolean {
   if (original.length === 0 || rephrased.length === 0) {
     return false;
   }
-  const minLen = Math.floor(original.length * 0.2);
-  const maxLen = Math.ceil(original.length * 1.5);
+  const minLen = Math.floor(original.length * 0.7);
+  const maxLen = Math.ceil(original.length * 1.3);
   return rephrased.length >= minLen && rephrased.length <= maxLen;
 }
 
 /**
  * Checks Pillar 4: Shape Preservation.
- * Single sentence ending in '.', no internal linebreaks, code fences, or HTML tags.
+ * Single sentence ending in '.', no internal linebreaks, code fences, HTML tags, or URLs.
  */
 function checkShapePreservation(rephrased: string): boolean {
   const trimmed = rephrased.trim();
@@ -168,6 +173,9 @@ function checkShapePreservation(rephrased: string): boolean {
     return false;
   }
   if (trimmed.includes("```") || /<[a-z][\s\S]*>/i.test(trimmed)) {
+    return false;
+  }
+  if (URL_REGEX.test(trimmed)) {
     return false;
   }
 
@@ -186,11 +194,17 @@ function checkShapePreservation(rephrased: string): boolean {
 
 /**
  * Checks Pillar 5: Language/Script.
- * Hinglish (hi-en) must remain in Roman script (no Devanagari Unicode characters).
+ * Hinglish (hi-en) must remain in Roman script (no Devanagari Unicode characters)
+ * and contain at least one romanized Hindi token (§11.4).
  */
 function checkLanguageScript(rephrased: string, locale: Locale): boolean {
-  if (locale === "hi-en" && DEVANAGARI_REGEX.test(rephrased)) {
-    return false;
+  if (locale === "hi-en") {
+    if (DEVANAGARI_REGEX.test(rephrased)) {
+      return false;
+    }
+    if (!HINGLISH_MARKERS_REGEX.test(rephrased)) {
+      return false;
+    }
   }
   // English sentences should also not contain Devanagari script
   if (locale === "en" && DEVANAGARI_REGEX.test(rephrased)) {
