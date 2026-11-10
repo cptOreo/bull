@@ -1,11 +1,12 @@
-<<<<<<< HEAD
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 import type { Freshness, FreshnessKind } from "@/lib/data/provenance";
 import { badgeFor, WHY_DATED } from "@/lib/data/provenance";
 
-export interface DataBadgeProps {
+export interface DataBadgeProps extends React.HTMLAttributes<HTMLElement> {
   asOf: string;
   sourceLabel?: string;
   kind?: FreshnessKind;
@@ -13,31 +14,21 @@ export interface DataBadgeProps {
   freshness?: Freshness;
   text?: string;
   detail?: string | null;
-  className?: string;
-=======
-import React from "react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import type { Freshness } from "@/lib/data/provenance";
-
-export interface DataBadgeProps extends React.HTMLAttributes<HTMLAnchorElement> {
-  asOf: string;
-  freshness?: Freshness;
-  sourceLabel?: string;
   href?: string;
->>>>>>> subagent-Batch-12-Implementer-self-78083b73
+  className?: string;
 }
 
 export function DataBadge({
   asOf,
-<<<<<<< HEAD
   sourceLabel = "Audited filings",
   kind = "financials",
   now,
   freshness,
   text,
   detail,
+  href,
   className = "",
+  ...props
 }: DataBadgeProps) {
   const [open, setOpen] = useState(false);
 
@@ -68,7 +59,7 @@ export function DataBadge({
   const currentStyle = colorStyles[effectiveFreshness] || colorStyles.current;
 
   return (
-    <div className={`relative inline-block ${className}`}>
+    <div className={cn("relative inline-block", className)} {...props}>
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -79,9 +70,12 @@ export function DataBadge({
         aria-expanded={open}
         aria-haspopup="dialog"
         title={displayDetail ?? displayText}
-        className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-mono font-medium border transition-colors cursor-pointer hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-emerald-500 ${currentStyle.badge}`}
+        className={cn(
+          "inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-mono font-medium border transition-colors cursor-pointer hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-emerald-500",
+          currentStyle.badge
+        )}
       >
-        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${currentStyle.dot}`} />
+        <span className={cn("w-1.5 h-1.5 rounded-full shrink-0", currentStyle.dot)} />
         <span className="truncate">{displayText}</span>
         <svg
           className="w-3 h-3 opacity-60 ml-0.5"
@@ -109,13 +103,13 @@ export function DataBadge({
           >
             <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-100 dark:border-zinc-800">
               <span className="font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
-                <span className={`w-2 h-2 rounded-full ${currentStyle.dot}`} />
+                <span className={cn("w-2 h-2 rounded-full", currentStyle.dot)} />
                 {currentStyle.text}
               </span>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-0.5 rounded"
+                className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 p-0.5 rounded cursor-pointer"
                 aria-label="Close"
               >
                 ✕
@@ -136,6 +130,16 @@ export function DataBadge({
               <span>As of: {asOf}</span>
               <span>Source: {sourceLabel}</span>
             </div>
+            {href && (
+              <div className="mt-2 text-right">
+                <Link
+                  href={href}
+                  className="text-[11px] text-emerald-600 dark:text-emerald-400 hover:underline"
+                >
+                  Learn more →
+                </Link>
+              </div>
+            )}
           </div>
         </>
       )}
@@ -144,49 +148,3 @@ export function DataBadge({
 }
 
 export default DataBadge;
-=======
-  freshness = "current",
-  sourceLabel,
-  href = "/method",
-  className,
-  ...props
-}: DataBadgeProps) {
-  const statusStyles: Record<Freshness, { dot: string; text: string; bg: string }> = {
-    current: {
-      dot: "bg-emerald-500",
-      text: "text-emerald-700 dark:text-emerald-300",
-      bg: "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/60 dark:border-emerald-800/60",
-    },
-    stale: {
-      dot: "bg-amber-500",
-      text: "text-amber-700 dark:text-amber-300",
-      bg: "bg-amber-50 dark:bg-amber-950/40 border-amber-200/60 dark:border-amber-800/60",
-    },
-    expired: {
-      dot: "bg-rose-500",
-      text: "text-rose-700 dark:text-rose-300",
-      bg: "bg-rose-50 dark:bg-rose-950/40 border-rose-200/60 dark:border-rose-800/60",
-    },
-  };
-
-  const style = statusStyles[freshness];
-
-  return (
-    <Link
-      href={href}
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-mono font-medium transition-colors hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400",
-        style.bg,
-        style.text,
-        className
-      )}
-      title={sourceLabel ? `Source: ${sourceLabel} (as of ${asOf})` : `As of ${asOf}`}
-      {...props}
-    >
-      <span className={cn("h-1.5 w-1.5 rounded-full shrink-0", style.dot)} aria-hidden="true" />
-      <span>As of {asOf}</span>
-      {sourceLabel && <span className="opacity-75">· {sourceLabel}</span>}
-    </Link>
-  );
-}
->>>>>>> subagent-Batch-12-Implementer-self-78083b73
