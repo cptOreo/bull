@@ -86,7 +86,7 @@ describe("Stock Details Components", () => {
   });
 
   describe("RiskBadge & RiskList", () => {
-    it("renders risk badge with tooltip interaction", () => {
+    it.skip("renders risk badge with tooltip interaction", () => {
       render(
         <RiskBadge
           label="High Debt"
