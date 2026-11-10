@@ -155,6 +155,29 @@ export type DetailSection = { id: string; title: string; rows: Array<{ label: st
 export type ComparisonRow = { label: string; stockAValue: string; stockBValue: string };
 export type NewsItemView = { headline: string; summary: string; sourceName: string; publishedAt: string; kind: "fact" | "commentary" | "announcement"; sourceUrl: string | null };
 
+export type LiveStockSnapshot = {
+  ticker: string;
+  name: string;
+  price: number;
+  currency: string;
+  change: number;
+  changePercent: number;
+  dayHigh: number | null;
+  dayLow: number | null;
+  fiftyTwoWeekHigh: number | null;
+  fiftyTwoWeekLow: number | null;
+  marketCap: number | null;
+  marketCapFormatted: string;
+  peRatio: number | null;
+  dividendYield: number | null;
+  sector: string | null;
+  industry: string | null;
+  summary: string | null;
+  strengths: string[];
+  watchouts: string[];
+  asOf: string;
+};
+
 export type Block =
   | { type: "text"; text: string }
   | { type: "intake_question"; field: ProfileField; question: string; options: Option[] }
@@ -162,6 +185,7 @@ export type Block =
   | { type: "profile_summary"; profile: Profile; assumed: ProfileField[] }
   | { type: "shortlist"; cards: ShortlistCard[]; thinFit: boolean; sectors: number; diversityNote: string; howChosen: HowChosenView }
   | { type: "stock_detail"; ticker: string; sections: DetailSection[] }
+  | { type: "stock_snapshot"; snapshot: LiveStockSnapshot }
   | { type: "comparison"; tickers: [string, string]; rows: ComparisonRow[] }
   | { type: "news"; items: NewsItemView[] }
   | { type: "coverage_miss"; name: string; reason: string | null }

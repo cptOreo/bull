@@ -1,4 +1,4 @@
-import type { Locale } from "@/lib/engine/types";
+import type { Locale, LiveStockSnapshot } from "@/lib/engine/types";
 
 export interface RephraseItemInput {
   id: string;
@@ -17,6 +17,11 @@ export interface LlmProvider {
     items: Array<{ id: string; text: string; locale: Locale }>,
     signal?: AbortSignal
   ): Promise<Array<{ id: string; text: string }>>;
+  generateStockCommentary?(
+    snapshot: LiveStockSnapshot,
+    userQuery: string,
+    signal?: AbortSignal
+  ): Promise<string | null>;
 }
 
 export type RephraseProvider = LlmProvider;

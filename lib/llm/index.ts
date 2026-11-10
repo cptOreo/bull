@@ -12,6 +12,7 @@ export * from "./verify";
 export * from "./gemini";
 export * from "./groq";
 export * from "./openrouter";
+export * from "./slopmonster";
 
 /**
  * Shared session circuit breaker (§11.2).

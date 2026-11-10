@@ -19,6 +19,7 @@ import { DataBadge } from "@/components/ui/data-badge";
 import { EducationNote } from "@/components/ui/education-note";
 import { copyEn } from "@/content/copy.en";
 import { copyHiEn } from "@/content/copy.hi-en";
+import { StockSnapshotCard } from "./stock-snapshot-card";
 
 export interface MessageBubbleProps {
   sender: "user" | "assistant";
@@ -654,6 +655,13 @@ export function MessageBubble({
                         ticker={block.ticker}
                         sections={block.sections}
                         locale={locale}
+                      />
+                    );
+                  case "stock_snapshot":
+                    return (
+                      <StockSnapshotCard
+                        key={index}
+                        snapshot={block.snapshot}
                       />
                     );
                   case "comparison":
