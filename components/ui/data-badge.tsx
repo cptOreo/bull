@@ -27,7 +27,8 @@ export function DataBadge({
 }: DataBadgeProps) {
   const [open, setOpen] = useState(false);
 
-  const calculated = badgeFor(asOf, kind, now, sourceLabel);
+  const safeNow = now || new Date().toISOString();
+  const calculated = badgeFor(asOf, kind, safeNow, sourceLabel);
   const effectiveFreshness: Freshness = freshness ?? calculated.freshness;
   const displayText = text ?? calculated.text;
   const displayDetail = detail ?? calculated.detail;

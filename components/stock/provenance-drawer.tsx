@@ -191,7 +191,12 @@ export function ProvenanceDrawer({
                   </div>
                   <div className="text-xs text-zinc-600 dark:text-zinc-400">
                     Source: <span className="font-mono">{details.rung1.source}</span>
-                    {details.rung1.pageOrNote && <span> · {details.rung1.pageOrNote}</span>}
+                    {details.rung1.pageOrNote && (
+                      <>
+                        <span> · </span>
+                        <span>{details.rung1.pageOrNote}</span>
+                      </>
+                    )}
                   </div>
                   {details.rung1.timestamp && (
                     <div className="text-[11px] font-mono text-zinc-400">
@@ -331,7 +336,7 @@ export function ProvenanceDrawer({
             <button
               type="button"
               onClick={onClose}
-              aria-label="Close provenance drawer"
+              aria-label="Dismiss"
               className="p-1 rounded-md text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800"
             >
               ✕
@@ -385,7 +390,7 @@ export function ProvenanceDrawer({
                     </div>
                     {isActive && (
                       <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200 font-semibold">
-                        ACTIVE
+                        ACTIVE RUNG
                       </span>
                     )}
                   </div>
