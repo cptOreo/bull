@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  baseSnapshotSchema,
   corporateActionSchema,
   exclusionSchema,
   financialsSchema,
@@ -11,6 +12,8 @@ import {
   snapshotSchema,
   sourceSchema,
   stockSchema,
+  type CorporateAction,
+  type Dated,
 } from "@/lib/data/schema";
 
 const monthly = {
@@ -359,19 +362,270 @@ describe("snapshot", () => {
   };
 
   it("accepts a structurally valid shell", () => {
-    expect(snapshotSchema.safeParse(base).success).toBe(true);
+    expect(baseSnapshotSchema.safeParse(base).success).toBe(true);
   });
 
   it("rejects a snapshot id without a revision suffix", () => {
-    expect(snapshotSchema.safeParse({ ...base, snapshotId: "2026-11-10" }).success).toBe(false);
+    expect(baseSnapshotSchema.safeParse({ ...base, snapshotId: "2026-11-10" }).success).toBe(false);
   });
 
   it("rejects an unknown schema version", () => {
-    expect(snapshotSchema.safeParse({ ...base, schemaVersion: "1.1.0" }).success).toBe(false);
+    expect(baseSnapshotSchema.safeParse({ ...base, schemaVersion: "1.1.0" }).success).toBe(false);
   });
 
   it("rejects a top-level unknown key", () => {
-    expect(snapshotSchema.safeParse({ ...base, extra: true }).success).toBe(false);
+    expect(baseSnapshotSchema.safeParse({ ...base, extra: true }).success).toBe(false);
   });
 });
 
+
+function makeSnapshot() {
+  const source = {
+    id: "manual:screener.in:2026-11-10",
+    label: "Screener.in — manually transcribed 10 Nov 2026",
+    publisher: "Screener.in",
+    url: "https://www.screener.in/company/ITC/consolidated/",
+    retrievedAt: "2026-11-10T18:30:00+05:30",
+    method: "manual_transcription" as const,
+    licence: "personal_research" as const,
+    note: null,
+  };
+
+  const year = (n: number) => ({
+    fy: `FY${2022 + n}`,
+    periodEnd: `${2022 + n}-03-31`,
+    sourceId: source.id,
+    revenueCr: 60000 + n * 3000,
+    ebitdaCr: 24000 + n * 500,
+    ebitCr: 23000 + n * 500,
+    patCr: 18000 + n * 600,
+    epsInr: 14.4 + n * 0.5,
+    dpsInr: 12 + n,
+    netWorthCr: 44000 + n * 1000,
+    totalDebtCr: 1500 - n * 50,
+    interestExpenseCr: 140,
+    operatingCashFlowCr: 17500 + n * 400,
+    sharesOutstandingCr: 1250,
+  });
+
+  const monthlyPoints = Array.from({ length: 13 }, (_, i) => {
+    const year = 2025 + Math.floor((10 + i) / 12);
+    const month = ((10 + i) % 12) + 1;
+    return { date: `${year}-${String(month).padStart(2, "0")}-01`, close: 1400 + i * 6 };
+  });
+
+  const dailyDates = [
+    "2026-10-27",
+    "2026-10-28",
+    "2026-10-29",
+    "2026-10-30",
+    "2026-10-31",
+    "2026-11-01",
+    "2026-11-02",
+    "2026-11-03",
+    "2026-11-04",
+    "2026-11-05",
+  ];
+
+  const dailyPoints = dailyDates.map((date, i) => ({
+    date,
+    close: 1470 + i,
+  }));
+
+  const stock = {
+    ticker: "ITC",
+    name: "ITC Limited",
+    isin: "INE154A01025",
+    sectorId: "fmcg",
+    sectorModel: "non_financial" as const,
+    nifty50Member: { value: true, asOf: "2026-11-10", source: source.id } as Dated<boolean>,
+    businessSummary: { value: "Cigarettes, packaged foods and paperboards.", asOf: "2026-03-31", source: source.id },
+    segments: { value: ["Cigarettes", "Foods", "Paperboards"], asOf: "2026-03-31", source: source.id },
+    prices: {
+      value: { currency: "INR" as const, granularity: "monthly_close" as const, points: monthlyPoints },
+      asOf: "2026-11-01",
+      source: source.id,
+    },
+    recentPrices: {
+      value: { currency: "INR" as const, granularity: "daily_close" as const, points: dailyPoints },
+      asOf: "2026-11-05",
+      source: source.id,
+    },
+    financials: {
+      currency: "INR" as const,
+      units: "crore" as const,
+      basis: "consolidated" as const,
+      annual: { value: [0, 1, 2, 3, 4].map(year), asOf: "2026-03-31", source: source.id },
+    },
+    corporateActions: [] as CorporateAction[],
+  };
+
+  const indexPoints = monthlyPoints.map((p) => ({ date: p.date, close: 22000 + (p.close - 1400) * 3 }));
+
+  return {
+    schemaVersion: "1.0.0" as const,
+    snapshotId: "2026-11-10.1",
+    generatedAt: "2026-11-10T18:30:00+05:30",
+    generatedBy: "manual_transcription" as const,
+    note: "Course prototype seed.",
+    sources: [source],
+    index: {
+      id: "NIFTY50" as const,
+      name: "Nifty 50",
+      prices: {
+        value: { granularity: "monthly_close" as const, points: indexPoints },
+        asOf: "2026-11-01",
+        source: source.id,
+      },
+    },
+    sectors: [
+      {
+        id: "fmcg",
+        name: "Fast Moving Consumer Goods",
+        description: { value: "Packaged consumer goods.", asOf: "2026-11-10", source: source.id },
+        medianPe: { value: 28.4, asOf: "2026-11-10", source: source.id } as Dated<number>,
+        medianPb: { value: 8.2, asOf: "2026-11-10", source: source.id } as Dated<number>,
+      },
+    ],
+    stocks: [stock],
+    news: [
+      {
+        id: "news-itc-1",
+        ticker: "ITC",
+        headline: "ITC reports September quarter results",
+        summary: "ITC reported revenue growth in its September quarter filing to the exchanges.",
+        publishedAt: "2026-11-05T17:45:00+05:30",
+        sourceName: "Exchange filing",
+        sourceUrl: "https://www.nseindia.com/",
+        kind: "announcement" as const,
+        sourceId: source.id,
+      },
+    ],
+    exclusions: [],
+  };
+}
+
+function expectFailure(mutate: (snap: ReturnType<typeof makeSnapshot>) => void, messagePart: string) {
+  const snap = makeSnapshot();
+  mutate(snap);
+  const result = snapshotSchema.safeParse(snap);
+  expect(result.success).toBe(false);
+  if (!result.success) {
+    const messages = result.error.issues.map((i) => i.message).join(" | ");
+    expect(messages).toContain(messagePart);
+  }
+}
+
+describe("snapshot refinements", () => {
+  it("accepts the base fixture", () => {
+    const result = snapshotSchema.safeParse(makeSnapshot());
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects duplicate stock identity", () => {
+    expectFailure((s) => {
+      s.stocks.push({ ...s.stocks[0], ticker: "ITC" });
+    }, "Duplicate stock identity");
+  });
+
+  it("rejects an unknown source reference", () => {
+    expectFailure((s) => {
+      s.stocks[0].financials.annual.value[0].sourceId = "manual:missing:2026-11-10";
+    }, "Unknown source");
+  });
+
+  it("rejects a null Dated value with no note", () => {
+    expectFailure((s) => {
+      s.stocks[0].nifty50Member = { value: null, asOf: "2026-11-10", source: s.sources[0].id };
+    }, "Missing null explanation");
+  });
+
+  it("rejects a future-dated value", () => {
+    expectFailure((s) => {
+      s.stocks[0].nifty50Member.asOf = "2026-12-01";
+    }, "Future-dated or mislabelled value");
+  });
+
+  it("rejects a mislabelled financials block asOf", () => {
+    expectFailure((s) => {
+      s.stocks[0].financials.annual.asOf = "2026-02-28";
+    }, "Future-dated or mislabelled value");
+  });
+
+  it("rejects four financial years", () => {
+    expectFailure((s) => {
+      s.stocks[0].financials.annual.value = s.stocks[0].financials.annual.value.slice(0, 4);
+    }, "Financial history incomplete");
+  });
+
+  it("rejects a non-contiguous financial year", () => {
+    expectFailure((s) => {
+      s.stocks[0].financials.annual.value[2].fy = "FY2021";
+    }, "Financial history incomplete");
+  });
+
+  it("rejects a monthly series labelled daily", () => {
+    expectFailure((s) => {
+      s.stocks[0].prices.value.granularity = "daily_close" as never;
+    }, "Price series granularity invalid");
+  });
+
+  it("rejects a monthly series whose last date is not the block asOf", () => {
+    expectFailure((s) => {
+      s.stocks[0].prices.asOf = "2026-10-01";
+    }, "Price series invalid");
+  });
+
+  it("rejects a duplicate month in the monthly series", () => {
+    expectFailure((s) => {
+      s.stocks[0].prices.value.points[3].date = s.stocks[0].prices.value.points[2].date;
+      s.stocks[0].prices.asOf = s.stocks[0].prices.value.points[s.stocks[0].prices.value.points.length - 1].date;
+    }, "Price series invalid");
+  });
+
+  it("rejects nine daily points", () => {
+    expectFailure((s) => {
+      s.stocks[0].recentPrices.value.points = s.stocks[0].recentPrices.value.points.slice(0, 9);
+      s.stocks[0].recentPrices.asOf = s.stocks[0].recentPrices.value.points[8].date;
+    }, "Recent price series invalid");
+  });
+
+  it("rejects a recent tail that predates the monthly series", () => {
+    expectFailure((s) => {
+      s.stocks[0].recentPrices.asOf = "2026-01-01";
+      s.stocks[0].recentPrices.value.points = s.stocks[0].recentPrices.value.points.map((p, i) => ({
+        date: `2025-12-${String(20 + i).padStart(2, "0")}`,
+        close: p.close,
+      }));
+      s.stocks[0].prices.asOf = "2026-11-01";
+    }, "Recent series predates the monthly series");
+  });
+
+  it("rejects a missing sector valuation", () => {
+    expectFailure((s) => {
+      s.sectors[0].medianPe = { value: null, asOf: "2026-11-10", source: s.sources[0].id, note: "No data." };
+    }, "Sector valuation missing");
+  });
+
+  it("rejects price windows more than 31 days apart", () => {
+    expectFailure((s) => {
+      s.index.prices.value.points = s.index.prices.value.points.slice(2);
+      s.index.prices.asOf = s.index.prices.value.points[s.index.prices.value.points.length - 1].date;
+    }, "Series not comparable");
+  });
+
+  it("rejects two corporate actions of one type in one year", () => {
+    expectFailure((s) => {
+      const action = {
+        id: "ca-1",
+        type: "bonus" as const,
+        effectiveDate: "2025-06-01",
+        listingDate: null,
+        description: "A bonus issue.",
+        successorTickers: [],
+        sourceId: s.sources[0].id,
+      };
+      s.stocks[0].corporateActions = [action, { ...action, id: "ca-2", effectiveDate: "2025-09-01" }];
+    }, "Duplicate corporate action");
+  });
+});
