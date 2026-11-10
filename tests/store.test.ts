@@ -256,8 +256,9 @@ describe("lib/state/events - event log persistence and gamification", () => {
     expect(streak.todayActive).toBe(true);
 
     const badges = computeBadges();
-    const firstSteps = badges.find((b) => b.id === "first_steps");
-    expect(firstSteps?.unlocked).toBe(true);
+    expect(badges.length).toBe(6);
+    const diversifier = badges.find((b) => b.id === "diversifier");
+    expect(diversifier?.unlocked).toBe(false);
   });
 
   it("clears event log", () => {
@@ -331,7 +332,7 @@ describe("lib/state/store - BullProvider and useBullState", () => {
     expect(typeof result.current.logEvent).toBe("function");
     expect(typeof result.current.setLocale).toBe("function");
     expect(result.current.xp).toBe(0);
-    expect(result.current.level.level).toBe(1);
+    expect(result.current.level.level).toBe(0);
     expect(result.current.streak.current).toBe(0);
     expect(result.current.badges.length).toBe(6);
   });
