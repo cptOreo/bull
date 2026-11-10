@@ -20,7 +20,7 @@ export type IntentType =
   | "prompt_injection"
   | "general_chat";
 
-export type BoundaryTopic = "advice" | "concentration" | "injection";
+export type BoundaryTopic = "advice" | "concentration" | "injection" | "universe";
 
 export type ClassifiedEntities = {
   tickers: string[];
@@ -407,6 +407,30 @@ export function classify(
     };
   }
 
+  // Off-universe assets or exclusions (evaluated before shortlist cues so off-universe requests are not routed to intake)
+  if (unknownEntities.length > 0 && matchedCoveredTickers.length === 0) {
+    const isPenny = unknownEntities.some((u) => ["penny stock", "penny stocks"].includes(u));
+    if (isPenny) {
+      return {
+        route: "boundary",
+        intent: "boundary_violation",
+        boundaryTopic: "universe",
+        confidence: 0.95,
+        ruleIndex: 10,
+        matchedRule: "Rule 10: Penny stocks boundary violation",
+        entities: allEntities,
+      };
+    }
+    return {
+      route: "coverage_miss",
+      intent: "boundary_violation",
+      confidence: 0.95,
+      ruleIndex: 10,
+      matchedRule: "Rule 10: Uncovered company, exclusion, or off-universe asset",
+      entities: allEntities,
+    };
+  }
+
   // Rule 7: Shortlist cue with a complete profile
   const hasShortlistCue = hasCue(message, CUES.shortlist);
   if (hasShortlistCue && isProfileFullyComplete(profile)) {
@@ -498,7 +522,7 @@ export function classify(
 
   if (entities.concepts.length > 0) {
     return {
-      route: "clarify",
+      route: "concept",
       intent: "concept_query",
       confidence: 0.85,
       ruleIndex: 12,

@@ -397,13 +397,14 @@ function BoundaryBlock({
   topic,
   explanation,
 }: {
-  topic: "advice" | "concentration" | "injection";
+  topic: "advice" | "concentration" | "injection" | "universe";
   explanation: string;
 }) {
   const topicTitles: Record<string, string> = {
     advice: "Investment Advice Boundary",
     concentration: "Concentration Risk Boundary",
     injection: "Prompt Injection Boundary",
+    universe: "Universe Scope Boundary",
   };
 
   return (

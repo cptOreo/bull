@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BASE="$1"
+HEAD="$2"
+OUT=".superpowers/sdd/2026-11-10-bull-v0/review-${BASE}..${HEAD}.diff"
+
+echo "# Review package: ${BASE}..${HEAD}" > "$OUT"
+echo "" >> "$OUT"
+echo "## Commits" >> "$OUT"
+git log --oneline "${BASE}..${HEAD}" >> "$OUT"
+echo "" >> "$OUT"
+echo "## Files changed" >> "$OUT"
+git diff --stat "${BASE}..${HEAD}" >> "$OUT"
+echo "" >> "$OUT"
+echo "## Diff" >> "$OUT"
+git diff "${BASE}..${HEAD}" >> "$OUT"
+
+echo "Wrote ${OUT}"

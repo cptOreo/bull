@@ -19,7 +19,9 @@ import type {
   ScoredStock,
   ShortlistCard,
   TurnInput,
+  ConceptId,
 } from "./types";
+import { CONCEPTS } from "./curriculum";
 import { classify } from "./classify";
 import {
   parseIntakeMessage,
@@ -150,6 +152,7 @@ function getStandardConfigRefs(): Ref[] {
     createConfigRef("config:benchmark:patCagr", 8.0, "percent"),
     createConfigRef("config:benchmark:indexVolatility", 16.8, "percent"),
     createConfigRef("config:benchmark:indexDrawdown", -22.4, "percent"),
+    createConfigRef("config:threshold:drawdown", -20.0, "percent"),
     createConfigRef("config:benchmark:de", 1.0, "ratio"),
     createConfigRef("config:intake:1", 1, "count"),
     createConfigRef("config:intake:2", 2, "count"),
@@ -303,8 +306,14 @@ export function composeAnswer(
       );
       registerProfileRefs(resolvedProfile);
 
-      // Score universe
-      const scoredStocks: ScoredStock[] = snapshot.stocks.map((stock) => {
+      // Score universe (or filter to requested sector if sector query)
+      const requestedSector = classification.entities.sectors[0];
+      const stocksToScore =
+        requestedSector && classification.intent === "sector_query"
+          ? snapshot.stocks.filter((s) => s.sectorId === requestedSector)
+          : snapshot.stocks;
+
+      const scoredStocks: ScoredStock[] = stocksToScore.map((stock) => {
         const metrics = getStockMetrics(stock, snapshot, now);
         registerAllMetricRefs(stock, metrics, refsMap);
         return scoreStock(resolvedProfile, metrics, stock);
@@ -680,6 +689,11 @@ export function composeAnswer(
           locale === "hi-en"
             ? "Bull investment advice, buy ya sell recommendation, ya target price provide nahi karta."
             : "Bull does not recommend stocks, manage portfolios, or promise returns.";
+      } else if (topic === "universe") {
+        explanation =
+          locale === "hi-en"
+            ? "Bull sirf Nifty 50 companies track karta hai. Penny stocks, crypto, ya non-index securities out of scope hain."
+            : "Bull strictly tracks selected Nifty 50 companies for educational discovery. Penny stocks, speculative assets, and non-index securities are outside our scope.";
       } else {
         explanation =
           locale === "hi-en"
@@ -691,6 +705,23 @@ export function composeAnswer(
         type: "boundary",
         topic,
         explanation,
+      });
+
+      blocks.push({
+        type: "education_note",
+        text: EDUCATION_NOTE_TEXT[locale],
+      });
+      break;
+    }
+
+    case "concept": {
+      const conceptId = classification.entities.concepts[0] as ConceptId | undefined;
+      const concept = CONCEPTS.find((c) => c.id === conceptId) ?? CONCEPTS[2]; // Default to C3 (P/E ratio)
+      const text = `${concept.title}: ${concept.summary}. ${concept.step1Idea}`;
+
+      blocks.push({
+        type: "text",
+        text,
       });
 
       blocks.push({

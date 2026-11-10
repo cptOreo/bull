@@ -1,4 +1,5 @@
 import type { Snapshot, Stock } from "@/lib/data/schema";
+export type { Snapshot, Stock };
 
 export type Locale = "en" | "hi-en";
 export type Goal = "grow_wealth" | "dividends" | "learn" | "preserve";
@@ -164,7 +165,7 @@ export type Block =
   | { type: "comparison"; tickers: [string, string]; rows: ComparisonRow[] }
   | { type: "news"; items: NewsItemView[] }
   | { type: "coverage_miss"; name: string; reason: string | null }
-  | { type: "boundary"; topic: "advice" | "concentration" | "injection"; explanation: string }
+  | { type: "boundary"; topic: "advice" | "concentration" | "injection" | "universe"; explanation: string }
   | { type: "limitations"; items: string[] }
   | { type: "education_note"; text: string };
 
@@ -177,7 +178,8 @@ export type Route =
   | "coverage_miss"
   | "boundary"
   | "intake"
-  | "clarify";
+  | "clarify"
+  | "concept";
 
 export type Answer = {
   route: Route;
