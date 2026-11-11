@@ -4,23 +4,18 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useBull } from "@/lib/state/use-bull";
-import { copyEn } from "@/content/copy.en";
-import { copyHiEn } from "@/content/copy.hi-en";
 
 export function Navbar() {
   const pathname = usePathname();
   const { locale, setLocale, streak, level, xp } = useBull();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const copy = locale === "hi-en" ? copyHiEn : copyEn;
-
   const navLinks = [
-    { href: "/", label: copy.nav.chat },
-    { href: "/shortlist", label: copy.nav.shortlist },
-    { href: "/compare", label: copy.nav.compare },
-    { href: "/academy", label: copy.nav.academy },
-    { href: "/progress", label: copy.nav.progress },
-    { href: "/method", label: copy.nav.method },
+    { href: "/", label: "Studio" },
+    { href: "/learn", label: "Skill Tree" },
+    { href: "/practice", label: "Practice Arena" },
+    { href: "/research", label: "Stock Research" },
+    { href: "/profile", label: "Progress & Badges" },
   ];
 
   const toggleLocale = () => {
@@ -52,9 +47,14 @@ export function Navbar() {
                 <path d="M6 14l6 6 6-6" />
               </svg>
             </div>
-            <span className="font-bold tracking-tight text-zinc-900 dark:text-zinc-100 text-lg">
-              Bull
-            </span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-bold tracking-tight text-zinc-900 dark:text-zinc-100 text-lg">
+                Bull
+              </span>
+              <span className="text-[10px] font-mono font-semibold px-1.5 py-0.2 rounded bg-primary/10 text-primary">
+                v2.0
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Nav Links */}
@@ -67,7 +67,7 @@ export function Navbar() {
                   href={link.href}
                   className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                     isActive
-                      ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 font-semibold"
+                      ? "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 font-bold"
                       : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-900"
                   }`}
                 >
@@ -82,7 +82,7 @@ export function Navbar() {
         <div className="flex items-center gap-2.5">
           {/* Streak pill */}
           <Link
-            href="/academy"
+            href="/profile"
             title={`${streak.current} day learning streak (${streak.todayActive ? "Active today" : "Not yet active today"})`}
             className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-mono font-medium border border-amber-200/90 bg-amber-50/80 text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300 hover:opacity-90 transition-opacity"
           >
@@ -92,7 +92,7 @@ export function Navbar() {
 
           {/* XP & Level pill */}
           <Link
-            href="/progress"
+            href="/profile"
             title={`Level ${level.level}: ${level.title} (${xp} XP)`}
             className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-medium border border-zinc-200 dark:border-zinc-800 bg-zinc-100/80 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-200/60 dark:hover:bg-zinc-800 transition-colors"
           >

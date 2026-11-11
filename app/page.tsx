@@ -261,13 +261,76 @@ export default function HomePage() {
           <div className="flex items-center gap-3 shrink-0">
             <DataBadge asOf="2026-11-10" sourceLabel="Audited Reports & Live Feed" freshness="current" />
             <Link
-              href="/shortlist"
+              href="/learn"
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 active:scale-95 transition-all shadow-xs"
             >
-              <span>{copy.nav.shortlist}</span>
+              <span>Explore Skill Tree</span>
               <span aria-hidden="true">→</span>
             </Link>
           </div>
+        </div>
+
+        {/* ── QUICK PORTAL CARDS TO PHASE 2 PLATFORM ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+          <Link
+            href="/learn"
+            className="p-4 rounded-2xl border border-primary/20 bg-primary/5 hover:border-primary/40 hover:bg-primary/10 transition-all flex items-start gap-3 group"
+          >
+            <div className="h-10 w-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0 font-bold shadow-xs">
+              🌳
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
+                  Financial Skill Tree
+                </span>
+                <span className="text-xs text-primary font-semibold group-hover:translate-x-0.5 transition-transform">→</span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                33 concepts across 4 tracks with 5-step applied lessons &amp; real stocks.
+              </p>
+            </div>
+          </Link>
+
+          <Link
+            href="/practice"
+            className="p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5 hover:border-amber-500/40 hover:bg-amber-500/10 transition-all flex items-start gap-3 group"
+          >
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center shrink-0 font-bold shadow-xs">
+              🎯
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                  Practice Arena
+                </span>
+                <span className="text-xs text-amber-600 dark:text-amber-400 font-semibold group-hover:translate-x-0.5 transition-transform">→</span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                12 hands-on scenarios: DCF Builder, Red Flag Audits &amp; Peer Valuation.
+              </p>
+            </div>
+          </Link>
+
+          <Link
+            href="/profile"
+            className="p-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all flex items-start gap-3 group"
+          >
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center shrink-0 font-bold shadow-xs">
+              🏆
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-sm text-foreground group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                  Progress &amp; Heatmap
+                </span>
+                <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold group-hover:translate-x-0.5 transition-transform">→</span>
+              </div>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                33-node curriculum heatmap, 12 achievement badges &amp; streak calendar.
+              </p>
+            </div>
+          </Link>
         </div>
 
         {/* ── UNIVERSAL LIVE SEARCH BAR (Cmd + K) ── */}
