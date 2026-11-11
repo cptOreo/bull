@@ -1,8 +1,11 @@
 "use client";
 
-import React from "react";
-import type { MetricSet } from "@/lib/engine/types";
-import { formatPercent, formatRatio, formatTimes } from "@/lib/engine/format";
+import * as React from "react";
+import { cn } from "@/lib/utils/cn";
+import { Card } from "@/ui/card";
+import { GlossaryTooltip } from "@/ui/glossary-tooltip";
+import { formatPercent, formatRatio } from "@/lib/engine/format";
+import { TrendingUp, TrendingDown, Minus, HelpCircle } from "lucide-react";
 
 export interface RatioItem {
   id: string;
@@ -16,7 +19,21 @@ export interface RatioItem {
 }
 
 export interface RatioGridProps {
-  metrics?: MetricSet;
+  stock?: {
+    peRatio?: number | null;
+    pbRatio?: number | null;
+    roe?: number | null;
+    roce?: number | null;
+    debtToEquity?: number | null;
+    operatingMargin?: number | null;
+    netMargin?: number | null;
+    dividendYield?: number | null;
+  };
+  metrics?: {
+    sectorModel?: string;
+    values: Record<string, number | null | undefined>;
+    asOfDates?: Record<string, string>;
+  };
   ratios?: RatioItem[];
   sectorModel?: "financial" | "non_financial";
   asOfDefault?: string;
@@ -25,7 +42,19 @@ export interface RatioGridProps {
   className?: string;
 }
 
+const STOCK_RATIOS = [
+  { key: "peRatio", label: "P/E Ratio", format: (v: number) => `${v.toFixed(1)}x`, tooltip: "pe" },
+  { key: "pbRatio", label: "P/B Ratio", format: (v: number) => `${v.toFixed(1)}x`, tooltip: "pb" },
+  { key: "roe", label: "ROE", format: (v: number) => formatPercent(v), tooltip: "roe" },
+  { key: "roce", label: "ROCE", format: (v: number) => formatPercent(v), tooltip: "roce" },
+  { key: "debtToEquity", label: "Debt/Equity", format: (v: number) => `${v.toFixed(2)}x`, tooltip: "debtToEquity" },
+  { key: "operatingMargin", label: "Op. Margin", format: (v: number) => formatPercent(v), tooltip: "om" },
+  { key: "netMargin", label: "Net Margin", format: (v: number) => formatPercent(v), tooltip: "nm" },
+  { key: "dividendYield", label: "Div. Yield", format: (v: number) => formatPercent(v), tooltip: "dividendYield" },
+] as const;
+
 export function RatioGrid({
+  stock,
   metrics,
   ratios,
   sectorModel,
@@ -34,14 +63,49 @@ export function RatioGrid({
   onSelectRatio,
   className = "",
 }: RatioGridProps) {
-  const isBank = (sectorModel || metrics?.sectorModel) === "financial";
+  if (stock) {
+    return (
+      <div className={cn("grid grid-cols-2 sm:grid-cols-4 gap-3", className)}>
+        {STOCK_RATIOS.map(({ key, label, format, tooltip }) => {
+          const value = stock[key as keyof typeof stock];
+          const displayValue = value != null ? format(value as number) : "N/A";
+          const trend = value != null ? (
+            key === "peRatio" || key === "pbRatio" || key === "debtToEquity" ? (value < 20 ? "up" : value > 40 ? "down" : "neutral") :
+            key === "roe" || key === "roce" || key === "operatingMargin" || key === "netMargin" ? (value > 15 ? "up" : value < 8 ? "down" : "neutral") :
+            "neutral"
+          ) : "neutral";
 
-  // Build at least 8 ratios if metrics provided
+          return (
+            <Card key={key} className="p-4">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-xs font-medium text-muted-foreground">{label}</span>
+                  <GlossaryTooltip term={tooltip}>
+                    <HelpCircle className="h-3.5 w-3.5 text-muted-foreground/50 hover:text-muted-foreground cursor-pointer" />
+                  </GlossaryTooltip>
+                </div>
+                {trend && (
+                  <span className={cn("h-3.5 w-3.5", trend === "up" ? "text-emerald-500" : trend === "down" ? "text-rose-500" : "text-muted-foreground")}>
+                    {trend === "up" && <TrendingUp className="h-3.5 w-3.5" />}
+                    {trend === "down" && <TrendingDown className="h-3.5 w-3.5" />}
+                    {trend === "neutral" && <Minus className="h-3.5 w-3.5" />}
+                  </span>
+                )}
+              </div>
+              <p className="mt-2 font-mono text-2xl font-bold tabular-nums">{displayValue}</p>
+            </Card>
+          );
+        })}
+      </div>
+    );
+  }
+
+  const isBank = (sectorModel || metrics?.sectorModel) === "financial";
   const items: RatioItem[] = ratios || [
     {
       id: "pe",
       name: "Price to Earnings (P/E)",
-      value: metrics?.values.pe !== null && metrics?.values.pe !== undefined ? `${formatRatio(metrics.values.pe)}x` : "24.5x",
+      value: metrics?.values.pe != null ? `${formatRatio(metrics.values.pe)}x` : "24.5x",
       meaning: "How much investors pay for ₹1 of annual earnings.",
       asOf: metrics?.asOfDates?.pe || asOfDefault,
       source: "Recent Price / Annual PAT",
@@ -50,7 +114,7 @@ export function RatioGrid({
     {
       id: "pb",
       name: "Price to Book (P/B)",
-      value: metrics?.values.pb !== null && metrics?.values.pb !== undefined ? `${formatRatio(metrics.values.pb)}x` : "3.8x",
+      value: metrics?.values.pb != null ? `${formatRatio(metrics.values.pb)}x` : "3.8x",
       meaning: "Market value compared to net accounting book value.",
       asOf: metrics?.asOfDates?.pb || asOfDefault,
       source: "Recent Price / Net Worth",
@@ -59,7 +123,7 @@ export function RatioGrid({
     {
       id: "div_yield",
       name: "Dividend Yield",
-      value: metrics?.values.dividendYieldPct !== null && metrics?.values.dividendYieldPct !== undefined ? formatPercent(metrics.values.dividendYieldPct) : "1.2%",
+      value: metrics?.values.dividendYieldPct != null ? formatPercent(metrics.values.dividendYieldPct) : "1.2%",
       meaning: "Cash dividend paid out per share relative to share price.",
       asOf: asOfDefault,
       source: "FY26 Dividends / Close",
@@ -68,7 +132,7 @@ export function RatioGrid({
     {
       id: "roe",
       name: "Return on Equity (ROE)",
-      value: metrics?.values.roePct !== null && metrics?.values.roePct !== undefined ? formatPercent(metrics.values.roePct) : "21.4%",
+      value: metrics?.values.roePct != null ? formatPercent(metrics.values.roePct) : "21.4%",
       meaning: "Net income generated as a percentage of shareholder equity.",
       asOf: asOfDefault,
       source: `Annual Financial Filing (${sourceDefault})`,
@@ -76,7 +140,7 @@ export function RatioGrid({
     {
       id: "roce",
       name: "Return on Capital Employed (ROCE)",
-      value: metrics?.values.rocePct !== null && metrics?.values.rocePct !== undefined ? formatPercent(metrics.values.rocePct) : "26.1%",
+      value: metrics?.values.rocePct != null ? formatPercent(metrics.values.rocePct) : "26.1%",
       meaning: "Operating efficiency on both debt and equity capital.",
       asOf: asOfDefault,
       source: `Annual Financial Filing (${sourceDefault})`,
@@ -84,7 +148,7 @@ export function RatioGrid({
     {
       id: "opm",
       name: "Operating Margin",
-      value: metrics?.values.operatingMarginPct !== null && metrics?.values.operatingMarginPct !== undefined ? formatPercent(metrics.values.operatingMarginPct) : "18.5%",
+      value: metrics?.values.operatingMarginPct != null ? formatPercent(metrics.values.operatingMarginPct) : "18.5%",
       meaning: "Percentage of revenue left over after paying direct operating costs.",
       asOf: asOfDefault,
       source: "Annual Financial Filing",
@@ -92,7 +156,7 @@ export function RatioGrid({
     {
       id: "de",
       name: "Debt to Equity (D/E)",
-      value: isBank ? "N/A" : metrics?.values.debtToEquity !== null && metrics?.values.debtToEquity !== undefined ? formatRatio(metrics.values.debtToEquity) : "0.15",
+      value: isBank ? "N/A" : metrics?.values.debtToEquity != null ? formatRatio(metrics.values.debtToEquity) : "0.15",
       meaning: isBank ? "Customer deposits are liabilities, not debt." : "Total borrowing compared to shareholder funds.",
       asOf: asOfDefault,
       source: "Annual Balance Sheet",
@@ -101,7 +165,7 @@ export function RatioGrid({
     {
       id: "interest_cover",
       name: "Interest Coverage",
-      value: isBank ? "N/A" : metrics?.values.interestCoverTimes !== null && metrics?.values.interestCoverTimes !== undefined ? formatTimes(metrics.values.interestCoverTimes) : "14.2x",
+      value: isBank ? "N/A" : metrics?.values.interestCoverTimes != null ? `${metrics.values.interestCoverTimes}x` : "14.2x",
       meaning: isBank ? "Not applicable for banks (interest is an operating cost)." : "How many times operating earnings cover annual interest expense.",
       asOf: asOfDefault,
       source: "Annual P&L",
@@ -110,7 +174,7 @@ export function RatioGrid({
     {
       id: "revenue_cagr",
       name: "Revenue 3Y CAGR",
-      value: metrics?.values.revenueCagrPct !== null && metrics?.values.revenueCagrPct !== undefined ? formatPercent(metrics.values.revenueCagrPct) : "14.2%",
+      value: metrics?.values.revenueCagrPct != null ? formatPercent(metrics.values.revenueCagrPct) : "14.2%",
       meaning: "Smoothed annual rate at which total sales grew over 3 years.",
       asOf: asOfDefault,
       source: "3-Year Audited Financials",
@@ -118,7 +182,7 @@ export function RatioGrid({
     {
       id: "pat_cagr",
       name: "PAT 3Y CAGR",
-      value: metrics?.values.patCagrPct !== null && metrics?.values.patCagrPct !== undefined ? formatPercent(metrics.values.patCagrPct) : "16.8%",
+      value: metrics?.values.patCagrPct != null ? formatPercent(metrics.values.patCagrPct) : "16.8%",
       meaning: "Smoothed annual rate at which bottom-line profit grew.",
       asOf: asOfDefault,
       source: "3-Year Audited Financials",
@@ -126,7 +190,7 @@ export function RatioGrid({
   ];
 
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={cn("space-y-4", className)}>
       <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800">
         <div>
           <h2 className="text-base font-serif font-bold text-zinc-950 dark:text-zinc-50">

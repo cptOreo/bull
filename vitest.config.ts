@@ -5,7 +5,17 @@ const root = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
   resolve: {
-    alias: { "@": root.replace(/\/$/, "") },
+    alias: {
+      "@/ui": `${root.replace(/\/$/, "")}/components/ui`,
+      "@/components": `${root.replace(/\/$/, "")}/components`,
+      "@/state": `${root.replace(/\/$/, "")}/lib/state`,
+      "@/data": `${root.replace(/\/$/, "")}/lib/data`,
+      "@/engine": `${root.replace(/\/$/, "")}/lib/engine`,
+      "@/hooks": `${root.replace(/\/$/, "")}/lib/hooks`,
+      "@/llm": `${root.replace(/\/$/, "")}/lib/llm`,
+      "@/lib": `${root.replace(/\/$/, "")}/lib`,
+      "@": root.replace(/\/$/, ""),
+    },
   },
   test: {
     projects: [

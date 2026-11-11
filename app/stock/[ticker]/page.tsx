@@ -1,195 +1,49 @@
 "use client";
 
-import React, { use, useState, useMemo } from "react";
+import * as React from "react";
+import { motion } from "framer-motion";
 import { notFound } from "next/navigation";
-import { snapshot } from "@/lib/data/snapshot";
-import { getStockMetrics } from "@/lib/engine/metrics";
-import { deriveRiskFlags } from "@/lib/engine/risk";
-import { useBull } from "@/lib/state/use-bull";
+import { useParams } from "next/navigation";
 import { StockHeader } from "@/components/stock/stock-header";
-import { MetricGrid } from "@/components/stock/metric-grid";
-import { FinancialChart } from "@/components/stock/financial-chart";
+import { StockTabs } from "@/components/stock/stock-tabs";
 import { PriceChart } from "@/components/stock/price-chart";
-import { RatioGrid } from "@/components/stock/ratio-grid";
-import { RiskList } from "@/components/stock/risk-list";
-import { RiskCheck } from "@/components/stock/risk-check";
-import { NewsList } from "@/components/stock/news-list";
-import { Limitations } from "@/components/stock/limitations";
-import {
-  ProvenanceDrawer,
-  type MetricProvenanceDetails,
-} from "@/components/stock/provenance-drawer";
+import { ChatPanel } from "@/components/chat/chat-panel";
+import { useStock, useStockHistory } from "@/hooks/use-stock";
+import { Skeleton } from "@/ui/skeleton";
 
-interface PageProps {
-  params: Promise<{ ticker: string }>;
-}
+export default function StockPage() {
+  const params = useParams();
+  const ticker = (params.ticker as string)?.toUpperCase();
+  const symbol = ticker?.includes(".") ? ticker : `${ticker}.NS`;
 
-export default function StockDetailPage({ params }: PageProps) {
-  const { ticker } = use(params);
-  const stock = snapshot.stocks.find(
-    (s) => s.ticker.toUpperCase() === ticker.toUpperCase()
-  );
+  const { data: stock, isLoading, error } = useStock(symbol, { enabled: !!ticker });
+  const { data: priceHistory } = useStockHistory(symbol, "5y", "1d", { enabled: !!ticker });
 
-  if (!stock) {
-    notFound();
-  }
-
-  const { logEvent } = useBull();
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [activeMetric, setActiveMetric] = useState<MetricProvenanceDetails | null>(null);
-
-  const now = "2026-11-10T14:00:00Z";
-  const metrics = useMemo(() => getStockMetrics(stock, snapshot, now), [stock]);
-  const riskFlags = useMemo(() => deriveRiskFlags(metrics, stock), [metrics, stock]);
-  const sector = snapshot.sectors.find((s) => s.id === stock.sectorId);
-  const sectorName = sector?.name ?? stock.sectorId;
-
-  // Open provenance drawer for a metric
-  const handleInspectMetric = (metricId: string, metricLabel: string, metricValue: string) => {
-    setActiveMetric({
-      id: metricId,
-      name: metricLabel,
-      value: metricValue,
-      asOf: "2026-11-10",
-      rung1: {
-        source: "Official NSE/BSE filing & Audited Annual Report FY26",
-        document: `${stock.name} Annual Report FY26 (Note on Financial Statements)`,
-        pageOrNote: "Consolidated Financials p. 112",
-        timestamp: "2026-10-31",
-      },
-      rung2: {
-        formula: `${metricLabel} = Computed from audited standalone & consolidated financials`,
-        inputs: [
-          { label: "Close Price", value: `₹${metrics.values.latestClose.toFixed(2)}` },
-          { label: "Reporting Base", value: "FY2026 Audited" },
-        ],
-      },
-      rung3: {
-        percentile: 88,
-        sampleSize: 50,
-        universeName: "Nifty 50 Large-Cap",
-        interpretation: "Ranked against all 50 constituent companies in the Nifty 50 benchmark.",
-      },
-      rung4: {
-        claimText: `${stock.name} demonstrates stable fundamental performance based on audited filings.`,
-        context: `${metricLabel} metric card on stock deep-dive`,
-      },
-    });
-    setDrawerOpen(true);
-    logEvent({
-      type: "chart_viewed",
-      ticker: stock.ticker,
-      timestamp: new Date().toISOString(),
-      data: { metricId },
-    });
-  };
+  if (isLoading) return <StockSkeleton />;
+  if (error || !stock) return notFound();
 
   return (
-    <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
-      {/* Stock Header */}
-      <StockHeader
-        ticker={stock.ticker}
-        name={stock.name}
-        sector={sectorName}
-        sectorId={stock.sectorId}
-        latestClose={metrics.values.latestClose}
-        oneSessionMovePct={metrics.values.oneSessionMovePct ?? 0}
-        marketCapCr={metrics.refs["marketCap"] ? Number(metrics.refs["marketCap"].value) : undefined}
-        asOf="2026-11-10"
-        sourceLabel="Official Bhavcopy & Filings"
-        freshness="current"
-      />
-
-      {/* 4-Card Metric Grid */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-            Key Financial Ratios & Fundamentals
-          </h2>
-          <span className="text-xs font-mono text-zinc-500">
-            Click ℹ️ on any metric to view 4-rung audit trail
-          </span>
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex h-full flex-1">
+      <div className="flex-1 lg:pr-8 pb-8 lg:pb-0 overflow-y-auto">
+        <div className="mx-auto max-w-6xl px-4 lg:px-6 py-6 space-y-8">
+          <StockHeader stock={stock} />
+          <PriceChart data={priceHistory?.daily || []} ticker={stock.ticker} currency={stock.currency} />
+          <StockTabs stock={stock} />
         </div>
-        <MetricGrid
-          ticker={stock.ticker}
-          values={metrics.values}
-          sectorModel={stock.sectorModel}
-          sectorMedianPe={sector?.medianPe?.value ?? null}
-          sectorMedianPb={sector?.medianPb?.value ?? null}
-          asOf="2026-11-10"
-          onSelectMetric={handleInspectMetric}
-        />
-      </section>
+      </div>
+      <aside className="hidden lg:block w-96 border-l glass dark:glass-dark">
+        <ChatPanel defaultMode="tutor" context={{ stock: stock.ticker, page: "stock" }} />
+      </aside>
+    </motion.div>
+  );
+}
 
-      {/* Financial Statement Charts & Price Performance */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <FinancialChart
-          ticker={stock.ticker}
-          financials={stock.financials.annual.value ?? []}
-        />
-        <PriceChart
-          ticker={stock.ticker}
-          name={stock.name}
-          segments={metrics.chartSegments}
-          fiveYearReturnPct={metrics.values.fiveYearReturnPct ?? undefined}
-          indexReturnPct={metrics.values.indexReturnPct ?? undefined}
-        />
-      </section>
-
-      {/* Fundamental Ratios Detailed Grid */}
-      <section className="space-y-4">
-        <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-          Comprehensive Ratio Analysis
-        </h2>
-        <RatioGrid
-          metrics={metrics}
-          sectorModel={stock.sectorModel}
-          onSelectRatio={(id) => handleInspectMetric(id, id, "")}
-        />
-      </section>
-
-      {/* Risk Analysis & Practice Check */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="space-y-4">
-          <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-            Assessed Risk Factors (§7.7)
-          </h2>
-          <RiskList
-            flags={riskFlags}
-            ticker={stock.ticker}
-            onSelectMetricRef={(refId) => handleInspectMetric(refId, refId, "")}
-          />
-        </div>
-
-        <div className="space-y-4">
-          <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-            Practice: Name The Risk
-          </h2>
-          <RiskCheck ticker={stock.ticker} flags={riskFlags} />
-        </div>
-      </section>
-
-      {/* News & Announcements */}
-      <section className="space-y-4">
-        <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100 tracking-tight">
-          Recent Material Announcements (Last 90 Days)
-        </h2>
-        <NewsList
-          items={snapshot.news.filter((n) => n.ticker === stock.ticker)}
-          ticker={stock.ticker}
-        />
-      </section>
-
-      {/* Data Limitations & SEBI Disclosure */}
-      <Limitations />
-
-      {/* Provenance Slide-over Drawer */}
-      <ProvenanceDrawer
-        isOpen={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        details={activeMetric}
-        ticker={stock.ticker}
-      />
-    </main>
+function StockSkeleton() {
+  return (
+    <div className="mx-auto max-w-6xl px-4 lg:px-6 py-6 space-y-8">
+      <Skeleton className="h-32 w-full" />
+      <Skeleton className="h-[400px] w-full" />
+      <Skeleton className="h-96 w-full" />
+    </div>
   );
 }

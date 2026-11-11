@@ -1,40 +1,37 @@
-import React from "react";
-import { cn } from "@/lib/utils";
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils/cn";
 
-export type BadgeVariant = "default" | "secondary" | "outline" | "success" | "warning" | "destructive";
-
-export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: BadgeVariant;
-}
-
-const badgeVariants: Record<BadgeVariant, string> = {
-  default:
-    "bg-zinc-900 text-zinc-50 border-transparent dark:bg-zinc-100 dark:text-zinc-900",
-  secondary:
-    "bg-zinc-100 text-zinc-700 border-zinc-200/80 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/80",
-  outline:
-    "bg-transparent text-zinc-800 border-zinc-200 dark:text-zinc-200 dark:border-zinc-800",
-  success:
-    "bg-emerald-50 text-emerald-800 border-emerald-200/80 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800/80",
-  warning:
-    "bg-amber-50 text-amber-800 border-amber-200/80 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800/80",
-  destructive:
-    "bg-rose-50 text-rose-800 border-rose-200/80 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800/80",
-};
-
-export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ className, variant = "default", ...props }, ref) => {
-    return (
-      <span
-        ref={ref}
-        className={cn(
-          "inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-mono font-medium tabular-nums transition-colors",
-          badgeVariants[variant],
-          className
-        )}
-        {...props}
-      />
-    );
+const badgeVariants = cva(
+  "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium transition-all",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary/10 text-primary border border-primary/20",
+        secondary: "bg-secondary text-secondary-foreground border border-border",
+        destructive: "bg-destructive/10 text-destructive border border-destructive/20",
+        outline: "border border-border bg-transparent",
+        success: "bg-positive/10 text-positive border border-positive/20",
+        warning: "bg-attention/10 text-attention border border-attention/20",
+        info: "bg-info/10 text-info border border-info/20",
+        glass: "glass dark:glass-dark",
+      },
+      size: {
+        default: "px-2.5 py-0.5 text-xs",
+        sm: "px-2 py-0.5 text-[11px]",
+        lg: "px-3 py-1 text-sm",
+      },
+    },
+    defaultVariants: { variant: "default", size: "default" },
   }
 );
-Badge.displayName = "Badge";
+
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLSpanElement>,
+    VariantProps<typeof badgeVariants> {}
+
+function Badge({ className, variant, size, ...props }: BadgeProps) {
+  return <span className={cn(badgeVariants({ variant, size, className }))} {...props} />;
+}
+
+export { Badge, badgeVariants };

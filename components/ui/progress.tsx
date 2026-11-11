@@ -1,39 +1,25 @@
-import React from "react";
-import { cn } from "@/lib/utils";
+"use client";
 
-export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
-  value?: number;
-  max?: number;
-  indicatorClassName?: string;
-}
+import * as React from "react";
+import * as ProgressPrimitive from "@radix-ui/react-progress";
+import { cn } from "@/lib/utils/cn";
 
-export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
-  ({ className, value = 0, max = 100, indicatorClassName, ...props }, ref) => {
-    const clampedValue = Math.min(Math.max(value ?? 0, 0), max);
-    const percentage = max > 0 ? (clampedValue / max) * 100 : 0;
+const Progress = React.forwardRef<
+  React.ElementRef<typeof ProgressPrimitive.Root>,
+  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>
+>(({ className, value, ...props }, ref) => (
+  <ProgressPrimitive.Root
+    ref={ref}
+    value={value}
+    className={cn("relative h-2 w-full overflow-hidden rounded-full bg-secondary", className)}
+    {...props}
+  >
+    <ProgressPrimitive.Indicator
+      className="h-full w-full flex-1 bg-primary transition-all"
+      style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+    />
+  </ProgressPrimitive.Root>
+));
+Progress.displayName = ProgressPrimitive.Root.displayName;
 
-    return (
-      <div
-        ref={ref}
-        role="progressbar"
-        aria-valuenow={clampedValue}
-        aria-valuemin={0}
-        aria-valuemax={max}
-        className={cn(
-          "relative h-2 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800",
-          className
-        )}
-        {...props}
-      >
-        <div
-          className={cn(
-            "h-full w-full flex-1 bg-zinc-900 transition-all duration-300 ease-in-out dark:bg-zinc-100 rounded-full",
-            indicatorClassName
-          )}
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
-    );
-  }
-);
-Progress.displayName = "Progress";
+export { Progress };

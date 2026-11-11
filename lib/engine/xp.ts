@@ -349,3 +349,26 @@ export function calculateStreak(events: LearningEvent[], now: string): StreakRes
     },
   };
 }
+
+export interface BadgeItem {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  xp: number;
+}
+
+export const BADGES: BadgeItem[] = [
+  { id: "first-lesson", name: "First Steps", description: "Complete your first lesson", icon: "BookOpen", xp: 100 },
+  { id: "analyst", name: "Analyst", description: "Complete 'Analyze Any Stock' track", icon: "Search", xp: 500 },
+  { id: "dividend-investor", name: "Dividend Investor", description: "Complete 'Build Dividend Portfolio' track", icon: "DollarSign", xp: 500 },
+  { id: "statement-reader", name: "Statement Reader", description: "Complete 'Read Financial Statements' track", icon: "FileText", xp: 500 },
+  { id: "moat-master", name: "Moat Master", description: "Complete 'Understand Moats' track", icon: "Shield", xp: 500 },
+  { id: "streak-7", name: "Week Warrior", description: "7-day learning streak", icon: "Flame", xp: 100 },
+  { id: "streak-30", name: "Monthly Master", description: "30-day learning streak", icon: "Calendar", xp: 200 },
+  { id: "streak-100", name: "Centurion", description: "100-day learning streak", icon: "Award", xp: 500 },
+  { id: "risk-namer", name: "Risk Namer", description: "Correctly identify risks for 10 stocks", icon: "AlertTriangle", xp: 200 },
+  { id: "dcf-builder", name: "DCF Builder", description: "Build 5 DCF models", icon: "Calculator", xp: 300 },
+  { id: "screener", name: "Screener", description: "Run 10 stock screens", icon: "Filter", xp: 200 },
+  { id: "professor", name: "Professor", description: "Reach Level 10", icon: "GraduationCap", xp: 1000 },
+];

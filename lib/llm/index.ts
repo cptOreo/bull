@@ -142,3 +142,134 @@ export async function rephraseAnswer(
     return answer;
   }
 }
+
+// v2 LLM / Chat Integrations
+import { getActiveProvider, type LLMMessage } from "./providers";
+import { getAllToolSchemas, type LLMToolName } from "./tools";
+import { buildTutorPrompt, buildAnalystPrompt } from "./prompts";
+import { verifyResponse, sanitizeResponse } from "./verification";
+import { retrieveRelevantKnowledge } from "./rag";
+import { useChatStore } from "@/components/providers/chat-provider";
+
+export interface ChatContext {
+  mode: "tutor" | "analyst";
+  stock?: string;
+  page?: string;
+  userMastery?: Record<string, number>;
+  locale?: "en" | "hi-en";
+}
+
+export interface ToolExecutor {
+  search_stocks: (args: { query: string; limit?: number }) => Promise<unknown>;
+  get_fundamentals: (args: { symbol: string }) => Promise<unknown>;
+  get_price_history: (args: { symbol: string; range?: string; interval?: string }) => Promise<unknown>;
+  screen_stocks: (args: { criteria: Record<string, unknown>; limit?: number }) => Promise<unknown>;
+  compare_stocks: (args: { symbols: string[] }) => Promise<unknown>;
+  build_dcf: (args: { symbol: string; assumptions: Record<string, unknown> }) => Promise<unknown>;
+  analyze_sector: (args: { sector: string }) => Promise<unknown>;
+  generate_report: (args: { title: string; analysis: string; symbol?: string; format?: string }) => Promise<unknown>;
+}
+
+let toolExecutor: ToolExecutor | null = null;
+
+export function setToolExecutor(executor: ToolExecutor) {
+  toolExecutor = executor;
+}
+
+export async function handleChat(
+  userMessage: string,
+  context: ChatContext
+): Promise<{ response: string; toolCalls?: Array<{ name: string; args: unknown; result: unknown }> }> {
+  const provider = getActiveProvider();
+  const isTutor = context.mode === "tutor";
+
+  const knowledge = await retrieveRelevantKnowledge(userMessage, 3);
+  const knowledgeText = knowledge.length > 0
+    ? `\n\nRelevant Knowledge:\n${knowledge.map(k => `- [${k.category}] ${k.text}`).join("\n")}`
+    : "";
+
+  const systemPrompt = isTutor
+    ? buildTutorPrompt(context.locale || "en", context.userMastery || {})
+    : buildAnalystPrompt(context.locale || "en");
+
+  const messages: LLMMessage[] = [
+    { role: "system", content: systemPrompt + knowledgeText },
+    ...getRecentHistory(10).map(m => ({
+      role: m.role as "user" | "assistant",
+      content: m.content,
+    })),
+    { role: "user", content: userMessage },
+  ];
+
+  const tools = isTutor ? [] : getAllToolSchemas();
+
+  let response = await provider.generate(messages, tools);
+  const toolCalls: Array<{ name: string; args: unknown; result: unknown }> = [];
+
+  if (!isTutor && response.toolCalls && toolExecutor) {
+    for (const tc of response.toolCalls) {
+      const name = tc.function.name as LLMToolName;
+      const args = JSON.parse(tc.function.arguments);
+      
+      try {
+        const executor = toolExecutor[name];
+        if (executor) {
+          const result = await executor(args);
+          toolCalls.push({ name, args, result });
+          
+          messages.push({
+            role: "tool",
+            content: JSON.stringify(result),
+            toolCallId: tc.id,
+            name,
+          });
+        }
+      } catch (error) {
+        toolCalls.push({ name, args, result: { error: String(error) } });
+      }
+    }
+
+    if (toolCalls.length > 0) {
+      const finalResponse = await provider.generate(messages, []);
+      response = finalResponse;
+    }
+  }
+
+  const stockContext = context.stock ? { symbol: context.stock } : undefined;
+  const verification = verifyResponse(response.content, { stockData: stockContext }, { language: context.locale });
+
+  if (!verification.passed) {
+    return {
+      response: sanitizeResponse(getTemplateFallback(userMessage, context)),
+      toolCalls,
+    };
+  }
+
+  return {
+    response: sanitizeResponse(response.content),
+    toolCalls,
+  };
+}
+
+function getRecentHistory(limit: number): Array<{ role: string; content: string }> {
+  const { messages } = useChatStore.getState();
+  return messages
+    .slice(-limit)
+    .map(m => ({ role: m.role, content: m.content }));
+}
+
+function getTemplateFallback(message: string, context: ChatContext): string {
+  const lower = message.toLowerCase();
+  
+  if (context.mode === "tutor") {
+    if (lower.includes("pe") || lower.includes("p/e")) {
+      return `The P/E (Price-to-Earnings) ratio compares a company's share price to its annual earnings per share. For instance, a P/E of 15 means you are paying ₹15 for every ₹1 of profit the business earns. Lower multiples often indicate cheaper valuation or slower expected growth, while higher multiples reflect higher growth expectations. Would you like to check the P/E of a specific company?`;
+    }
+    if (lower.includes("dcf")) {
+      return `Discounted Cash Flow (DCF) estimates a company's intrinsic value by forecasting future free cash flows and discounting them back to today's value using a required rate of return. It depends on assumptions like revenue growth, margins, and the discount rate. Would you like to review how the calculation works?`;
+    }
+    return `I can help you understand financial metrics, company fundamentals, valuation multiples, and market concepts in plain language. Feel free to ask about any concept or company you are researching.`;
+  } else {
+    return `I can help analyze stocks: search companies, compare fundamentals, review key valuation ratios, and assess business trends. Which stock or sector would you like to explore?`;
+  }
+}
