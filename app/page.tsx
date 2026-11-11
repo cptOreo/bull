@@ -7,6 +7,9 @@ import { snapshot } from "@/lib/data/snapshot";
 import { handleTurn } from "@/lib/engine/answer";
 import type { TurnInput } from "@/lib/engine/types";
 import { ChatContainer } from "@/components/chat/chat-container";
+import { SkillTreeView } from "@/components/learn/skill-tree-view";
+import { PracticeArenaView } from "@/components/learn/practice-arena-view";
+import { ProgressHeatmapView } from "@/components/learn/progress-heatmap-view";
 import { CurriculumTracks } from "@/components/learn/curriculum-tracks";
 import { RatioSimulator } from "@/components/learn/ratio-simulator";
 import { StockDissector } from "@/components/learn/stock-dissector";
@@ -16,7 +19,7 @@ import { copyEn } from "@/content/copy.en";
 import { copyHiEn } from "@/content/copy.hi-en";
 import { cn } from "@/lib/utils";
 
-export type StudioTab = "masterclass" | "sandbox" | "dissector" | "tutor";
+export type StudioTab = "masterclass" | "practice" | "sandbox" | "dissector" | "tutor" | "heatmap";
 
 interface LiveSearchResult {
   symbol: string;
@@ -55,7 +58,7 @@ export default function HomePage() {
   const [activeTab, setActiveTab] = useState<StudioTab>("masterclass");
   const [dissectorTicker, setDissectorTicker] = useState<string>("ZOMATO");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [searchQuery, setSearchQuery] = useState<string>("" );
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [isSearchFocused, setIsSearchFocused] = useState<boolean>(false);
   const [liveResults, setLiveResults] = useState<LiveSearchResult[]>([]);
 
@@ -254,7 +257,7 @@ export default function HomePage() {
               Bull Educational Studio
             </h1>
             <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              Understand businesses from the owner&apos;s perspective. Master valuation multiples, balance sheets, and economic moats through grounded real-world analogies.
+              Understand businesses from the owner&apos;s perspective. Master valuation multiples, balance sheets, and economic moats through 33 interactive lessons, 12 practical scenarios, and live uncapped data.
             </p>
           </div>
 
@@ -272,9 +275,15 @@ export default function HomePage() {
 
         {/* ── QUICK PORTAL CARDS TO PHASE 2 PLATFORM ── */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-          <Link
-            href="/learn"
-            className="p-4 rounded-2xl border border-primary/20 bg-primary/5 hover:border-primary/40 hover:bg-primary/10 transition-all flex items-start gap-3 group"
+          <button
+            type="button"
+            onClick={() => setActiveTab("masterclass")}
+            className={cn(
+              "p-4 rounded-2xl border text-left transition-all flex items-start gap-3 group cursor-pointer",
+              activeTab === "masterclass"
+                ? "border-primary bg-primary/10 shadow-xs"
+                : "border-primary/20 bg-primary/5 hover:border-primary/40 hover:bg-primary/10"
+            )}
           >
             <div className="h-10 w-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0 font-bold shadow-xs">
               🌳
@@ -290,11 +299,17 @@ export default function HomePage() {
                 33 concepts across 4 tracks with 5-step applied lessons &amp; real stocks.
               </p>
             </div>
-          </Link>
+          </button>
 
-          <Link
-            href="/practice"
-            className="p-4 rounded-2xl border border-amber-500/20 bg-amber-500/5 hover:border-amber-500/40 hover:bg-amber-500/10 transition-all flex items-start gap-3 group"
+          <button
+            type="button"
+            onClick={() => setActiveTab("practice")}
+            className={cn(
+              "p-4 rounded-2xl border text-left transition-all flex items-start gap-3 group cursor-pointer",
+              activeTab === "practice"
+                ? "border-amber-500 bg-amber-500/10 shadow-xs"
+                : "border-amber-500/20 bg-amber-500/5 hover:border-amber-500/40 hover:bg-amber-500/10"
+            )}
           >
             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center shrink-0 font-bold shadow-xs">
               🎯
@@ -310,11 +325,17 @@ export default function HomePage() {
                 12 hands-on scenarios: DCF Builder, Red Flag Audits &amp; Peer Valuation.
               </p>
             </div>
-          </Link>
+          </button>
 
-          <Link
-            href="/profile"
-            className="p-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 hover:border-emerald-500/40 hover:bg-emerald-500/10 transition-all flex items-start gap-3 group"
+          <button
+            type="button"
+            onClick={() => setActiveTab("heatmap")}
+            className={cn(
+              "p-4 rounded-2xl border text-left transition-all flex items-start gap-3 group cursor-pointer",
+              activeTab === "heatmap"
+                ? "border-emerald-500 bg-emerald-500/10 shadow-xs"
+                : "border-emerald-500/20 bg-emerald-500/5 hover:border-emerald-500/40 hover:bg-emerald-500/10"
+            )}
           >
             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center shrink-0 font-bold shadow-xs">
               🏆
@@ -330,7 +351,7 @@ export default function HomePage() {
                 33-node curriculum heatmap, 12 achievement badges &amp; streak calendar.
               </p>
             </div>
-          </Link>
+          </button>
         </div>
 
         {/* ── UNIVERSAL LIVE SEARCH BAR (Cmd + K) ── */}
@@ -383,7 +404,7 @@ export default function HomePage() {
                     setSearchQuery("");
                     searchInputRef.current?.focus();
                   }}
-                  className="pointer-events-auto p-1 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+                  className="pointer-events-auto p-1 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 cursor-pointer"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -459,11 +480,11 @@ export default function HomePage() {
                 </div>
               )}
 
-              {/* Local Seed Matches */}
+              {/* Local Curated Stocks */}
               {searchResults.stocks.length > 0 && (
                 <div className="p-2 space-y-1">
                   <div className="px-3 py-1 text-xs font-mono font-medium text-zinc-500 dark:text-zinc-400">
-                    Covered Stocks ({searchResults.stocks.length})
+                    Curated Companies ({searchResults.stocks.length})
                   </div>
                   {searchResults.stocks.map((stock) => (
                     <div
@@ -535,12 +556,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── STUDIO SEGMENTED TABS (AWWWARDS / IMPECCABLE CRAFT FLOOR) ── */}
+      {/* ── EDUCATIONAL STUDIO SEGMENTED TABS ── */}
       <section className="space-y-4">
         <div
           role="tablist"
           aria-label="Educational Studio Sections"
-          className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1.5 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800"
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 p-1.5 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800"
         >
           <button
             type="button"
@@ -554,8 +575,24 @@ export default function HomePage() {
                 : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
             )}
           >
-            <span className="text-sm">🎓 Masterclass</span>
-            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">4 Mental Models</span>
+            <span className="text-sm">🌳 Masterclass &amp; Skill Tree</span>
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">33 Concepts</span>
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "practice"}
+            onClick={() => setActiveTab("practice")}
+            className={cn(
+              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer",
+              activeTab === "practice"
+                ? "bg-white text-zinc-900 shadow-xs dark:bg-zinc-800 dark:text-zinc-50 font-bold"
+                : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
+            )}
+          >
+            <span className="text-sm">🎯 Practice Arena</span>
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">12 Scenarios</span>
           </button>
 
           <button
@@ -587,7 +624,7 @@ export default function HomePage() {
             )}
           >
             <span className="text-sm">🔍 Live Stock Dissector</span>
-            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">Uncapped Global Search</span>
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">Global Equities</span>
           </button>
 
           <button
@@ -603,14 +640,45 @@ export default function HomePage() {
             )}
           >
             <span className="text-sm">💬 AI Financial Tutor</span>
-            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">Plain-English Tutor</span>
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">Plain English</span>
+          </button>
+
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeTab === "heatmap"}
+            onClick={() => setActiveTab("heatmap")}
+            className={cn(
+              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer",
+              activeTab === "heatmap"
+                ? "bg-white text-zinc-900 shadow-xs dark:bg-zinc-800 dark:text-zinc-50 font-bold"
+                : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
+            )}
+          >
+            <span className="text-sm">🏆 Heatmap &amp; Badges</span>
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">Streak Calendar</span>
           </button>
         </div>
 
         {/* ── ACTIVE TAB CONTENT ── */}
         <div className="pt-2">
           {activeTab === "masterclass" && (
-            <CurriculumTracks onAskTutor={handleAskAiFromLearning} />
+            <div className="space-y-8">
+              <SkillTreeView showHeader={false} />
+              <div className="border-t border-border/60 pt-6">
+                <div className="mb-4">
+                  <h3 className="text-base font-bold text-foreground">Foundation Mental Models</h3>
+                  <p className="text-xs text-muted-foreground">
+                    Core commercial analogies for beginner investors before tackling multi-step valuation.
+                  </p>
+                </div>
+                <CurriculumTracks onAskTutor={handleAskAiFromLearning} />
+              </div>
+            </div>
+          )}
+
+          {activeTab === "practice" && (
+            <PracticeArenaView showHeader={false} />
           )}
 
           {activeTab === "sandbox" && (
@@ -632,6 +700,10 @@ export default function HomePage() {
                 onSelectIntakeOption={(field, val) => handleSendMessage(`My ${field} is ${val}`)}
               />
             </div>
+          )}
+
+          {activeTab === "heatmap" && (
+            <ProgressHeatmapView showHeader={false} />
           )}
         </div>
       </section>
