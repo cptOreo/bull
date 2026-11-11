@@ -9,6 +9,8 @@ import {
 } from "@/lib/llm";
 import { identifyStockInQuery, getLiveStockQuote } from "@/lib/data/live";
 import type { TurnInput, Block, Answer, Locale, PartialProfile, LearningEvent } from "@/lib/engine/types";
+import { getLlmProvider as getV2LlmProvider, type LLMMessage, handleChat as handleV2Chat } from "@/lib/llm";
+import { getAllToolSchemas } from "@/lib/llm/tools";
 
 export interface ChatRequestPayload {
   messages?: Array<{ role: "user" | "assistant"; content: string }>;
@@ -18,6 +20,9 @@ export interface ChatRequestPayload {
   now?: string;
   events?: LearningEvent[];
   overrides?: Record<string, unknown>;
+  mode?: "tutor" | "analyst";
+  context?: { stock?: string; page?: string };
+  userMastery?: Record<string, number>;
 }
 
 export async function POST(req: Request) {
@@ -73,7 +78,7 @@ export async function POST(req: Request) {
 
     // 3. Run core engine turn
     const answer = handleTurn(turnInput, { snapshot });
-    const provider = getLlmProvider();
+    const v0Provider = getLlmProvider();
     let blocks: Block[] = [...answer.blocks];
 
     let resolvedSnapshot: Awaited<ReturnType<typeof getLiveStockQuote>> = null;
@@ -102,8 +107,8 @@ export async function POST(req: Request) {
 
         // 5. Generate commentary via Gemini 3.5 Flash or SlopMonster fallback
         let commentary: string | null = null;
-        if (typeof provider.generateStockCommentary === "function") {
-          commentary = await provider.generateStockCommentary(
+        if (typeof v0Provider.generateStockCommentary === "function") {
+          commentary = await v0Provider.generateStockCommentary(
             normalizedSnapshot,
             currentMessage,
             undefined,
@@ -155,15 +160,69 @@ export async function POST(req: Request) {
     };
 
     // 7. If provider configured, run verification-gated rephrase
-    const finalAnswer =
-      provider.name !== "null"
-        ? await rephraseAnswer(modifiedAnswer, provider)
+    const v0FinalAnswer =
+      v0Provider.name !== "null"
+        ? await rephraseAnswer(modifiedAnswer, v0Provider)
         : modifiedAnswer;
 
+    // 8. If Analyst mode requested, use v2 LLM with function calling
+    const mode = body.mode || "tutor";
+    let v2Response: { response: string; toolCalls?: Array<{ name: string; args: unknown; result: unknown }> } | null = null;
+
+    if (mode === "analyst") {
+      try {
+        const v2Result = await handleV2Chat(
+          body.message || currentMessage,
+          {
+            mode: "analyst",
+            stock: body.context?.stock || stockTicker || undefined,
+            page: body.context?.page,
+            userMastery: body.userMastery,
+            locale: locale,
+          }
+        );
+        v2Response = v2Result;
+      } catch (error) {
+        console.error("Analyst mode error:", error);
+        // Fallback to tutor mode response
+      }
+    }
+
+    // Merge v2 response if available
+    if (v2Response) {
+      // Add tool invocation blocks if any
+      if (v2Response.toolCalls && v2Response.toolCalls.length > 0) {
+        v2Response.toolCalls.forEach((tc, idx) => {
+          blocks.splice(blocks.length - 1, 0, {
+            type: "tool_invocation",
+            name: tc.name,
+            args: tc.args as Record<string, unknown>,
+            result: tc.result,
+            id: `tool_${idx}`,
+          });
+        });
+      }
+      
+      // Use v2 response as main content for analyst mode
+      if (mode === "analyst") {
+        const textIdx = blocks.findIndex((b) => b.type === "text");
+        if (textIdx >= 0) {
+          blocks[textIdx] = { type: "text", text: v2Response.response };
+        } else {
+          blocks.unshift({ type: "text", text: v2Response.response });
+        }
+      }
+    }
+
+    // 7. If provider configured, run verification-gated rephrase
+    // (already done above as v0FinalAnswer)
+
     return NextResponse.json({
-      ...finalAnswer,
-      followUps,
-      provider: provider.name,
+      ...v0FinalAnswer,
+      followUps: v2Response?.toolCalls ? [...(v0FinalAnswer.followUps || [])] : followUps,
+      toolCalls: v2Response?.toolCalls,
+      mode,
+      provider: v0Provider.name,
     });
   } catch (error) {
     console.error("Chat API error:", error);

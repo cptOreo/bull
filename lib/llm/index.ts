@@ -6,7 +6,7 @@ import { GeminiLlmProvider } from "./gemini";
 import { GroqLlmProvider } from "./groq";
 import { OpenRouterLlmProvider } from "./openrouter";
 
-export * from "./provider";
+export * from "./providers";
 export * from "./null";
 export * from "./verify";
 export * from "./gemini";
@@ -150,6 +150,7 @@ import { buildTutorPrompt, buildAnalystPrompt } from "./prompts";
 import { verifyResponse, sanitizeResponse } from "./verification";
 import { retrieveRelevantKnowledge } from "./rag";
 import { useChatStore } from "@/components/providers/chat-provider";
+import { toolExecutors } from "./analyst-tools";
 
 export interface ChatContext {
   mode: "tutor" | "analyst";
@@ -170,7 +171,7 @@ export interface ToolExecutor {
   generate_report: (args: { title: string; analysis: string; symbol?: string; format?: string }) => Promise<unknown>;
 }
 
-let toolExecutor: ToolExecutor | null = null;
+let toolExecutor: ToolExecutor = toolExecutors;
 
 export function setToolExecutor(executor: ToolExecutor) {
   toolExecutor = executor;

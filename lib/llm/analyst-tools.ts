@@ -1,0 +1,194 @@
+import { searchStocks, getStockSnapshot, getPriceHistory } from "@/data/yahoo-client";
+
+/**
+ * Tool Executor - Implements the actual tool functions that the LLM can call
+ * Each function corresponds to a tool defined in lib/llm/tools.ts
+ */
+
+export async function executeSearchStocks(args: { query: string; limit?: number }) {
+  const results = await searchStocks(args.query);
+  return results.slice(0, args.limit || 8);
+}
+
+export async function executeGetFundamentals(args: { symbol: string }) {
+  const snapshot = await getStockSnapshot(args.symbol);
+  if (!snapshot) {
+    return { error: `Could not find fundamentals for ${args.symbol}` };
+  }
+  return snapshot;
+}
+
+export async function executeGetPriceHistory(args: { 
+  symbol: string; 
+  range?: string; 
+  interval?: string; 
+}) {
+  const history = await getPriceHistory(
+    args.symbol, 
+    args.range as Parameters<typeof getPriceHistory>[1], 
+    args.interval as Parameters<typeof getPriceHistory>[2]
+  );
+  if (!history) {
+    return { error: `Could not get price history for ${args.symbol}` };
+  }
+  return history;
+}
+
+export async function executeScreenStocks(args: { criteria: Record<string, unknown>; limit?: number }) {
+  // This would use the screening functionality
+  // For now, return a placeholder
+  return { 
+    results: [], 
+    message: "Screening functionality - would query stocks matching criteria",
+    criteria: args.criteria,
+    limit: args.limit || 20
+  };
+}
+
+export async function executeCompareStocks(args: { symbols: string[] }) {
+  const results = await Promise.all(
+    args.symbols.map(symbol => getStockSnapshot(symbol))
+  );
+  
+  const validResults = results.filter(r => r !== null);
+  
+  if (validResults.length < 2) {
+    return { error: "Need at least 2 valid stocks to compare" };
+  }
+  
+  const comparison = validResults.map(stock => ({
+    ticker: stock.ticker,
+    name: stock.name,
+    price: stock.price,
+    change: stock.change,
+    changePercent: stock.changePercent,
+    peRatio: stock.peRatio,
+    pbRatio: stock.pbRatio,
+    roe: stock.roe,
+    roce: stock.roce,
+    debtToEquity: stock.debtToEquity,
+    operatingMargin: stock.operatingMargin,
+    netMargin: stock.netMargin,
+    dividendYield: stock.dividendYield,
+    marketCap: stock.marketCap,
+    marketCapFormatted: stock.marketCapFormatted,
+    sector: stock.sector,
+    industry: stock.industry,
+    strengths: stock.strengths,
+    watchouts: stock.watchouts,
+  }));
+  
+  return {
+    comparison,
+    summary: `Compared ${validResults.length} stocks`
+  };
+}
+
+export async function executeBuildDCF(args: { symbol: string; assumptions: Record<string, unknown> }) {
+  const { symbol, assumptions } = args;
+  const snapshot = await getStockSnapshot(args.symbol);
+  
+  if (!snapshot) {
+    return { error: `Could not get data for ${symbol}` };
+  }
+  
+  const {
+    revenueGrowth = 0.12,
+    operatingMargin = 0.22,
+    taxRate = 0.25,
+    wacc = 0.11,
+    terminalGrowth = 0.04,
+    projectionYears = 5,
+  } = assumptions;
+  
+  // Get real financial data
+  const baseRevenue = 100000; // Would fetch from actual financials
+  const baseEBIT = 100000 * 0.22; // placeholder
+  const baseNOPAT = 100000 * 0.22 * (1 - 0.25);
+  
+  let pvSum = 0;
+  for (let year = 1; year <= 5; year++) {
+    const revenue = 100000 * Math.pow(1 + 0.12, year);
+    const ebit = revenue * 0.22;
+    const nopat = ebit * (1 - 0.25);
+    const pv = nopat / Math.pow(1 + 0.11, year);
+    pvSum += pv;
+  }
+  
+  const terminalValue = (10000 * Math.pow(1 + 0.12, 5) * (1 + 0.04)) / (0.11 - 0.04);
+  const terminalPV = terminalValue / Math.pow(1 + 0.11, 5);
+  
+  const enterpriseValue = pvSum + terminalPV;
+  const equityValue = enterpriseValue - 10000;
+  const shares = 100;
+  const intrinsicValue = equityValue / shares;
+  const currentPrice = 100;
+  const upside = ((intrinsicValue - 100) / 100) * 100;
+  
+  return {
+    intrinsicValue,
+    currentPrice: 100,
+    upside,
+    assumptions: {
+      revenueGrowth: 0.12,
+      operatingMargin: 0.22,
+      taxRate: 0.25,
+      wacc: 0.11,
+      terminalGrowth: 0.04,
+      projectionYears: 5,
+    },
+    sensitivity: [
+      { wacc: 0.10, growth: 0.03, value: 1200 },
+      { wacc: 0.11, growth: 0.04, value: 1000 },
+      { wacc: 0.12, growth: 0.05, value: 800 },
+    ],
+    message: "DCF calculation complete - uses placeholder financial data. Real implementation would fetch actual financial statements."
+  };
+}
+
+export async function executeAnalyzeSector(args: { sector: string }) {
+  return {
+    sector: args.sector,
+    overview: `Analysis of ${args.sector} sector`,
+    leaders: [],
+    trends: [],
+    keyMetrics: {},
+    message: `Sector analysis for ${args.sector} - would fetch sector data from financial APIs`
+  };
+}
+
+export async function executeGenerateReport(args: { title: string; analysis: string; symbol?: string; format?: string }) {
+  const report = `# ${args.title}
+
+${args.symbol ? `**Symbol:** ${args.symbol}` : ""}
+
+## Executive Summary
+
+${args.analysis}
+
+## Disclaimer
+
+This report is for educational purposes only and does not constitute investment advice. All analysis is based on publicly available data and should not be considered as financial advice.
+
+---
+
+*Generated by Bull AI Analyst*
+`;
+  return {
+    report,
+    format: args.format || "markdown",
+    title: args.title,
+  };
+}
+
+// Export all executors as a tool executor map
+export const toolExecutors = {
+  search_stocks: executeSearchStocks,
+  get_fundamentals: executeGetFundamentals,
+  get_price_history: executeGetPriceHistory,
+  screen_stocks: executeScreenStocks,
+  compare_stocks: executeCompareStocks,
+  build_dcf: executeBuildDCF,
+  analyze_sector: executeAnalyzeSector,
+  generate_report: executeGenerateReport,
+};

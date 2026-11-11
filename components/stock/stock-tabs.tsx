@@ -29,6 +29,7 @@ interface StockTabsProps {
     debtToEquity: number | null;
     operatingMargin: number | null;
     netMargin: number | null;
+    currency: string;
   };
 }
 

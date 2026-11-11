@@ -191,7 +191,8 @@ export type Block =
   | { type: "coverage_miss"; name: string; reason: string | null }
   | { type: "boundary"; topic: "advice" | "concentration" | "injection" | "universe"; explanation: string }
   | { type: "limitations"; items: string[] }
-  | { type: "education_note"; text: string };
+  | { type: "education_note"; text: string }
+  | { type: "tool_invocation"; name: string; args: Record<string, unknown>; result: unknown; id: string };
 
 export type Route =
   | "shortlist"

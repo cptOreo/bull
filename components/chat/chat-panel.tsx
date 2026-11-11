@@ -5,21 +5,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
-import { Send, X, Loader2, Sparkles, Bot, Brain, ChevronRight } from "lucide-react";
+import { Send, Loader2, Sparkles, Bot, Brain, HelpCircle, Languages } from "lucide-react";
 import { useChat } from "@/state/use-chat";
-import { useStock } from "@/hooks/use-stock";
-
-interface ChatPanelProps {
-  defaultMode?: "tutor" | "analyst";
-  context?: { stock?: string; page?: string };
-  className?: string;
-}
+import { ToolInvocation } from "./tool-invocation";
+import { CitationList, InlineCitations } from "@/components/chat/citation";
+import { ContextualFollowUps } from "./contextual-follow-ups";
 
 const STARTER_PROMPTS_TUTOR = [
-  "Explain P/E ratio with a kirana store analogy",
-  "What is DCF modeling?",
-  "How to read a balance sheet?",
-  "What are economic moats?",
+  "Explain P/E ratio in plain English",
+  "Socratic Challenge: What happens if margins drop 2%?",
+  "How to read a balance sheet and spot red flags?",
+  "What is the difference between ROCE and ROE?",
 ];
 
 const STARTER_PROMPTS_ANALYST = [
@@ -29,20 +25,32 @@ const STARTER_PROMPTS_ANALYST = [
   "Analyze Zomato's cash flow red flags",
 ];
 
+interface ChatPanelProps {
+  defaultMode?: "tutor" | "analyst";
+  context?: { stock?: string; page?: string };
+  className?: string;
+}
+
 export function ChatPanel({ defaultMode = "tutor", context, className }: ChatPanelProps) {
   const { messages, currentMode, addMessage, setMode } = useChat();
   const [input, setInput] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [locale, setLocale] = React.useState<"en" | "hi-en">("en");
 
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
+  const handleSend = async (e: React.FormEvent, customText?: string) => {
+    if (e && e.preventDefault) e.preventDefault();
+    const userMessage = (customText || input).trim();
+    if (!userMessage || isLoading) return;
 
-    const userMessage = input;
     setInput("");
     setIsLoading(true);
 
-    addMessage({ role: "user", content: userMessage, mode: currentMode, context: context || {} });
+    addMessage({
+      role: "user",
+      content: userMessage,
+      mode: currentMode,
+      context: context || {},
+    });
 
     try {
       const response = await fetch("/api/chat", {
@@ -51,18 +59,21 @@ export function ChatPanel({ defaultMode = "tutor", context, className }: ChatPan
         body: JSON.stringify({
           message: userMessage,
           mode: currentMode,
+          locale: locale,
           context: { stock: context?.stock, page: context?.page },
         }),
       });
 
       const data = await response.json();
-      
+
       if (data.blocks && data.blocks[0]?.text) {
         addMessage({
           role: "assistant",
           content: data.blocks[0].text,
           mode: currentMode,
           context: context || {},
+          citations: data.citations,
+          toolCalls: data.toolCalls,
         });
       } else if (data.content) {
         addMessage({
@@ -70,6 +81,8 @@ export function ChatPanel({ defaultMode = "tutor", context, className }: ChatPan
           content: data.content,
           mode: currentMode,
           context: context || {},
+          citations: data.citations,
+          toolCalls: data.toolCalls,
         });
       }
     } catch (error) {
@@ -94,24 +107,35 @@ export function ChatPanel({ defaultMode = "tutor", context, className }: ChatPan
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
             <Sparkles className="h-5 w-5 text-white" />
           </div>
-          <span className="font-semibold">AI Assistant</span>
+          <span className="font-semibold text-sm">Financial AI Assistant</span>
         </div>
-        <div className="flex items-center gap-2">
+
+        <div className="flex items-center gap-1.5">
+          {/* Language Toggle */}
+          <button
+            onClick={() => setLocale(locale === "en" ? "hi-en" : "en")}
+            title="Toggle English / Hinglish"
+            className="px-2 py-1 rounded text-[11px] font-mono border border-border/80 text-muted-foreground hover:text-foreground flex items-center gap-1"
+          >
+            <Languages className="h-3 w-3" />
+            <span>{locale === "en" ? "EN" : "Hinglish"}</span>
+          </button>
+
           <Button
             variant={currentMode === "tutor" ? "default" : "ghost"}
             size="sm"
             onClick={() => setMode("tutor")}
-            className="text-xs"
+            className="text-xs h-7 px-2.5"
           >
-            <Brain className="h-3.5 w-3.5 mr-1" /> Tutor
+            <Brain className="h-3 w-3 mr-1" /> Tutor
           </Button>
           <Button
             variant={currentMode === "analyst" ? "default" : "ghost"}
             size="sm"
             onClick={() => setMode("analyst")}
-            className="text-xs"
+            className="text-xs h-7 px-2.5"
           >
-            <Bot className="h-3.5 w-3.5 mr-1" /> Analyst
+            <Bot className="h-3 w-3 mr-1" /> Analyst
           </Button>
         </div>
       </div>
@@ -120,23 +144,24 @@ export function ChatPanel({ defaultMode = "tutor", context, className }: ChatPan
         <AnimatePresence mode="popLayout">
           {messages.length === 0 ? (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="flex flex-col items-center justify-center h-full text-center"
+              exit={{ opacity: 0, y: -15 }}
+              className="flex flex-col items-center justify-center h-full text-center py-8"
             >
-              <Bot className="h-12 w-12 mb-4 opacity-50" />
-              <p className="text-sm mb-4">Start a conversation</p>
-              <div className="flex flex-wrap gap-2 justify-center">
-                {STARTER_PROMPTS_TUTOR.map((prompt, i) => (
+              <Bot className="h-10 w-10 mb-3 opacity-40 text-primary" />
+              <p className="text-sm font-semibold text-foreground mb-1">Interactive Financial Tutor</p>
+              <p className="text-xs text-muted-foreground mb-4 max-w-xs">
+                Ask about any stock, valuation multiple, balance sheet item, or request a Socratic problem.
+              </p>
+              <div className="flex flex-wrap gap-2 justify-center max-w-sm">
+                {starterPrompts.map((prompt, i) => (
                   <Button
                     key={i}
                     variant="outline"
                     size="sm"
-                    className="text-xs h-auto px-3 py-1.5"
-                    onClick={() => {
-                      addMessage({ role: "user", content: prompt, mode: "tutor", context: context || {} });
-                    }}
+                    className="text-xs h-auto px-2.5 py-1.5 text-left"
+                    onClick={(e) => handleSend(e, prompt)}
                   >
                     {prompt}
                   </Button>
@@ -156,25 +181,41 @@ export function ChatPanel({ defaultMode = "tutor", context, className }: ChatPan
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className={cn("flex gap-3", msg.role === "user" && "flex-row-reverse")}
+                  className={cn("flex gap-3", msg.role === "user" ? "flex-row-reverse" : "")}
                 >
                   <div
                     className={cn(
-                      "h-8 w-8 rounded-full flex items-center justify-center shrink-0",
-                      msg.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
+                      "h-8 w-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold",
+                      msg.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted text-foreground"
                     )}
                   >
                     {msg.role === "user" ? <Brain className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
                   </div>
                   <div
                     className={cn(
-                      "max-w-[75%] rounded-2xl px-4 py-2 text-sm",
+                      "max-w-[82%] rounded-2xl px-4 py-2.5 text-xs sm:text-sm leading-relaxed",
                       msg.role === "user"
                         ? "bg-primary text-primary-foreground rounded-tr-sm"
-                        : "bg-muted rounded-tl-sm"
+                        : "bg-muted/80 border border-border/40 rounded-tl-sm text-foreground"
                     )}
                   >
-                    <p className="whitespace-pre-wrap">{msg.content}</p>
+                    <InlineCitations citations={msg.citations || []} text={msg.content} />
+                    {msg.toolCalls && msg.toolCalls.length > 0 ? (
+                      <div className="mt-3 space-y-2">
+                        {msg.toolCalls.map((tc, idx) => (
+                          <ToolInvocation
+                            key={idx}
+                            name={tc.name}
+                            args={tc.args}
+                            result={tc.result}
+                            id={`tool_${msg.id}_${idx}`}
+                          />
+                        ))}
+                      </div>
+                    ) : null}
+                    {msg.citations && msg.citations.length > 0 ? (
+                      <CitationList citations={msg.citations} />
+                    ) : null}
                   </div>
                 </motion.div>
               ))}
@@ -186,30 +227,40 @@ export function ChatPanel({ defaultMode = "tutor", context, className }: ChatPan
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="flex items-center gap-3 py-2 text-muted-foreground"
+              className="flex items-center gap-2 py-2 text-muted-foreground"
             >
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span className="text-sm font-mono">Thinking...</span>
+              <Loader2 className="h-4 w-4 animate-spin text-primary" />
+              <span className="text-xs font-mono">Tutor reasoning...</span>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      <form onSubmit={handleSend} className="p-4 border-t bg-card/50 backdrop-blur">
-        <div className="flex gap-2">
-          <Input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={`Ask ${currentMode}...`}
-            className="flex-1"
-            disabled={isLoading}
-            aria-label="Chat input"
-          />
-          <Button type="submit" size="icon" disabled={!input.trim() || isLoading} aria-label="Send message">
-            <Send className="h-5 w-5" />
-          </Button>
-        </div>
-      </form>
+      <div className="border-t p-3 bg-card/50 backdrop-blur space-y-2">
+        <ContextualFollowUps
+          mode={currentMode}
+          stock={context?.stock}
+          concept={messages[messages.length - 1]?.content}
+          onSelect={(prompt) => handleSend({ preventDefault: () => {} } as React.FormEvent, prompt)}
+          context={context?.page}
+        />
+
+        <form onSubmit={handleSend} className="pt-1">
+          <div className="flex gap-2">
+            <Input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={`Ask ${currentMode === "tutor" ? "tutor a financial question" : "analyst to screen or model"}...`}
+              className="flex-1 text-xs h-9"
+              disabled={isLoading}
+              aria-label="Chat input"
+            />
+            <Button type="submit" size="sm" disabled={!input.trim() || isLoading} className="h-9 px-3" aria-label="Send message">
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

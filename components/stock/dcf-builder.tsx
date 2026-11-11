@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
-import { Calculator, Download, ArrowUpRight } from "lucide-react";
+import { Calculator, Download, ArrowUpRight, Copy } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { formatPrice, formatPercent, formatRatio, formatCrore } from "@/lib/utils/formatters";
+import { useStock } from "@/hooks/use-stock";
 
 interface DCFBuilderProps {
   ticker: string;
+  currentPrice?: number;
 }
 
 const DEFAULT_ASSUMPTIONS = {
@@ -22,8 +24,40 @@ const DEFAULT_ASSUMPTIONS = {
   projectionYears: 5,
 };
 
-export function DCFBuilder({ ticker }: DCFBuilderProps) {
-  const [assumptions, setAssumptions] = React.useState(DEFAULT_ASSUMPTIONS);
+export function DCFBuilder({ ticker, currentPrice: initialPrice }: DCFBuilderProps) {
+  const { data: stockData } = useStock(ticker);
+
+  const baseRevenue = React.useMemo(() => {
+    if (stockData?.financials?.annual?.value?.[0]?.revenueCr) {
+      return stockData.financials.annual.value[0].revenueCr * 10000000;
+    }
+    return 100000;
+  }, [stockData]);
+
+  const shares = React.useMemo(() => {
+    if (stockData?.financials?.annual?.value?.[0]?.sharesOutstandingCr) {
+      return stockData.financials.annual.value[0].sharesOutstandingCr * 10000000;
+    }
+    return 100;
+  }, [stockData]);
+
+  const netDebt = React.useMemo(() => {
+    if (stockData?.financials?.annual?.value?.[0]?.totalDebtCr && stockData?.financials?.annual?.value?.[0]?.cashAndEquivalentsCr) {
+      return (stockData.financials.annual.value[0].totalDebtCr - stockData.financials.annual.value[0].cashAndEquivalentsCr) * 10000000;
+    }
+    return 10000;
+  }, [stockData]);
+
+  const currentPrice = initialPrice || stockData?.price || 100;
+
+  const [assumptions, setAssumptions] = React.useState({
+    revenueGrowth: 0.12,
+    operatingMargin: 0.22,
+    taxRate: 0.25,
+    wacc: 0.11,
+    terminalGrowth: 0.04,
+    projectionYears: 5,
+  });
   const [dcfResult, setDcfResult] = React.useState<{
     intrinsicValue: number;
     currentPrice: number;
@@ -31,20 +65,21 @@ export function DCFBuilder({ ticker }: DCFBuilderProps) {
     sensitivity: Array<{ wacc: number; growth: number; value: number }>;
   } | null>(null);
   const [isCalculating, setIsCalculating] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
 
   const handleCalculate = async () => {
     setIsCalculating(true);
     try {
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 500));
       
       const { revenueGrowth, operatingMargin, taxRate, wacc, terminalGrowth, projectionYears } = assumptions;
-      const baseRevenue = 100000;
-      const baseEBIT = baseRevenue * operatingMargin;
+      const baseRev = baseRevenue;
+      const baseEBIT = baseRev * operatingMargin;
       const baseNOPAT = baseEBIT * (1 - taxRate);
       
       let pvSum = 0;
       for (let year = 1; year <= projectionYears; year++) {
-        const revenue = baseRevenue * Math.pow(1 + revenueGrowth, year);
+        const revenue = baseRev * Math.pow(1 + revenueGrowth, year);
         const ebit = revenue * operatingMargin;
         const nopat = ebit * (1 - taxRate);
         const pv = nopat / Math.pow(1 + wacc, year);
@@ -55,10 +90,10 @@ export function DCFBuilder({ ticker }: DCFBuilderProps) {
       const terminalPV = terminalValue / Math.pow(1 + wacc, projectionYears);
       
       const enterpriseValue = pvSum + terminalPV;
-      const equityValue = enterpriseValue - 10000;
-      const shares = 100;
-      const intrinsicValue = equityValue / shares;
-      const currentPrice = 100;
+      const equityValue = enterpriseValue - netDebt;
+      const sharesOut = shares;
+      const intrinsicValue = equityValue / sharesOut;
+      const currentPrice = initialPrice || stockData?.price || 100;
       const upside = ((intrinsicValue - currentPrice) / currentPrice) * 100;
 
       const sensitivity = [];
@@ -68,7 +103,7 @@ export function DCFBuilder({ ticker }: DCFBuilderProps) {
           const tv = (baseNOPAT * Math.pow(1 + revenueGrowth, projectionYears) * (1 + g)) / (w - g);
           const tpv = tv / Math.pow(1 + w, projectionYears);
           const ev = pvSum * (wacc / w) + tpv;
-          const eq = ev - 10000;
+          const eq = ev - netDebt;
           sensitivity.push({ wacc: w, growth: g, value: eq / shares });
         }
       }
@@ -83,6 +118,33 @@ export function DCFBuilder({ ticker }: DCFBuilderProps) {
       console.error("DCF calculation failed:", error);
     } finally {
       setIsCalculating(false);
+    }
+  };
+
+  const handleCopy = async () => {
+    if (!dcfResult) return;
+    const text = `DCF Valuation for ${ticker}
+Intrinsic Value: ₹${formatPrice(dcfResult.intrinsicValue)}
+Current Price: ₹${formatPrice(dcfResult.currentPrice)}
+Upside/Downside: ${dcfResult.upside >= 0 ? "+" : ""}${formatPercent(dcfResult.upside)}
+
+Assumptions:
+- Revenue Growth: ${(assumptions.revenueGrowth * 100).toFixed(1)}%
+- Operating Margin: ${(assumptions.operatingMargin * 100).toFixed(1)}%
+- Tax Rate: ${(assumptions.taxRate * 100).toFixed(1)}%
+- WACC: ${(assumptions.wacc * 100).toFixed(1)}%
+- Terminal Growth: ${(assumptions.terminalGrowth * 100).toFixed(1)}%
+- Projection Years: ${assumptions.projectionYears}
+
+Sensitivity Analysis (WACC vs Terminal Growth):
+${dcfResult.sensitivity.map(s => `WACC ${(s.wacc*100).toFixed(1)}%, Growth ${(s.growth*100).toFixed(1)}%: ₹${formatPrice(s.value)}`).join('\n')}`;
+    
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error("Failed to copy:", e);
     }
   };
 
@@ -127,6 +189,13 @@ export function DCFBuilder({ ticker }: DCFBuilderProps) {
               value={assumptions.terminalGrowth}
               onChange={v => setAssumptions(prev => ({ ...prev, terminalGrowth: v }))}
               min={0.02} max={0.06} step={0.005}
+              format={v => formatPercent(v * 100)}
+            />
+            <AssumptionSlider
+              label="Tax Rate"
+              value={assumptions.taxRate}
+              onChange={v => setAssumptions(prev => ({ ...prev, taxRate: v }))}
+              min={0.15} max={0.35} step={0.01}
               format={v => formatPercent(v * 100)}
             />
             <AssumptionSlider

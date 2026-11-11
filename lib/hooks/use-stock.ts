@@ -1,5 +1,3 @@
-"use client";
-
 import { useQuery } from "@tanstack/react-query";
 import { getStockSnapshot, getPriceHistory, searchStocks, LiveStockSnapshot } from "@/data/yahoo-client";
 import { transformPriceHistory, mergeSnapshots, type PriceSeries } from "@/data/transformers";
@@ -57,8 +55,9 @@ export function useStockHistory(
       if (!symbol) throw new Error("No symbol provided");
       
       const upperSymbol = symbol.toUpperCase();
+      const cacheKey = `${upperSymbol}:${range}:${interval}`;
       
-      const cached = (await getCachedStockHistory(upperSymbol, range, interval, staleTime)) as PriceSeries | null;
+      const cached = await getCachedStockHistory(upperSymbol, range, interval, staleTime);
       if (cached) return cached;
 
       const history = await getPriceHistory(upperSymbol, range, interval);

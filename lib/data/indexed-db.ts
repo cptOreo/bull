@@ -98,13 +98,15 @@ export async function cacheStockHistory(symbol: string, range: string, interval:
   await db.put("stockHistory", { symbol: symbol.toUpperCase(), range, interval, data, timestamp: Date.now() });
 }
 
-export async function getCachedStockHistory(symbol: string, range: string, interval: string, maxAge = 300000): Promise<unknown | null> {
+import { type PriceSeries } from "./transformers";
+
+export async function getCachedStockHistory(symbol: string, range: string, interval: string, maxAge = 300000): Promise<PriceSeries | null> {
   const db = await getDB();
   const key = `${symbol.toUpperCase()}:${range}:${interval}`;
   const cached = await db.get("stockHistory", key);
   if (!cached) return null;
   if (Date.now() - cached.timestamp > maxAge) return null;
-  return cached.data;
+  return cached.data as PriceSeries | null;
 }
 
 export async function cacheSearchResults(query: string, data: unknown): Promise<void> {

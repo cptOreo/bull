@@ -10,9 +10,19 @@ interface ChatMessage {
   content: string;
   toolCalls?: ToolCall[];
   toolResults?: ToolResult[];
+  citations?: Citation[];
   timestamp: number;
   mode: "tutor" | "analyst";
   context?: { stock?: string; page?: string };
+}
+
+interface Citation {
+  id: number;
+  source: string;
+  date?: string;
+  url?: string;
+  title?: string;
+  type?: "yahoo" | "screener" | "snapshot" | "filing" | "news";
 }
 
 interface ToolCall {

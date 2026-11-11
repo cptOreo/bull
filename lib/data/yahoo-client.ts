@@ -195,6 +195,33 @@ export interface LiveStockSnapshot {
   watchouts: string[];
   asOf: string;
   source: "yahoo" | "screener" | "snapshot";
+  financials?: {
+    currency: "INR";
+    units: "crore";
+    basis: "consolidated" | "standalone";
+    annual: {
+      value: Array<{
+        fy: string;
+        periodEnd: string;
+        sourceId: string;
+        revenueCr: number;
+        ebitdaCr: number;
+        ebitCr: number;
+        patCr: number;
+        epsInr: number;
+        dpsInr: number;
+        netWorthCr: number;
+        totalDebtCr: number;
+        interestExpenseCr: number;
+        operatingCashFlowCr: number;
+        sharesOutstandingCr: number;
+        cashAndEquivalentsCr?: number;
+      }> | null;
+      asOf: string;
+      source: string;
+      note?: string;
+    };
+  };
 }
 
 function formatMarketCap(marketCap: number | null, currency: string): string {
