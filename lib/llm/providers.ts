@@ -60,39 +60,55 @@ function getGeminiProvider(): LLMProviderConfig | null {
     maxTokens: 8192,
     contextWindow: 1000000,
     async generate(messages, _tools) {
-      try {
-        const systemMessage = messages.find((m) => m.role === "system");
-        const nonSystemMessages = messages.filter((m) => m.role !== "system");
+      const preferredModel = process.env.GEMINI_MODEL ?? "gemini-3.8-flash";
+      const modelsToTry = [preferredModel, "gemini-3.6-flash", "gemini-3.5-flash"];
+      const systemMessage = messages.find((m) => m.role === "system");
+      const nonSystemMessages = messages.filter((m) => m.role !== "system");
 
-        const model = genAI.getGenerativeModel({
-          model: process.env.GEMINI_MODEL ?? "gemini-3.5-flash",
-          systemInstruction: systemMessage?.content,
-        });
-
-        if (nonSystemMessages.length === 0) {
-          return { content: "" };
-        }
-
-        const history = nonSystemMessages.slice(0, -1).map((m) => ({
-          role: m.role === "assistant" ? "model" : "user",
-          parts: [{ text: m.content }],
-        }));
-
-        const lastMessage = nonSystemMessages[nonSystemMessages.length - 1];
-        const chat = model.startChat({ history });
-        const result = await chat.sendMessage(lastMessage.content);
-
-        return {
-          content: result.response.text(),
-          usage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
-        };
-      } catch (error) {
-        console.error("Gemini generation error:", error);
-        const lastUser = messages.filter((m) => m.role === "user").pop();
-        return {
-          content: `Unable to reach Gemini right now: ${error instanceof Error ? error.message : "Unknown error"}. Query was: "${lastUser?.content || ""}".`,
-        };
+      if (nonSystemMessages.length === 0) {
+        return { content: "" };
       }
+
+      const history = nonSystemMessages.slice(0, -1).map((m) => ({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: [{ text: m.content }],
+      }));
+      const lastMessage = nonSystemMessages[nonSystemMessages.length - 1];
+
+      let lastError: unknown;
+      for (const modelName of modelsToTry) {
+        try {
+          const model = genAI.getGenerativeModel({
+            model: modelName,
+            systemInstruction: systemMessage?.content,
+            generationConfig: {
+              temperature: 0.2,
+            },
+          });
+
+          const chat = model.startChat({ history });
+          const result = await chat.sendMessage(lastMessage.content);
+
+          return {
+            content: result.response.text(),
+            usage: { promptTokens: 0, completionTokens: 0, totalTokens: 0 },
+          };
+        } catch (error) {
+          lastError = error;
+          const msg = error instanceof Error ? error.message : String(error);
+          if (msg.includes("429") || msg.includes("RESOURCE_EXHAUSTED") || msg.includes("503") || msg.includes("404")) {
+            console.warn(`[Gemini] ${modelName} unavailable (${msg.slice(0, 80)}), trying fallback...`);
+            continue;
+          }
+          break;
+        }
+      }
+
+      console.error("Gemini generation error:", lastError);
+      const lastUser = messages.filter((m) => m.role === "user").pop();
+      return {
+        content: `Unable to reach Gemini right now: ${lastError instanceof Error ? lastError.message : "Unknown error"}. Query was: "${lastUser?.content || ""}".`,
+      };
     },
   };
 }

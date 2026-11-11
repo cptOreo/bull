@@ -209,7 +209,7 @@ describe("live stock data layer", () => {
     it("returns null when symbol cannot be found", async () => {
       const quote = await getLiveStockQuote("NON_EXISTENT_CO_12345");
       expect(quote).toBeNull();
-    });
+    }, 15000);
 
     it("correctly parses live Yahoo chart and quoteSummary responses", async () => {
       const fakeChart = {

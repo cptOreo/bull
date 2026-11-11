@@ -30,7 +30,7 @@ export class GeminiLlmProvider implements LlmProvider {
 
   constructor(options: GeminiProviderOptions = {}) {
     this.apiKey = options.apiKey ?? process.env.GEMINI_API_KEY;
-    this.model = options.model ?? process.env.GEMINI_MODEL ?? "gemini-3.5-flash-lite";
+    this.model = options.model ?? process.env.GEMINI_MODEL ?? "gemini-3.8-flash";
     this.timeoutMs = options.timeoutMs ?? DEFAULT_LLM_TIMEOUT_MS;
     this.circuitBreaker = options.circuitBreaker ?? new CircuitBreaker();
   }
@@ -71,9 +71,11 @@ export class GeminiLlmProvider implements LlmProvider {
     items: RephraseItemInput[],
     signal?: AbortSignal
   ): Promise<RephraseItemOutput[] | null> {
-    const fallbackModel =
-      this.model === "gemini-3.5-flash-lite" ? "gemini-3.5-flash" : "gemini-3.5-flash-lite";
-    const modelsToTry = [this.model, fallbackModel];
+    const modelsToTry = [
+      this.model,
+      "gemini-3.6-flash",
+      "gemini-3.5-flash",
+    ];
     let lastError: unknown;
 
     for (const model of modelsToTry) {
@@ -98,6 +100,7 @@ export class GeminiLlmProvider implements LlmProvider {
           generationConfig: {
             responseMimeType: "application/json",
             temperature: 0.2,
+            thinkingConfig: { thinkingBudget: 0 },
           },
         };
 
@@ -187,9 +190,11 @@ export class GeminiLlmProvider implements LlmProvider {
       return null;
     }
 
-    const fallbackModel =
-      this.model === "gemini-3.5-flash-lite" ? "gemini-3.5-flash" : "gemini-3.5-flash-lite";
-    const modelsToTry = [this.model, fallbackModel];
+    const modelsToTry = [
+      this.model,
+      "gemini-3.6-flash",
+      "gemini-3.5-flash",
+    ];
 
     const contextPrefix = `Live snapshot for ${snapshot.name} (${snapshot.ticker}):\n- Price: ₹${snapshot.price} (${snapshot.change >= 0 ? "+" : ""}${snapshot.changePercent}%)\n- Market Cap: ${snapshot.marketCapFormatted}\n- P/E Ratio: ${snapshot.peRatio ?? "N/A"}\n- Business: ${snapshot.summary}\n- Strengths: ${snapshot.strengths.join("; ")}\n- Watchouts: ${snapshot.watchouts.join("; ")}\n\n`;
 
@@ -228,6 +233,7 @@ export class GeminiLlmProvider implements LlmProvider {
       contents,
       generationConfig: {
         temperature: 0.2,
+        thinkingConfig: { thinkingBudget: 0 },
       },
     };
 

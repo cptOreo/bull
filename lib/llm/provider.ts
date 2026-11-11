@@ -34,7 +34,7 @@ export type RephraseInput = {
 
 export type RephraseOutput = Array<{ id: string; text: string }>;
 
-export const DEFAULT_LLM_TIMEOUT_MS = 25000;
+export const DEFAULT_LLM_TIMEOUT_MS = 10000;
 export const CIRCUIT_BREAKER_THRESHOLD = 3;
 export const CIRCUIT_BREAKER_COOLDOWN_MS = 30000;
 
