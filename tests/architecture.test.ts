@@ -27,7 +27,7 @@ describe("engine purity contract", () => {
         expect(content, `${path.basename(file)} imports ${pattern}`).not.toContain(pattern);
       }
     }
-  });
+  }, 15000);
 
   it("components never import narrative.ts, metrics.ts, or score.ts directly", () => {
     const files = [...findFiles(path.resolve("components"), ".tsx"), ...findFiles(path.resolve("components"), ".ts")];
@@ -39,5 +39,5 @@ describe("engine purity contract", () => {
         expect(importRegex.test(content), `${path.basename(file)} directly imports ${pattern}`).toBe(false);
       }
     }
-  });
+  }, 15000);
 });

@@ -65,6 +65,20 @@ export default function HomePage() {
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
+  // Synchronize initial tab from URL query if provided (e.g. ?tab=tutor)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab") as StudioTab | null;
+      if (
+        tabParam &&
+        ["masterclass", "sandbox", "dissector", "tutor", "practice", "heatmap"].includes(tabParam)
+      ) {
+        setActiveTab(tabParam);
+      }
+    }
+  }, []);
+
   // Global keyboard shortcut: Cmd+K or Ctrl+K or /
   useEffect(() => {
     function handleGlobalKeyDown(e: KeyboardEvent) {
@@ -273,89 +287,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ── QUICK PORTAL CARDS TO PHASE 2 PLATFORM ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-          <button
-            type="button"
-            onClick={() => setActiveTab("masterclass")}
-            className={cn(
-              "p-4 rounded-2xl border text-left transition-all flex items-start gap-3 group cursor-pointer",
-              activeTab === "masterclass"
-                ? "border-primary bg-primary/10 shadow-xs"
-                : "border-primary/20 bg-primary/5 hover:border-primary/40 hover:bg-primary/10"
-            )}
-          >
-            <div className="h-10 w-10 rounded-xl bg-primary text-primary-foreground flex items-center justify-center shrink-0 font-bold shadow-xs">
-              🌳
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">
-                  Financial Skill Tree
-                </span>
-                <span className="text-xs text-primary font-semibold group-hover:translate-x-0.5 transition-transform">→</span>
-              </div>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                33 concepts across 4 tracks with 5-step applied lessons &amp; real stocks.
-              </p>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab("practice")}
-            className={cn(
-              "p-4 rounded-2xl border text-left transition-all flex items-start gap-3 group cursor-pointer",
-              activeTab === "practice"
-                ? "border-amber-500 bg-amber-500/10 shadow-xs"
-                : "border-amber-500/20 bg-amber-500/5 hover:border-amber-500/40 hover:bg-amber-500/10"
-            )}
-          >
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white flex items-center justify-center shrink-0 font-bold shadow-xs">
-              🎯
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                  Practice Arena
-                </span>
-                <span className="text-xs text-amber-600 dark:text-amber-400 font-semibold group-hover:translate-x-0.5 transition-transform">→</span>
-              </div>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                12 hands-on scenarios: DCF Builder, Red Flag Audits &amp; Peer Valuation.
-              </p>
-            </div>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setActiveTab("heatmap")}
-            className={cn(
-              "p-4 rounded-2xl border text-left transition-all flex items-start gap-3 group cursor-pointer",
-              activeTab === "heatmap"
-                ? "border-emerald-500 bg-emerald-500/10 shadow-xs"
-                : "border-emerald-500/20 bg-emerald-500/5 hover:border-emerald-500/40 hover:bg-emerald-500/10"
-            )}
-          >
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 text-white flex items-center justify-center shrink-0 font-bold shadow-xs">
-              🏆
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center justify-between">
-                <span className="font-bold text-sm text-foreground group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
-                  Progress &amp; Heatmap
-                </span>
-                <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold group-hover:translate-x-0.5 transition-transform">→</span>
-              </div>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                33-node curriculum heatmap, 12 achievement badges &amp; streak calendar.
-              </p>
-            </div>
-          </button>
-        </div>
-
         {/* ── UNIVERSAL LIVE SEARCH BAR (Cmd + K) ── */}
-        <div ref={searchContainerRef} className="relative w-full max-w-3xl mx-auto pt-1">
+        <div ref={searchContainerRef} className="relative w-full max-w-3xl mx-auto pt-2">
           <div className="relative group">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400 dark:text-zinc-500 group-focus-within:text-zinc-900 dark:group-focus-within:text-zinc-100 transition-colors">
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -556,12 +489,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── EDUCATIONAL STUDIO SEGMENTED TABS ── */}
+      {/* ── STREAMLINED STUDIO WORKBENCH TABS ── */}
       <section className="space-y-4">
         <div
           role="tablist"
           aria-label="Educational Studio Sections"
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 p-1.5 rounded-2xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-800"
+          className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1.5 rounded-2xl bg-zinc-100 dark:bg-zinc-900/90 border border-zinc-200/80 dark:border-zinc-800"
         >
           <button
             type="button"
@@ -569,7 +502,7 @@ export default function HomePage() {
             aria-selected={activeTab === "masterclass"}
             onClick={() => setActiveTab("masterclass")}
             className={cn(
-              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer",
+              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer min-h-[44px]",
               activeTab === "masterclass"
                 ? "bg-white text-zinc-900 shadow-xs dark:bg-zinc-800 dark:text-zinc-50 font-bold"
                 : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
@@ -582,26 +515,10 @@ export default function HomePage() {
           <button
             type="button"
             role="tab"
-            aria-selected={activeTab === "practice"}
-            onClick={() => setActiveTab("practice")}
-            className={cn(
-              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer",
-              activeTab === "practice"
-                ? "bg-white text-zinc-900 shadow-xs dark:bg-zinc-800 dark:text-zinc-50 font-bold"
-                : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
-            )}
-          >
-            <span className="text-sm">🎯 Practice Arena</span>
-            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">12 Scenarios</span>
-          </button>
-
-          <button
-            type="button"
-            role="tab"
             aria-selected={activeTab === "sandbox"}
             onClick={() => setActiveTab("sandbox")}
             className={cn(
-              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer",
+              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer min-h-[44px]",
               activeTab === "sandbox"
                 ? "bg-white text-zinc-900 shadow-xs dark:bg-zinc-800 dark:text-zinc-50 font-bold"
                 : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
@@ -617,7 +534,7 @@ export default function HomePage() {
             aria-selected={activeTab === "dissector"}
             onClick={() => setActiveTab("dissector")}
             className={cn(
-              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer",
+              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer min-h-[44px]",
               activeTab === "dissector"
                 ? "bg-white text-zinc-900 shadow-xs dark:bg-zinc-800 dark:text-zinc-50 font-bold"
                 : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
@@ -633,7 +550,7 @@ export default function HomePage() {
             aria-selected={activeTab === "tutor"}
             onClick={() => setActiveTab("tutor")}
             className={cn(
-              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer",
+              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer min-h-[44px]",
               activeTab === "tutor"
                 ? "bg-white text-zinc-900 shadow-xs dark:bg-zinc-800 dark:text-zinc-50 font-bold"
                 : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
@@ -642,38 +559,28 @@ export default function HomePage() {
             <span className="text-sm">💬 AI Financial Tutor</span>
             <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">Plain English</span>
           </button>
-
-          <button
-            type="button"
-            role="tab"
-            aria-selected={activeTab === "heatmap"}
-            onClick={() => setActiveTab("heatmap")}
-            className={cn(
-              "flex flex-col items-center justify-center py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer",
-              activeTab === "heatmap"
-                ? "bg-white text-zinc-900 shadow-xs dark:bg-zinc-800 dark:text-zinc-50 font-bold"
-                : "text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
-            )}
-          >
-            <span className="text-sm">🏆 Heatmap &amp; Badges</span>
-            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-normal">Streak Calendar</span>
-          </button>
         </div>
 
         {/* ── ACTIVE TAB CONTENT ── */}
         <div className="pt-2">
           {activeTab === "masterclass" && (
-            <div className="space-y-8">
-              <SkillTreeView showHeader={false} />
-              <div className="border-t border-border/60 pt-6">
-                <div className="mb-4">
-                  <h3 className="text-base font-bold text-foreground">Foundation Mental Models</h3>
-                  <p className="text-xs text-muted-foreground">
-                    Core commercial analogies for beginner investors before tackling multi-step valuation.
+            <div className="space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200/60 dark:border-zinc-800/60">
+                <div>
+                  <h2 className="text-base font-bold text-zinc-900 dark:text-zinc-100">Financial Mastery Skill Tree</h2>
+                  <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                    33 applied concepts across 4 tracks with interactive owner mental models &amp; real market data.
                   </p>
                 </div>
-                <CurriculumTracks onAskTutor={handleAskAiFromLearning} />
+                <Link
+                  href="/practice"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 hover:bg-amber-500/20 transition-colors shrink-0 self-start sm:self-auto"
+                >
+                  <span>🎯 Practice Arena (12 Scenarios)</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
               </div>
+              <SkillTreeView showHeader={false} />
             </div>
           )}
 

@@ -14,8 +14,7 @@ export function Navbar() {
     { href: "/", label: "Studio" },
     { href: "/learn", label: "Skill Tree" },
     { href: "/practice", label: "Practice Arena" },
-    { href: "/research", label: "Stock Research" },
-    { href: "/profile", label: "Progress & Badges" },
+    { href: "/profile", label: "Progress & Heatmap" },
   ];
 
   const toggleLocale = () => {
