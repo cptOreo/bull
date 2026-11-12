@@ -5,10 +5,9 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/ui/tabs";
-import { Bot, Brain, Send, Sparkles, Loader2, ChevronRight, X, Copy } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/ui/tabs";
+import { Bot, Brain, Send, Sparkles, Loader2, X } from "lucide-react";
 import { useChat } from "@/state/use-chat";
-import { useStock } from "@/hooks/use-stock";
 
 export default function ResearchPage() {
   const { messages, currentMode, context, addMessage, setMode, setContext } = useChat();

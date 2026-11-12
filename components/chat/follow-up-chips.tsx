@@ -3,8 +3,6 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
-import { Button } from "@/ui/button";
-import { Sparkles, Bot, Brain, Send } from "lucide-react";
 
 interface FollowUpChipsProps {
   suggestions: string[];
@@ -13,7 +11,7 @@ interface FollowUpChipsProps {
   maxChips?: number;
 }
 
-export function FollowUpChips({ suggestions, onSelect, mode = "tutor", maxChips = 4 }: FollowUpChipsProps) {
+export function FollowUpChips({ suggestions, onSelect, maxChips = 4 }: FollowUpChipsProps) {
   if (!suggestions.length) return null;
 
   const displaySuggestions = suggestions.slice(0, maxChips);

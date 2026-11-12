@@ -3,8 +3,7 @@
 import * as React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
-import { ChevronDown, ChevronUp, Loader2, CheckCircle, AlertCircle, Terminal } from "lucide-react";
-import { formatPrice, formatPercent, formatRatio, formatCrore } from "@/lib/utils/formatters";
+import { ChevronDown, ChevronUp, Terminal } from "lucide-react";
 
 interface ToolInvocationProps {
   name: string;
@@ -37,7 +36,7 @@ function formatResult(result: unknown): React.ReactNode {
       const jsonStr = JSON.stringify(result, null, 2);
       return (
         <pre className="text-xs font-mono text-sm p-2 bg-muted rounded overflow-x-auto max-h-64 overflow-y-auto">
-          {JSON.stringify(result, null, 2)}
+          {jsonStr}
         </pre>
       );
     } catch {

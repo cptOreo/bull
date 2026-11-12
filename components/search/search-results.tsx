@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Loader2, ChevronRight, Building2, BookOpen, Bot, Target } from "lucide-react";
+import { Loader2, Building2, BookOpen, Bot, Target } from "lucide-react";
 import { StockSearchResult } from "./stock-search-result";
 import { PageSearchResult } from "./page-search-result";
 import { AISearchResult } from "./ai-search-result";

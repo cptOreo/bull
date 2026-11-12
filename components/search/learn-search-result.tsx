@@ -1,7 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils/cn";
-import { BookOpen, Target, TrendingUp, CheckCircle, ChevronRight } from "lucide-react";
+import { BookOpen, ChevronRight } from "lucide-react";
 import { MasteryRing } from "@/ui/mastery-ring";
 
 const LEARN_CONCEPTS = [
@@ -29,7 +28,7 @@ export function LearnSearchResult({ query }: { query: string }) {
 
   return (
     <div className="divide-y divide-border/50">
-      {filtered.map((concept, i) => (
+      {filtered.map((concept) => (
         <div key={concept.id} className="p-4 hover:bg-accent/50 transition-colors">
           <div className="flex items-center gap-3">
             <MasteryRing progress={0} size={40} strokeWidth={3} showLabel={false} level={0} />

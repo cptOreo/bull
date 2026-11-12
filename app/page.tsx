@@ -10,13 +10,10 @@ import { ChatContainer } from "@/components/chat/chat-container";
 import { SkillTreeView } from "@/components/learn/skill-tree-view";
 import { PracticeArenaView } from "@/components/learn/practice-arena-view";
 import { ProgressHeatmapView } from "@/components/learn/progress-heatmap-view";
-import { CurriculumTracks } from "@/components/learn/curriculum-tracks";
 import { RatioSimulator } from "@/components/learn/ratio-simulator";
 import { StockDissector } from "@/components/learn/stock-dissector";
 import { DataBadge } from "@/components/ui/data-badge";
 import { FINANCIAL_TERMS } from "@/components/ui/glossary-tooltip";
-import { copyEn } from "@/content/copy.en";
-import { copyHiEn } from "@/content/copy.hi-en";
 import { cn } from "@/lib/utils";
 
 export type StudioTab = "masterclass" | "practice" | "sandbox" | "dissector" | "tutor" | "heatmap";
@@ -53,7 +50,6 @@ const CURIOSITY_PILLS = [
 
 export default function HomePage() {
   const { profile, locale, updateProfile, logEvent, chatMessages, addChatMessage, events } = useBull();
-  const copy = locale === "hi-en" ? copyHiEn : copyEn;
 
   const [activeTab, setActiveTab] = useState<StudioTab>("masterclass");
   const [dissectorTicker, setDissectorTicker] = useState<string>("ZOMATO");

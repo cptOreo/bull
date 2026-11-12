@@ -66,7 +66,7 @@ Analyst: "Here is a comparison between TCS and Infosys across key metrics:
 Would you like to see their historical margin trends or price performance over the past 3 years?"`
 };
 
-export function buildTutorPrompt(locale: "en" | "hi-en", userMastery: Record<string, number> = {}): string {
+export function buildTutorPrompt(locale: "en" | "hi-en", _userMastery: Record<string, number> = {}): string {
   return SYSTEM_PROMPTS.tutor
     .replace("{{locale}}", locale === "hi-en" ? "Hinglish (romanized Hindi + English)" : "English")
     + "\n\n" + SYSTEM_PROMPTS.tutor_few_shot;

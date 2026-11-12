@@ -1,16 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/ui/tabs";
 import { DCFBuilder } from "./dcf-builder";
 import { RatioGrid } from "./ratio-grid";
-import { PriceChart } from "./price-chart";
-import { Calculator, TrendingUp, TrendingDown, BarChart3, Building2, ArrowRight } from "lucide-react";
-import { formatPrice, formatCrore } from "@/lib/utils/formatters";
-import { cn } from "@/lib/utils/cn";
-import { useStockHistory } from "@/hooks/use-stock";
+import { Calculator, TrendingUp, BarChart3, Building2 } from "lucide-react";
 
 function formatRatio(val: number | null): string {
   return val !== null ? `${val.toFixed(1)}x` : "N/A";
@@ -86,9 +81,6 @@ function calculateDebtPercentile(debtToEquity: number | null): string {
 }
 
 export function ValuationTab({ stock }: ValuationTabProps) {
-  const [activeTab, setActiveTab] = React.useState("multiples");
-  const { data: peersData } = useStockHistory(stock.ticker, "1y", "1d");
-
   return (
     <div className="space-y-6">
       <Card>
@@ -103,7 +95,7 @@ export function ValuationTab({ stock }: ValuationTabProps) {
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="multiples" className="w-full" onValueChange={setActiveTab}>
+      <Tabs defaultValue="multiples" className="w-full">
         <TabsList className="grid w-full grid-cols-4 bg-muted">
           {VALUATION_TABS.map(t => (
             <TabsTrigger key={t.id} value={t.id} className="gap-1.5 py-2 text-sm">
@@ -142,7 +134,7 @@ export function ValuationTab({ stock }: ValuationTabProps) {
           <Card>
             <CardHeader><CardTitle>Valuation History</CardTitle></CardHeader>
             <CardContent>
-              <ValuationHistoryChart stock={stock} priceHistory={stock.priceHistory} />
+              <ValuationHistoryChart />
             </CardContent>
           </Card>
         </TabsContent>
@@ -266,7 +258,7 @@ function MetricRow({ label, value, benchmark }: { label: string; value: string; 
   );
 }
 
-function ValuationHistoryChart({ stock, priceHistory }: { stock: ValuationTabProps["stock"]; priceHistory?: unknown }) {
+function ValuationHistoryChart() {
   return (
     <Card>
       <CardHeader><CardTitle>P/E History (5 Years)</CardTitle></CardHeader>

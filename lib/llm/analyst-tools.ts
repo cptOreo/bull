@@ -85,26 +85,12 @@ export async function executeCompareStocks(args: { symbols: string[] }) {
 }
 
 export async function executeBuildDCF(args: { symbol: string; assumptions: Record<string, unknown> }) {
-  const { symbol, assumptions } = args;
+  const { symbol } = args;
   const snapshot = await getStockSnapshot(args.symbol);
   
   if (!snapshot) {
     return { error: `Could not get data for ${symbol}` };
   }
-  
-  const {
-    revenueGrowth = 0.12,
-    operatingMargin = 0.22,
-    taxRate = 0.25,
-    wacc = 0.11,
-    terminalGrowth = 0.04,
-    projectionYears = 5,
-  } = assumptions;
-  
-  // Get real financial data
-  const baseRevenue = 100000; // Would fetch from actual financials
-  const baseEBIT = 100000 * 0.22; // placeholder
-  const baseNOPAT = 100000 * 0.22 * (1 - 0.25);
   
   let pvSum = 0;
   for (let year = 1; year <= 5; year++) {
@@ -122,7 +108,6 @@ export async function executeBuildDCF(args: { symbol: string; assumptions: Recor
   const equityValue = enterpriseValue - 10000;
   const shares = 100;
   const intrinsicValue = equityValue / shares;
-  const currentPrice = 100;
   const upside = ((intrinsicValue - 100) / 100) * 100;
   
   return {

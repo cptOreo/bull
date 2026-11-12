@@ -89,7 +89,7 @@ ToastViewport.displayName = "ToastViewport";
 
 import { useUI } from "@/lib/state/use-ui";
 
-export function Toaster({ position = "bottom-right", richColors }: { position?: string; richColors?: boolean }) {
+export function Toaster({}: { position?: string; richColors?: boolean }) {
   const { toasts, removeToast } = useUI();
   return (
     <ToastViewport>

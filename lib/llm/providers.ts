@@ -59,7 +59,7 @@ function getGeminiProvider(): LLMProviderConfig | null {
     supportsTools: true,
     maxTokens: 8192,
     contextWindow: 1000000,
-    async generate(messages, _tools) {
+    async generate(messages) {
       const preferredModel = process.env.GEMINI_MODEL ?? "gemini-3.8-flash";
       const modelsToTry = [preferredModel, "gemini-3.6-flash", "gemini-3.5-flash"];
       const systemMessage = messages.find((m) => m.role === "system");

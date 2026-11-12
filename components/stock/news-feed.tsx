@@ -2,9 +2,8 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/ui/card";
 import { Badge } from "@/ui/badge";
-import { ExternalLink, Newspaper, Clock } from "lucide-react";
+import { ExternalLink, Newspaper } from "lucide-react";
 import { formatDate } from "@/lib/utils/formatters";
 
 interface NewsFeedProps {
@@ -49,7 +48,7 @@ function NewsCard({ item }: { item: typeof MOCK_NEWS[0] }) {
   );
 }
 
-export function NewsFeed({ stock }: { stock: { ticker: string; name: string } }) {
+export function NewsFeed({}: NewsFeedProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">

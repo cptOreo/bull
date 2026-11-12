@@ -1,7 +1,7 @@
 import { describe, expect, it, vi, beforeAll } from "vitest";
 import React from "react";
 import { render } from "@testing-library/react"
-import { screen, fireEvent, waitFor } from "@testing-library/dom";
+import { screen, fireEvent } from "@testing-library/dom";
 import { StockHeader } from "@/components/stock/stock-header";
 import { Limitations } from "@/components/stock/limitations";
 import { RiskBadge } from "@/components/stock/risk-badge";

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import React from "react";
 import { render } from "@testing-library/react"
-import { screen, fireEvent, waitFor } from "@testing-library/dom";
+import { screen, fireEvent } from "@testing-library/dom";
 import { SectorTag, getSectorTheme } from "@/components/shortlist/sector-tag";
 import { ShortlistTable, type ShortlistTableRow } from "@/components/shortlist/shortlist-table";
 import { RankFactorCard } from "@/components/shortlist/rank-factor-card";

@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 export interface VerificationResult {
   passed: boolean;
   errors: string[];
@@ -54,7 +52,7 @@ export function verifyResponse(
       if (isNaN(num)) continue;
       
       let found = false;
-      for (const [key, value] of Object.entries(context.stockData)) {
+      for (const value of Object.values(context.stockData)) {
         if (typeof value === "number") {
           const tolerance = Math.abs(value) * cfg.numericTolerance;
           if (Math.abs(num - value) <= tolerance) {

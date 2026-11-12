@@ -3,8 +3,8 @@
 import * as React from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils/cn";
-import { formatPrice, formatSignedPercent } from "@/lib/utils/formatters";
-import { ChevronRight, TrendingUp, TrendingDown, Building2 } from "lucide-react";
+import { formatPrice } from "@/lib/utils/formatters";
+import { ChevronRight, Building2 } from "lucide-react";
 import { useStock } from "@/hooks/use-stock";
 
 interface StockSearchResultProps {

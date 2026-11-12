@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { Badge } from "@/ui/badge";
-import { AlertTriangle, AlertCircle, Info, Shield, TrendingDown, DollarSign } from "lucide-react";
+import { AlertTriangle, AlertCircle, Shield, TrendingDown, DollarSign } from "lucide-react";
 
 interface RiskFlagsProps {
   stock: {

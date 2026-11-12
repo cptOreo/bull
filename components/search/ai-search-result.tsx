@@ -1,7 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils/cn";
-import { Bot, Sparkles, ArrowRight } from "lucide-react";
+import { Bot, ArrowRight } from "lucide-react";
 import { useChatStore } from "@/components/providers/chat-provider";
 
 export function AISearchResult({ query }: { query: string }) {

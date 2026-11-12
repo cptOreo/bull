@@ -2,9 +2,8 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils/cn";
 import { Button } from "@/ui/button";
-import { Search, TrendingUp, DollarSign, BookOpen, Shield, ArrowRight } from "lucide-react";
+import { Search, DollarSign, BookOpen, Shield, ArrowRight } from "lucide-react";
 import { useProfile } from "@/state/use-profile";
 
 const GOALS = [

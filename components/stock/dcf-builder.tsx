@@ -3,26 +3,16 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
-import { Input } from "@/ui/input";
 import { Button } from "@/ui/button";
-import { Calculator, Download, ArrowUpRight, Copy } from "lucide-react";
+import { Calculator, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
-import { formatPrice, formatPercent, formatRatio, formatCrore } from "@/lib/utils/formatters";
+import { formatPrice, formatPercent } from "@/lib/utils/formatters";
 import { useStock } from "@/hooks/use-stock";
 
 interface DCFBuilderProps {
   ticker: string;
   currentPrice?: number;
 }
-
-const DEFAULT_ASSUMPTIONS = {
-  revenueGrowth: 0.12,
-  operatingMargin: 0.22,
-  taxRate: 0.25,
-  wacc: 0.11,
-  terminalGrowth: 0.04,
-  projectionYears: 5,
-};
 
 export function DCFBuilder({ ticker, currentPrice: initialPrice }: DCFBuilderProps) {
   const { data: stockData } = useStock(ticker);
@@ -48,8 +38,6 @@ export function DCFBuilder({ ticker, currentPrice: initialPrice }: DCFBuilderPro
     return 10000;
   }, [stockData]);
 
-  const currentPrice = initialPrice || stockData?.price || 100;
-
   const [assumptions, setAssumptions] = React.useState({
     revenueGrowth: 0.12,
     operatingMargin: 0.22,
@@ -65,7 +53,6 @@ export function DCFBuilder({ ticker, currentPrice: initialPrice }: DCFBuilderPro
     sensitivity: Array<{ wacc: number; growth: number; value: number }>;
   } | null>(null);
   const [isCalculating, setIsCalculating] = React.useState(false);
-  const [copied, setCopied] = React.useState(false);
 
   const handleCalculate = async () => {
     setIsCalculating(true);
@@ -118,33 +105,6 @@ export function DCFBuilder({ ticker, currentPrice: initialPrice }: DCFBuilderPro
       console.error("DCF calculation failed:", error);
     } finally {
       setIsCalculating(false);
-    }
-  };
-
-  const handleCopy = async () => {
-    if (!dcfResult) return;
-    const text = `DCF Valuation for ${ticker}
-Intrinsic Value: ₹${formatPrice(dcfResult.intrinsicValue)}
-Current Price: ₹${formatPrice(dcfResult.currentPrice)}
-Upside/Downside: ${dcfResult.upside >= 0 ? "+" : ""}${formatPercent(dcfResult.upside)}
-
-Assumptions:
-- Revenue Growth: ${(assumptions.revenueGrowth * 100).toFixed(1)}%
-- Operating Margin: ${(assumptions.operatingMargin * 100).toFixed(1)}%
-- Tax Rate: ${(assumptions.taxRate * 100).toFixed(1)}%
-- WACC: ${(assumptions.wacc * 100).toFixed(1)}%
-- Terminal Growth: ${(assumptions.terminalGrowth * 100).toFixed(1)}%
-- Projection Years: ${assumptions.projectionYears}
-
-Sensitivity Analysis (WACC vs Terminal Growth):
-${dcfResult.sensitivity.map(s => `WACC ${(s.wacc*100).toFixed(1)}%, Growth ${(s.growth*100).toFixed(1)}%: ₹${formatPrice(s.value)}`).join('\n')}`;
-    
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (e) {
-      console.error("Failed to copy:", e);
     }
   };
 

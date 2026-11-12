@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
-import { Send, Loader2, Sparkles, Bot, Brain, HelpCircle, Languages } from "lucide-react";
+import { Send, Loader2, Sparkles, Bot, Brain, Languages } from "lucide-react";
 import { useChat } from "@/state/use-chat";
 import { ToolInvocation } from "./tool-invocation";
 import { CitationList, InlineCitations } from "@/components/chat/citation";
@@ -31,7 +31,7 @@ interface ChatPanelProps {
   className?: string;
 }
 
-export function ChatPanel({ defaultMode = "tutor", context, className }: ChatPanelProps) {
+export function ChatPanel({ context, className }: ChatPanelProps) {
   const { messages, currentMode, addMessage, setMode } = useChat();
   const [input, setInput] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);

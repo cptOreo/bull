@@ -1,7 +1,7 @@
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
 import { render } from "@testing-library/react"
-import { screen, fireEvent, waitFor } from "@testing-library/dom";
+import { screen, fireEvent } from "@testing-library/dom";
 
 import { ConceptCard } from "@/components/academy/concept-card";
 import { CheckModal } from "@/components/academy/check-modal";

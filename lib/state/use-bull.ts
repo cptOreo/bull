@@ -107,7 +107,7 @@ export const useBullStore = create<BullState>()(
         state.progress = { ...state.progress, ...updates };
       }),
 
-      addXP: (amount, _source) => set((state) => {
+      addXP: (amount) => set((state) => {
         const newXP = state.progress.xp + amount;
         const newLevel = calculateLevel(newXP);
         const leveledUp = newLevel > state.progress.level;
@@ -187,7 +187,7 @@ export const useBullStore = create<BullState>()(
       name: "bull-v2-state",
       storage: createJSONStorage(() => localStorage),
       version: 1,
-      migrate: (persisted: unknown, _version: number) => {
+      migrate: (persisted: unknown) => {
         return persisted as BullState;
       },
     }

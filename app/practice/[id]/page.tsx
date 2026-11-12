@@ -2,34 +2,26 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { useParams } from "next/navigation";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/ui/button";
 import { useBullStore } from "@/state/use-bull";
 import { useProgress } from "@/state/use-progress";
 import {
   ArrowLeft,
-  ArrowRight,
   CheckCircle2,
-  AlertTriangle,
-  Sliders,
   TrendingUp,
   Target,
-  Search,
   Award,
-  Sparkles,
-  ExternalLink,
   ShieldAlert,
 } from "lucide-react";
 
 export default function PracticeDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const rawId = (params?.id as string) || "find-red-flags";
 
   const { addXP, addBadge, updateMastery } = useBullStore();
-  const { xp, level, streak } = useProgress();
+  const { xp, level } = useProgress();
 
   // Determine scenario type
   const scenarioType: "flags" | "compare" | "dcf" | "screen" = React.useMemo(() => {

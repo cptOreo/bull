@@ -4,7 +4,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { formatPrice, formatSignedPercent, formatCrore } from "@/lib/engine/format";
-import { TrendingUp, TrendingDown, Minus, Building2, DollarSign, Percent, Target } from "lucide-react";
+import { TrendingUp, TrendingDown, Building2, DollarSign, Percent, Target } from "lucide-react";
 
 export interface StockHeaderProps {
   stock?: {

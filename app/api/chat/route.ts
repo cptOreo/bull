@@ -10,8 +10,7 @@ import {
 import { identifyStockInQuery, getLiveStockQuote } from "@/lib/data/live";
 import { generateTutorResponse } from "@/lib/llm/tutor-engine";
 import type { TurnInput, Block, Answer, Locale, PartialProfile, LearningEvent } from "@/lib/engine/types";
-import { getLlmProvider as getV2LlmProvider, type LLMMessage, handleChat as handleV2Chat } from "@/lib/llm";
-import { getAllToolSchemas } from "@/lib/llm/tools";
+import { handleChat as handleV2Chat } from "@/lib/llm";
 
 export interface ChatRequestPayload {
   messages?: Array<{ role: "user" | "assistant"; content: string }>;

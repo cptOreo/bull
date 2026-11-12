@@ -354,9 +354,8 @@ function generateHeuristics(input: HeuristicInputs): { strengths: string[]; watc
 }
 
 export async function getStockSnapshot(symbol: string): Promise<LiveStockSnapshot | null> {
-  const [summary, history] = await Promise.allSettled([
+  const [summary] = await Promise.allSettled([
     getQuoteSummary(symbol),
-    getPriceHistory(symbol, "5y", "1d"),
   ]);
 
   if (summary.status === "rejected" || !summary.value) {
@@ -367,7 +366,6 @@ export async function getStockSnapshot(symbol: string): Promise<LiveStockSnapsho
   const price = data.price;
   const summaryDetail = data.summaryDetail;
   const financialData = data.financialData;
-  const keyStats = data.defaultKeyStatistics;
   const profile = data.assetProfile;
 
   if (!price?.regularMarketPrice?.raw) return null;

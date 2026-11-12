@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Button } from "@/ui/button";
-import { Command, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useCommandPalette } from "@/hooks/use-command-palette";
 
 export function CommandPaletteTrigger() {

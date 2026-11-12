@@ -2,10 +2,9 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
+import { Card, CardContent } from "@/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/ui/tabs";
-import { ChevronDown, ChevronUp, TrendingUp, TrendingDown } from "lucide-react";
-import { formatPrice, formatCrore, formatPercent } from "@/lib/utils/formatters";
+import { formatCrore } from "@/lib/utils/formatters";
 
 interface FinancialsTabProps {
   stock: { financials?: Record<string, unknown> };
@@ -51,7 +50,7 @@ function FinancialTable({ statement, data }: { statement: typeof FINANCIAL_STATE
           {statement.rows.map((row, i) => (
             <motion.tr key={row.key} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.03 }}>
               <td className="py-2 font-medium">{row.label}</td>
-              {["FY2026", "FY2025", "FY2024", "FY2023", "FY2022"].map((fy, j) => (
+              {["FY2026", "FY2025", "FY2024", "FY2023", "FY2022"].map((fy) => (
                 <td key={fy} className="py-2 text-right font-mono tabular-nums">
                   {data[`${row.key}_${fy}`] != null 
                     ? row.type === "currency" 

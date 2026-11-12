@@ -1,6 +1,5 @@
 import * as React from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils/cn";
 import { Github, Twitter, BookOpen } from "lucide-react";
 
 export function Footer() {

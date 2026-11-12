@@ -1,7 +1,7 @@
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render } from "@testing-library/react"
-import { screen, fireEvent, waitFor } from "@testing-library/dom";
+import { screen, fireEvent } from "@testing-library/dom";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

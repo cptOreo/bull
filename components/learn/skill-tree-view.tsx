@@ -248,7 +248,6 @@ export function SkillTreeGraphCanvas({
 
               // Curved bezier path
               const dx = endPos.x - startPos.x;
-              const dy = endPos.y - startPos.y;
               const cx1 = startPos.x + dx * 0.5;
               const cy1 = startPos.y;
               const cx2 = startPos.x + dx * 0.5;

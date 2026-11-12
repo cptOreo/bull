@@ -2,8 +2,7 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils/cn";
-import { Search, X, Loader2 } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/ui/tabs";
 import { useCommandPalette } from "@/hooks/use-command-palette";
 import { SearchResults } from "./search-results";

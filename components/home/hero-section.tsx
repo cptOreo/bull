@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils/cn";
 import { TrendingUp, BookOpen, Target, Search, Sparkles } from "lucide-react";
 import { Button } from "@/ui/button";
 

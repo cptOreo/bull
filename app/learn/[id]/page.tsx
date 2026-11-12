@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/ui/button";
@@ -26,7 +26,6 @@ import {
 
 export default function LessonPlayerPage() {
   const params = useParams();
-  const router = useRouter();
   const conceptId = (params?.id as string) || "pe-ratio";
 
   const {

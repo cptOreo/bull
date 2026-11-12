@@ -1,7 +1,7 @@
 import { useBullStore } from "./use-bull";
 
 export function useProgress() {
-  const { progress, updateProgress, addXP, completeLesson, completeMission, updateMastery, addBadge, recordQuiz, checkStreak } = useBullStore();
+  const { progress, checkStreak } = useBullStore();
 
   const xpForNextLevel = [0, 100, 250, 500, 1000, 2000, 4000, 8000, 16000, 32000][progress.level + 1] || 999999;
   const xpProgress = progress.level > 0 

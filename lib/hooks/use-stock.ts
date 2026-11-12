@@ -55,7 +55,6 @@ export function useStockHistory(
       if (!symbol) throw new Error("No symbol provided");
       
       const upperSymbol = symbol.toUpperCase();
-      const cacheKey = `${upperSymbol}:${range}:${interval}`;
       
       const cached = await getCachedStockHistory(upperSymbol, range, interval, staleTime);
       if (cached) return cached;

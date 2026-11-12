@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { cn } from "@/lib/utils/cn";
 import { Button } from "@/ui/button";
 import {
   DropdownMenu,
@@ -12,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/ui/avatar";
-import { LogOut, User, Settings, BookOpen, Target } from "lucide-react";
+import { LogOut, User, BookOpen, Target } from "lucide-react";
 import Link from "next/link";
 import { useProfile } from "@/state/use-profile";
 

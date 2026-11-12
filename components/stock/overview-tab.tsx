@@ -2,13 +2,11 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils/cn";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
 import { RatioGrid } from "./ratio-grid";
-import { MasteryRing } from "@/ui/mastery-ring";
 import { Button } from "@/ui/button";
 import Link from "next/link";
-import { Building2, BookOpen, Calculator, TrendingUp, Target, CheckCircle, AlertTriangle } from "lucide-react";
+import { Building2, BookOpen, Calculator, Target, CheckCircle, AlertTriangle } from "lucide-react";
 
 interface OverviewTabProps {
   stock: {

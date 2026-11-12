@@ -3,11 +3,10 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
-import { Badge } from "@/ui/badge";
 import { MasteryRing } from "@/ui/mastery-ring";
 import { Button } from "@/ui/button";
 import Link from "next/link";
-import { BookOpen, Target, TrendingUp, CheckCircle } from "lucide-react";
+import { BookOpen, CheckCircle } from "lucide-react";
 import { useProgress } from "@/state/use-progress";
 
 const STOCK_CONCEPTS = [

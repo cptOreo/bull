@@ -94,7 +94,6 @@ export async function getCachedStockQuote(symbol: string, maxAge = 60000): Promi
 
 export async function cacheStockHistory(symbol: string, range: string, interval: string, data: unknown): Promise<void> {
   const db = await getDB();
-  const key = `${symbol.toUpperCase()}:${range}:${interval}`;
   await db.put("stockHistory", { symbol: symbol.toUpperCase(), range, interval, data, timestamp: Date.now() });
 }
 

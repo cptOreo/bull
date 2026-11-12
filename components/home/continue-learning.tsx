@@ -5,8 +5,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils/cn";
 import { Button } from "@/ui/button";
 import Link from "next/link";
-import { Play, BookOpen, Target, Clock, ArrowRight, CheckCircle } from "lucide-react";
-import { useProgress } from "@/state/use-progress";
+import { Play, BookOpen, Target, ArrowRight, CheckCircle } from "lucide-react";
 
 interface ContinueItem {
   type: string;
